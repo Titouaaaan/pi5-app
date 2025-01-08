@@ -55,7 +55,7 @@ export default function About() {
             <div className="md:w-1/8">
               <h2 className="text-2xl font-semibold text-gray-800">Hobbies & Interests 🎮</h2>
               <p className="text-lg text-gray-700">
-                When I'm not working, I enjoy playing video games, playing music (guitar and electric bass), or doing some sports!
+                When I&apos;m not working, I enjoy playing video games, playing music (guitar and electric bass), or doing some sports!
               </p>
             </div>
             <div className="md:w-1/2">
