@@ -7,11 +7,11 @@ export default function About() {
       <div className="text-center mb-12">
         {/* Profile Picture */}
         <Image
-          src="/profilepic.jpeg" 
+          src="/nopropic.jpg" 
           alt="Titouan Guerin"
-          className="w-32 h-32 rounded-full mx-auto mb-4"
-          width={128}
-          height={128}
+          className="w-50 rounded-full mx-auto mb-4"
+          width={150}
+          height={150}
         />
         <h1 className="text-4xl font-extrabold text-gray-900">ABOUT ME</h1>
         <p className="mt-2 text-1xl text-gray-600">🤓 Fun fact, this website is currently being hosted on my raspberry pi 5!</p>
@@ -27,36 +27,47 @@ export default function About() {
           </p>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold text-gray-800">Recent Achievements 🎉</h2>
-          <p className="text-lg text-gray-700">
-          I recently co-authored a paper titled &quot;Beyond Chatbots: Enhancing Luxembourgish Language Learning Through Multi-agent Systems and Large Language Models&quot;, which was presented at PRIMA 2024 in Kyoto, Japan and published by Springer. 
-          The paper explores how AI and multi-agent systems can be utilized to revolutionize language learning, particularly for low-resource languages like Luxembourgish. 
-          You can read it{" "}
-          <a href="https://link.springer.com/chapter/10.1007/978-3-031-77367-9_29" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">
-           here
-          </a>
-          !
-          </p>
+        <section className="flex flex-col md:flex-row items-center">
+        <div className="md:w-1/3">
+            <Image
+                src="/publishement.png" 
+                alt="publishement"
+                className="w-32 h-48 square-full mx-auto mb-4"
+                width={254}
+                height={254}
+              />
+            </div>
+          <div className='md:w-3/4'>
+            <h2 className="text-2xl font-semibold text-gray-800">Recent Achievements 🎉</h2>
+            <p className="text-lg text-gray-700">
+            I recently co-authored a paper titled &quot;Beyond Chatbots: Enhancing Luxembourgish Language Learning Through Multi-agent Systems and Large Language Models&quot;, which was presented at PRIMA 2024 in Kyoto, Japan and published by Springer. 
+            The paper explores how AI and multi-agent systems can be utilized to revolutionize language learning, particularly for low-resource languages like Luxembourgish. 
+            You can read it{" "}
+            <a href="https://link.springer.com/chapter/10.1007/978-3-031-77367-9_29" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">
+            here
+            </a>
+            !
+            </p>
+          </div>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold text-gray-800">Hobbies & Interests 🎮</h2>
-          <p className="text-lg text-gray-700">
-            When I&apos;m not working, I enjoy playing video games, playing music (guitar and electric bass) or doing some physical exercise (climbing, gym, basketball).
-          </p>
-        </section>
-        
-        {/* Call to Action */}
-        <section className="mt-8 flex justify-center">
-          <a
-            href="/Titouan_Guerin_Resume_3.0.pdf" // replace with your CV path
-            download
-            className="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition transform hover:scale-105 animate-bubble"
-          >
-            Download my CV ! 
-          </a>
-        </section>
+        <section className="flex flex-col md:flex-row items-center gap-6">
+            <div className="md:w-1/8">
+              <h2 className="text-2xl font-semibold text-gray-800">Hobbies & Interests 🎮</h2>
+              <p className="text-lg text-gray-700">
+                When I'm not working, I enjoy playing video games, playing music (guitar and electric bass), or doing some sports!
+              </p>
+            </div>
+            <div className="md:w-1/2">
+            <Image
+                src="/surf.jpg" 
+                alt="surf"
+                className="w-48 h-48 rounded-full mx-auto mb-4 scale-110"
+                width={254}
+                height={254}
+              />
+            </div>
+          </section>
       </div>
     </main>
   );
