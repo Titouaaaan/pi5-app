@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import '@fontsource/bebas-neue';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +29,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Navigation Bar */}
+        <nav className="flex justify-between items-center p-4 bg-black-500 text-white font-bebas">
+          <div className="text-3xl text-lg font-bold font-bebas">Titouan Guerin</div>
+          <div className="flex gap-4">
+            <Link href="/" className="hover:underline text-2xl">
+              Home
+            </Link>
+            <Link href="/resume" className="hover:underline text-2xl">
+              Resume
+            </Link>
+          </div>
+        </nav>
         {children}
       </body>
     </html>
