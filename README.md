@@ -1,36 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## My website
+The goal of this project was to learn how to use Next.js, Tailwind CSS and get refreshed with HTML and Javascript/Typescript. 
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Raspberry Pi 5
+The app is being hosted on my pi (8gb), hosting the application files and serving content, and to make the app accessible from the internet securely and reliably, a Cloudflare Tunnel is used (free service). All you need is to own a domain name (in my case titouanguerin.com).
+A Cloudflare Tunnel securely exposes the Raspberry Pi’s local server to the internet without needing to open ports on the router.
+It acts as a reverse proxy, creating a secure, encrypted connection between the Cloudflare network and the Raspberry Pi.
+This setup enhances security by hiding the Raspberry Pi’s actual IP address and protects against direct attacks.
+The tunnel encrypts traffic and minimizes exposure of the Raspberry Pi to potential threats.
+This means I do not have to deal with complex router configurations or static IPs.
+Also, using the Raspberry Pi for hosting is energy-efficient and economical, plus I get to play around with a new toy so that's always fun.
