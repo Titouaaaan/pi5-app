@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         {/* Navigation Bar */}
         <nav className="flex justify-between items-center p-4 bg-black-500 text-white font-bebas">
-          <div className="text-3xl text-lg font-bold font-bebas">Titouan Guerin</div>
+          <div className="text-3xl text-lg font-bold font-bebas">Insert Logo Eventually</div>
           <div className="flex gap-4">
             <Link href="/" className="hover:underline text-2xl">
               Home
