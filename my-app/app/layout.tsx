@@ -16,10 +16,22 @@ interface SystemStats {
 }
 
 const fetchStats = async (): Promise<SystemStats> => {
-  const response = await fetch('http://192.168.1.119:8000/system-stats');
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch('/system-stats');
+    
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    return {} as SystemStats;  // Return an empty object or handle the error appropriately
+  }
 };
+
 
 
 const geistSans = Geist({
