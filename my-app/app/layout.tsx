@@ -16,20 +16,14 @@ interface SystemStats {
 }
 
 const fetchStats = async (): Promise<SystemStats> => {
-  try {
-    const response = await fetch('/system-stats');
-    
-    // Check if the response is successful
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Fetch error:', error);
-    return {} as SystemStats;  // Return an empty object or handle the error appropriately
+  const response = await fetch('https://api.titouanguerin.com/system-stats');
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
   }
+
+  const data: SystemStats = await response.json();
+  return data;
 };
 
 
