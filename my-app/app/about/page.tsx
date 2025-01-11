@@ -4,7 +4,7 @@ export default function About() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-300 py-12 px-6 font-bebas">
       {/* Profile Section */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 text-black">
         {/* Profile Picture */}
         <Image
           src="/nopropic.jpg" 
@@ -13,7 +13,7 @@ export default function About() {
           width={150}
           height={150}
         />
-        <h1 className="text-4xl font-extrabold text-gray-900">ABOUT ME</h1>
+        <h1 className="text-4xl font-extrabold">ABOUT ME</h1>
         <p className="mt-2 text-1xl text-gray-600">🤓 Fun fact, this website is currently being hosted on my raspberry pi 5!</p>
       </div>
 

@@ -35,3 +35,16 @@ body {
 .animate-bubble {
   animation: bubble 1.5s ease-in-out infinite;
 }
+
+/* div.sticky {
+  position: sticky;
+} */
+
+/* 
+.sidebar .content-wrapper div {
+  width: 200px;
+  height: 250px;
+  border-radius: 10px;
+  background: blue;
+  margin-bottom: 20px;
+} */

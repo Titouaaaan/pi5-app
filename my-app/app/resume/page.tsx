@@ -12,11 +12,19 @@ const skills = [ // Need to change this to be more realistic
 
 export default function resume() {
   return (
-    <main className="flex flex-col md:flex-row min-h-screen">
-      {/* Left Side - Fixed */}
-        <div className="p-6 bg-gray-500 w-3/4 overflow-y-auto">
-            <section className="bg-gray-400 shadow-lg rounded-lg p-6">
-                <div className="items-center justify-center text-black min-h-screen">
+    <main className="flex">
+        <section className="bg-gray-400 p-10">    
+            {/* Sticky Sidebar */}
+            <div
+                style={{
+                position: "sticky",
+                top: "5px", 
+                height: "10px",
+                width: "250px",
+                padding: "10px",
+                color: "black",
+                marginBottom: "500px",
+                }}>
                     {/* Profile Picture */}
                     <Image
                     src="/profilepic.jpeg"
@@ -30,31 +38,26 @@ export default function resume() {
 
                     {/* Skills Section */}
                     <h3 className="text-center font-semibold mb-2">Skills</h3>
-                    <div className="text-left w-3/4 mx-auto">
                         <SkillBar
                             skills={skills}
-                            height={25} // Bigger bars
+                            height={20} // Bigger bars
                             
                             animationDelay={0} // Start animation immediately
                             animationDuration={1500} // Smooth fill animation
                         />
-                    </div>
-
-                    {/* Call to Action */}
-                    <section className="mt-8 flex justify-center">
-                        <a
-                            href="/Titouan_Guerin_Resume_3.0.pdf" 
-                            download
-                            className="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition transform hover:scale-105 animate-bubble"
-                        >
-                            Download my CV ! 
-                        </a>
-                    </section>
+                
+                <div className="items-center justify-center text-black min-h-screen">
+                    <a href="/Titouan_Guerin_Resume_3.0.pdf" 
+                        download
+                        className="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition transform hover:scale-105 animate-bubble">
+                        Download my CV ! 
+                    </a>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+        
 
-        <div className="p-6 space-y-8 bg-gray-500 font-bebas w-3/4 overflow-y-auto">
+        <div className="p-6 space-y-8 bg-gray-300 font-bebas w-3/4 overflow-y-auto">
             {/* Experience Section */}
             <section className="bg-white shadow-lg rounded-lg p-6">
                 <h2 className="text-4xl font-semibold text-gray-800 mb-4">Experience</h2>
@@ -66,6 +69,8 @@ export default function resume() {
                         src="/logos/university_of_luxembourg_logo.jpeg"
                         alt="University of Luxembourg logo"
                         className="w-8 h-8"
+                        width={150}
+                        height={150}
                         />
                     </div>
                     <p className="text-sm text-gray-500">University of Luxembourg | Jul 2024</p>
@@ -84,6 +89,8 @@ export default function resume() {
                         src="/logos/grant_thornton_luxembourg_logo.jpeg"
                         alt="University of Luxembourg logo"
                         className="w-8 h-8"
+                        width={150}
+                        height={150}
                         />
                     </div>
                     <p className="text-sm text-gray-500">Grant Thornton Luxembourg | Feb 2023 - Jun 2023</p>
@@ -100,6 +107,8 @@ export default function resume() {
                         src="/logos/grant_thornton_luxembourg_logo.jpeg"
                         alt="University of Luxembourg logo"
                         className="w-8 h-8"
+                        width={150}
+                        height={150}
                         />
                     </div>
                     <p className="text-sm text-gray-500">Grant Thornton Luxembourg | Aug 2023 - Sep 2023</p>
@@ -116,6 +125,8 @@ export default function resume() {
                         src="/logos/goodyear_logo.jpeg"
                         alt="University of Luxembourg logo"
                         className="w-8 h-8"
+                        width={150}
+                        height={150}
                         />
                     </div>
                     <p className="text-sm text-gray-500">The Goodyear Tire & Rubber Company | Sep 2020 - Jan 2021</p>
@@ -138,6 +149,8 @@ export default function resume() {
                         src="/logos/sorbonne_universite_logo.jpeg"
                         alt="University of Luxembourg logo"
                         className="w-8 h-8"
+                        width={150}
+                        height={150}
                         />
                     </div>
                     <p className="text-sm text-gray-500">Sorbonne Université | 2023 - Present</p>
@@ -156,6 +169,8 @@ export default function resume() {
                         src="/logos/university_of_luxembourg_logo.jpeg"
                         alt="University of Luxembourg logo"
                         className="w-8 h-8"
+                        width={150}
+                        height={150}
                         />
                     </div>
                     <p className="text-sm text-gray-500">University of Luxembourg | 2020 - 2023</p>
