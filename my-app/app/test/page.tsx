@@ -1,5 +1,9 @@
-export default function Test () {
+"use client";
+
+export default function Test() {
   return (
-    <h1>Ello staynjer</h1>
-  )
+    <main className="flex min-h-screen bg-gray-300 font-bebas text-black">
+        <p>hi</p>
+    </main>
+  );
 }
