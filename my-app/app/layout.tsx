@@ -7,6 +7,7 @@ import '@fontsource/bebas-neue';
 import React from 'react';
 import { GitHub, LinkedIn, Email } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
+import Image from "next/image";
 
 
 interface SystemStats {
@@ -68,7 +69,17 @@ export default function RootLayout({
       >
         {/* Navigation Bar */}
         <nav className="flex justify-between items-center p-4 bg-black-500 text-white font-bebas">
-          <div className="text-3xl text-lg font-bold font-bebas">Insert Logo Eventually</div>
+          <div className="text-3xl text-lg font-bold font-bebas">
+            <Image
+              src='/logos/favicon.jpeg'
+              alt="Titouan Guerin"
+              width={30}
+              height={30}
+            />
+          </div>
+
+          {/* <div className="items-center justify-between">Welcome To my personal website :)</div> */}
+          
           <div className="flex gap-4">
             <Link href="/" className="hover:underline text-2xl">
               Home
