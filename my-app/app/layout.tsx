@@ -71,7 +71,7 @@ export default function RootLayout({
         <nav className="flex justify-between items-center p-4 bg-black-500 text-white font-bebas">
           <div className="text-3xl text-lg font-bold font-bebas">
             <Image
-              src='/logos/favicon.jpeg'
+              src='/Mochi/Mochi/IMG_20240804_225643.jpg'
               alt="Titouan Guerin"
               width={30}
               height={30}

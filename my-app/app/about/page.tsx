@@ -2,9 +2,16 @@ import Image from 'next/image';
 
 export default function About() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-300 py-12 px-6 font-bebas">
+    <main className="flex min-h-screen flex-col items-center justify-center py-12 px-6 font-bebas text-white "
+    style={{
+      backgroundImage: "url(/bg_gif.gif)", // Replace with your GIF path
+      backgroundSize: "cover", // Ensures the GIF covers the entire background
+      backgroundPosition: "center", // Centers the background
+      backgroundRepeat: "no-repeat", // Prevents the GIF from repeating
+    }}>
+      <div className='bg-black bg-opacity-70 rounded-xl p-10'> 
       {/* Profile Section */}
-      <div className="text-center mb-12 text-black">
+      <div className="text-center mb-12">
         {/* Profile Picture */}
         <Image
           src="/nopropic.jpg" 
@@ -13,15 +20,15 @@ export default function About() {
           width={150}
           height={150}
         />
-        <h1 className="text-4xl font-extrabold">ABOUT ME</h1>
-        <p className="mt-2 text-1xl text-gray-600">🤓 Fun fact, this website is currently being hosted on my raspberry pi 5!</p>
+        <h1 className="text-5xl font-extrabold">ABOUT ME</h1>
+        <p className="mt-2 text-1xl">🤓 Fun fact, this website is currently being hosted on my raspberry pi 5!</p>
       </div>
 
       {/* About Me Content */}
       <div className="max-w-4xl w-full space-y-6 px-4">
         <section>
-          <h2 className="text-2xl font-semibold text-gray-800">Who Am I? 👨‍🎓</h2>
-          <p className="text-lg text-gray-700">
+          <h2 className="text-4xl font-semibold ">Who Am I? 👨‍🎓</h2>
+          <p className="text-2xl">
           I am a passionate AI and Machine Learning enthusiast currently pursuing my Master&apos;s in Artificial Intelligence, Machine Learning, and Data Science at Sorbonne Université. 
           I hold a Bachelor&apos;s degree in Computer Science from the University of Luxembourg, where I also had the privilege of being a student representative.
           </p>
@@ -38,8 +45,8 @@ export default function About() {
               />
             </div>
           <div className='md:w-3/4'>
-            <h2 className="text-2xl font-semibold text-gray-800">Recent Achievements 🎉</h2>
-            <p className="text-lg text-gray-700">
+            <h2 className="text-4xl font-semibold ">Recent Achievements 🎉</h2>
+            <p className="text-2xl">
             I recently co-authored a paper titled &quot;Beyond Chatbots: Enhancing Luxembourgish Language Learning Through Multi-agent Systems and Large Language Models&quot;, which was presented at PRIMA 2024 in Kyoto, Japan and published by Springer. 
             The paper explores how AI and multi-agent systems can be utilized to revolutionize language learning, particularly for low-resource languages like Luxembourgish. 
             You can read it{" "}
@@ -53,8 +60,8 @@ export default function About() {
 
         <section className="flex flex-col md:flex-row items-center gap-6">
             <div className="md:w-1/8">
-              <h2 className="text-2xl font-semibold text-gray-800">Hobbies & Interests 🎮</h2>
-              <p className="text-lg text-gray-700">
+              <h2 className="text-4xl font-semibold">Hobbies & Interests 🎮</h2>
+              <p className="text-2xl">
                 When I&apos;m not working, I enjoy playing video games, playing music (guitar and electric bass), or doing some sports!
               </p>
             </div>
@@ -68,6 +75,7 @@ export default function About() {
               />
             </div>
           </section>
+      </div>
       </div>
     </main>
   );

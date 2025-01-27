@@ -8,14 +8,21 @@ export default function Home() {
     const [hovered, setHovered] = useState<number | null>(null);
   
     const images = [
-      { src: "/nopropic.jpg", alt: "Image 1", link: "/about", text: "Go to About Page" },
-      { src: "/surf.jpg", alt: "Image 2", link: "/resume", text: "Go to Resume Page"},
-      { src: "/publishement.png", alt: "Image 3", link: "/projects", text: "Go to Projects Page" },
-      { src: "/profilepic.jpeg", alt: "Image 4", link: "/", text: "Go to Home Page" }
+      { src: "/Mochi/Mochi/20241129_141316.jpg", alt: "Image 1", link: "/about", text: "Go to About Page" },
+      { src: "/Mochi/Mochi/20241221_213629.jpg", alt: "Image 2", link: "/resume", text: "Go to Resume Page"},
+      { src: "/Mochi/Mochi/IMG_20240804_225643.jpg", alt: "Image 3", link: "/projects", text: "Go to Projects Page" },
+      { src: "/Mochi/Mochi/20241129_141631.jpg", alt: "Image 4", link: "/", text: "Go to Home Page" }
     ];
   
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between bg-gray-300 font-bebas">
+      <main className="flex min-h-screen flex-col items-center justify-between bg-gray-300 font-bebas"
+      style={{
+        backgroundImage: "url(/bg_gif.gif)", // Replace with your GIF path
+        backgroundSize: "cover", // Ensures the GIF covers the entire background
+        backgroundPosition: "center", // Centers the background
+        backgroundRepeat: "no-repeat", // Prevents the GIF from repeating
+      }}>
+        <div className=' rounded-xl'> 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-10">
           {images.map((image, index) => (
             <Link key={index} href={image.link} passHref>
@@ -47,6 +54,7 @@ export default function Home() {
               </div>
             </Link>
           ))}
+        </div>
         </div>
       </main>
     );
