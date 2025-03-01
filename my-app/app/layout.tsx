@@ -40,6 +40,7 @@ export default function RootLayout({
 }>) {
 
   const [stats, setStats] = useState<SystemStats | null>(null);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
   useEffect(() => {
     const loadStats = async () => {
@@ -48,6 +49,26 @@ export default function RootLayout({
     };
 
     loadStats();
+
+    const handleScroll = () => {
+      const sections = ['welcome', 'about', 'projects', 'resume'];
+      const tolerancePixels = 300;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= tolerancePixels && rect.bottom >= tolerancePixels) {
+            setActiveSection(section);
+            return;
+          }
+        }
+      }
+      setActiveSection(null);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -61,16 +82,35 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* Header Section */}
-        <header className="sticky top-0 bg-white shadow-md p-4 flex justify-between items-center">
+        <header className="sticky top-0 left-0 w-full z-50 bg-white shadow-md p-4 flex justify-between items-center">
           {/* Name on the Left */}
-          <div className="text-purple-600 hover:text-purple-800 cursor-pointer" onClick={() => scrollToSection('welcome')}>
+          <div
+            className={`text-black font-bebas ${activeSection === 'welcome' ? 'font-bold text-red-600' : ''}`}
+            onClick={() => scrollToSection('welcome')}
+            style={{ cursor: 'pointer' }}
+          >
             Titouan Guerin
           </div>
           {/* Navigation Links on the Right */}
           <nav className="flex space-x-8">
-            <button onClick={() => scrollToSection('about')} className="text-purple-600 hover:text-purple-800">About</button>
-            <button onClick={() => scrollToSection('projects')} className="text-purple-600 hover:text-purple-800">Projects</button>
-            <button onClick={() => scrollToSection('resume')} className="text-purple-600 hover:text-purple-800">Resume</button>
+            <button
+              onClick={() => scrollToSection('about')}
+              className={`text-black font-bebas ${activeSection === 'about' ? 'font-bold text-red-600' : ''}`}
+            >
+              About
+            </button>
+            <button
+              onClick={() => scrollToSection('projects')}
+              className={`text-black font-bebas ${activeSection === 'projects' ? 'font-bold text-red-600' : ''}`}
+            >
+              Projects
+            </button>
+            <button
+              onClick={() => scrollToSection('resume')}
+              className={`text-black font-bebas ${activeSection === 'resume' ? 'font-bold text-red-600' : ''}`}
+            >
+              Resume
+            </button>
           </nav>
         </header>
 

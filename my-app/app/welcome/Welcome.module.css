@@ -1,16 +1,42 @@
 .section {
-    padding: 50px;
-    background-color: #e0f7fa; /* Light cyan background */
-    text-align: center;
-  }
-  
-  .title {
-    font-size: 3rem;
-    color: #004d40; /* Dark cyan text */
-  }
-  
-  .text {
-    font-size: 1.2rem;
-    color: #263238; /* Grey text */
-  }
-  
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  background-image: url('/sorbonne_background.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.5); /* Optional: Adds a dark overlay for better text visibility */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.profilePic {
+  border-radius: 50%;
+  border: 6px solid white; /* Increased outline width */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+  display: block; /* Ensures the image behaves like a block element */
+  margin: 0 auto; /* Centers the image horizontally */
+}
+
+
+.name {
+  font-size: 6rem; /* Increased font size */
+  color: white;
+  margin-top: 30px; /* Increased margin */
+  font-family: 'Bebas Neue';
+}
+
+.title {
+  font-size: 4rem; /* Increased font size */
+  color: #ddd;
+  margin-top: 10px; /* Increased margin */
+  font-family: 'Bebas Neue', sans-serif;
+}

@@ -35,6 +35,24 @@ const Resume: React.FC = () => {
           Python, Machine Learning, Data Analysis, React, Node.js, AI
         </p>
       </div>
+      <div className={styles.subsection}>
+        <h3 className={styles.subtitle}>Skills</h3>
+        <p className={styles.text}>
+          Python, Machine Learning, Data Analysis, React, Node.js, AI
+        </p>
+      </div>
+      <div className={styles.subsection}>
+        <h3 className={styles.subtitle}>Skills</h3>
+        <p className={styles.text}>
+          Python, Machine Learning, Data Analysis, React, Node.js, AI
+        </p>
+      </div>
+      <div className={styles.subsection}>
+        <h3 className={styles.subtitle}>Skills</h3>
+        <p className={styles.text}>
+          Python, Machine Learning, Data Analysis, React, Node.js, AI
+        </p>
+      </div>
     </section>
   );
 };

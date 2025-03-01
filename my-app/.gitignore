@@ -10,6 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 
+# pychache
+__pycache__/
+
 # testing
 /coverage
 
