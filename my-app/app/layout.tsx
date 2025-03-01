@@ -64,7 +64,7 @@ export default function RootLayout({
         <header className="sticky top-0 bg-white shadow-md p-4 flex justify-between items-center">
           {/* Name on the Left */}
           <div className="text-purple-600 hover:text-purple-800 cursor-pointer" onClick={() => scrollToSection('welcome')}>
-            Titouan Guérin
+            Titouan Guerin
           </div>
           {/* Navigation Links on the Right */}
           <nav className="flex space-x-8">
