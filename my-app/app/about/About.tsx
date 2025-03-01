@@ -1,26 +1,32 @@
 import React from 'react';
 import styles from './About.module.css';
+import Image from 'next/image';
 
 const About: React.FC = () => {
   return (
     <section id="about" className={styles.section}>
-      <h2 className={styles.title}>About Me</h2>
-      <p className={styles.text}>
-        I am a passionate AI and Machine Learning enthusiast currently pursuing my Master&apos;s in AI, ML, and Data Science at Sorbonne Université.
-        I hold a Bachelor&apos;s degree in Computer Science from the University of Luxembourg.
-      </p>
-      <p className={styles.text}>
-        My journey in the tech world has been filled with exciting projects and learning opportunities.
-        I am particularly interested in the intersection of AI and natural language processing,
-        and how these technologies can be used to solve real-world problems.
-      </p>
-      <p className={styles.text}>
-        Outside of my academic pursuits, I enjoy playing music, specifically the guitar and electric bass.
-        I also love staying active through sports and exploring new hobbies.
-      </p>
-      <p className={styles.text}>
-        I believe in the power of technology to drive positive change, and I am committed to using my skills to make a difference in the world.
-      </p>
+      <div className={styles.left}>
+        <Image
+          src="/ProfilePictures/profilepic.jpeg"
+          alt="Titouan Guerin"
+          className={styles.profilePic}
+          width={200}
+          height={200}
+        />
+        <a href="/Titouan_Guerin_Resume_3.0.pdf" download>
+          <button className={styles.downloadButton}>Download CV</button>
+        </a>
+      </div>
+      <div className={styles.right}>
+        <h2 className={styles.title}>AI/ML Student at Sorbonne, in Paris</h2>
+        <p className={styles.text}>
+          I graduated from the University of Luxembourg with a Bachelor&apos;s degree in Computer Science in 2023, and I am currently close to finishing my Master&apos;s at Sorbonne Universite.
+        </p>
+        <p className={styles.text}>
+        I am passionate about the mathematics behind AI and Machine Learning, and I have recently been particularly interested in reinforcement learning. 
+        My experience spans research, software development, (and a bit of tutoring), and I would love to further explore these fields through a PhD. 
+        </p>
+      </div>
     </section>
   );
 };
