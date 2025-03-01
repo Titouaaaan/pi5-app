@@ -28,9 +28,7 @@
   transform: scale(1.05);
 }
 
-.project img {
-  width: 100%;
-  height: auto;
+.projectImage {
   border-radius: 8px;
 }
 

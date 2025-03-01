@@ -14,8 +14,8 @@ const Welcome: React.FC = () => {
         Welcome to My Portfolio
       </motion.h1>
       <p className={styles.text}>
-        Hi, I'm Titouan Guérin, a passionate AI and Machine Learning enthusiast.
-        I'm currently pursuing my Master's in AI, ML, and Data Science at Sorbonne Université.
+        Hi, I&apos;m Titouan Guérin, a passionate AI and Machine Learning enthusiast.
+        I&apos;m currently pursuing my Master&apos;s in AI, ML, and Data Science at Sorbonne Université.
         Welcome to my digital space where I share my journey, projects, and experiences.
       </p>
       <p className={styles.text}>

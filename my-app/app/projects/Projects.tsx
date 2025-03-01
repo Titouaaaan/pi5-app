@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import styles from './Projects.module.css';
 
 const Projects: React.FC = () => {
@@ -40,7 +41,13 @@ const Projects: React.FC = () => {
       <div className={styles.projectsGrid}>
         {projects.map((project, index) => (
           <div key={index} className={styles.project} onClick={() => handleProjectClick(project.title)}>
-            <img src={project.imageUrl} alt={project.title} />
+            <Image
+              src={project.imageUrl}
+              alt={project.title}
+              width={200} // Set a fixed width
+              height={150} // Set a fixed height
+              className={styles.projectImage}
+            />
             <h3 className={styles.projectTitle}>{project.title}</h3>
           </div>
         ))}

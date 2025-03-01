@@ -11,10 +11,10 @@ const Resume: React.FC = () => {
       <div className={styles.subsection}>
         <h3 className={styles.subtitle}>Education</h3>
         <p className={styles.text}>
-          Master's in AI, ML, and Data Science - Sorbonne Université (2023 - Present)
+          Master&apos;s in AI, ML, and Data Science - Sorbonne Université (2023 - Present)
         </p>
         <p className={styles.text}>
-          Bachelor's in Computer Science - University of Luxembourg (2020 - 2023)
+          Bachelor&apos;s in Computer Science - University of Luxembourg (2020 - 2023)
         </p>
       </div>
       <div className={styles.subsection}>

@@ -6,8 +6,8 @@ const About: React.FC = () => {
     <section id="about" className={styles.section}>
       <h2 className={styles.title}>About Me</h2>
       <p className={styles.text}>
-        I am a passionate AI and Machine Learning enthusiast currently pursuing my Master's in AI, ML, and Data Science at Sorbonne Université.
-        I hold a Bachelor's degree in Computer Science from the University of Luxembourg.
+        I am a passionate AI and Machine Learning enthusiast currently pursuing my Master&apos;s in AI, ML, and Data Science at Sorbonne Université.
+        I hold a Bachelor&apos;s degree in Computer Science from the University of Luxembourg.
       </p>
       <p className={styles.text}>
         My journey in the tech world has been filled with exciting projects and learning opportunities.
