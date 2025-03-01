@@ -1,61 +1,21 @@
 "use client";
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import dynamic from 'next/dynamic';
 
-export default function Home() {
-    const [hovered, setHovered] = useState<number | null>(null);
-  
-    const images = [
-      { src: "/Mochi/Mochi/20241129_141316.jpg", alt: "Image 1", link: "/about", text: "Go to About Page" },
-      { src: "/Mochi/Mochi/20241221_213629.jpg", alt: "Image 2", link: "/resume", text: "Go to Resume Page"},
-      { src: "/Mochi/Mochi/IMG_20240804_225643.jpg", alt: "Image 3", link: "/projects", text: "Go to Projects Page" },
-      { src: "/Mochi/Mochi/20241129_141631.jpg", alt: "Image 4", link: "/", text: "Go to Home Page" }
-    ];
-  
-    return (
-      <main className="flex min-h-screen flex-col items-center justify-between bg-gray-300 font-bebas"
-      style={{
-        backgroundImage: "url(/bg_gif.gif)", // Replace with your GIF path
-        backgroundSize: "cover", // Ensures the GIF covers the entire background
-        backgroundPosition: "center", // Centers the background
-        backgroundRepeat: "no-repeat", // Prevents the GIF from repeating
-      }}>
-        <div className=' rounded-xl'> 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-10">
-          {images.map((image, index) => (
-            <Link key={index} href={image.link} passHref>
-              <div
-                className="relative group cursor-pointer"
-                onMouseEnter={() => setHovered(index)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                {/* Image */}
-                <Image
-                  src={image.src}
-                  width={400}
-                  height={500}
-                  alt={image.alt}
-                  className="rounded-lg w-[400px] h-[500px] object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-  
-                {/* Overlay */}
-                {hovered === index && (
-                  <motion.div
-                    className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <p className="text-white font-bebas text-3xl">{image.text}</p>
-                  </motion.div>
-                )}
-              </div>
-            </Link>
-          ))}
-        </div>
-        </div>
-      </main>
-    );
-  }
+// Dynamically import each component
+const Welcome = dynamic(() => import('./welcome/Welcome'), { ssr: false });
+const About = dynamic(() => import('./about/About'), { ssr: false });
+const Projects = dynamic(() => import('./projects/Projects'), { ssr: false });
+const Resume = dynamic(() => import('./resume/Resume'), { ssr: false });
+
+const HomePage: React.FC = () => {
+  return (
+    <main>
+      <Welcome />
+      <About />
+      <Projects />
+      <Resume />
+    </main>
+  );
+};
+
+export default HomePage;

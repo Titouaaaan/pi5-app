@@ -1,0 +1,25 @@
+.section {
+    padding: 50px;
+    background-color: #c5e0b3; /* Light green background */
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    color: #1b5e20; /* Dark green text */
+  }
+  
+  .text {
+    font-size: 1.2rem;
+    color: #388e3c; /* Green text */
+  }
+  
+  .link {
+    color: #004d40; /* Dark cyan link */
+    text-decoration: underline;
+  }
+  
+  .link:hover {
+    color: #00796b; /* Lighter cyan link on hover */
+  }
+  

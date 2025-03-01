@@ -1,0 +1,16 @@
+.section {
+    padding: 50px;
+    background-color: #e0f7fa; /* Light cyan background */
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 3rem;
+    color: #004d40; /* Dark cyan text */
+  }
+  
+  .text {
+    font-size: 1.2rem;
+    color: #263238; /* Grey text */
+  }
+  

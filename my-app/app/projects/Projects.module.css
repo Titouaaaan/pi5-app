@@ -1,0 +1,16 @@
+.section {
+    padding: 50px;
+    background-color: #e8eaf6; /* Light purple background */
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    color: #3700b3; /* Dark purple text */
+  }
+  
+  .text {
+    font-size: 1.2rem;
+    color: #4a148c; /* Purple text */
+  }
+  
