@@ -83,10 +83,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* Header Section */}
-        <header className="sticky top-0 left-0 w-full z-50 bg-white shadow-md p-4 flex justify-between items-center">
+        <header className="sticky top-0 left-0 w-full z-50 bg-white shadow-md p-2 flex justify-between items-center">
           {/* Name on the Left */}
           <div
-            className={`text-black font-bebas ${activeSection === 'welcome' ? 'font-bold text-red-600' : ''}`}
+            className={`text-black font-bebas ${activeSection === 'welcome' ? 'font-bold' : ''}`}
             onClick={() => scrollToSection('welcome')}
             style={{ cursor: 'pointer' }}
           >
@@ -96,19 +96,19 @@ export default function RootLayout({
           <nav className="flex space-x-8">
             <button
               onClick={() => scrollToSection('about')}
-              className={`text-black font-bebas ${activeSection === 'about' ? 'font-bold text-red-600' : ''}`}
+              className={`text-black font-bebas ${activeSection === 'about' ? 'font-bold' : ''}`}
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('projects')}
-              className={`text-black font-bebas ${activeSection === 'projects' ? 'font-bold text-red-600' : ''}`}
+              className={`text-black font-bebas ${activeSection === 'projects' ? 'font-bold' : ''}`}
             >
               Projects
             </button>
             <button
               onClick={() => scrollToSection('timeline')}
-              className={`text-black font-bebas ${activeSection === 'timeline' ? 'font-bold text-red-600' : ''}`}
+              className={`text-black font-bebas ${activeSection === 'timeline' ? 'font-bold' : ''}`}
             >
               Timeline
             </button>
