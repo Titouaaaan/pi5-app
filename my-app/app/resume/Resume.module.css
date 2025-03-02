@@ -1,25 +1,44 @@
 .section {
-    padding: 50px;
-    background-color: #c5e0b3; /* Light green background */
-    text-align: center;
-  }
-  
-  .title {
-    font-size: 2.5rem;
-    color: #1b5e20; /* Dark green text */
-  }
-  
-  .text {
-    font-size: 1.2rem;
-    color: #388e3c; /* Green text */
-  }
-  
-  .link {
-    color: #004d40; /* Dark cyan link */
-    text-decoration: underline;
-  }
-  
-  .link:hover {
-    color: #00796b; /* Lighter cyan link on hover */
-  }
-  
+  padding: 50px 20px;
+  text-align: center;
+  background-color: rgb(182, 238, 175);
+  justify-content: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.description {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+}
+
+.skillsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.skillItem {
+  flex: 1 1 calc(20% - 20px); /* Adjust the width to fit 3 per row */
+  box-sizing: border-box;
+  text-align: center;
+  max-width: calc(20% - 20px); /* Ensure it fits within the container */
+  padding-left: 100px;
+}
+
+.skillIcon {
+  border-radius: 10px; /* Adjust as needed */
+  margin-bottom: 10px;
+}
+
+.skillTitle {
+  font-size: 1.2rem;
+  margin-top: 5px;
+}

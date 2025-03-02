@@ -1,57 +1,129 @@
 import React from 'react';
+import Image from 'next/image';
 import styles from './Resume.module.css';
 
 const Resume: React.FC = () => {
   return (
     <section id="resume" className={styles.section}>
-      <h2 className={styles.title}>Resume</h2>
-      <p className={styles.text}>
-        You can download my resume <a href="/Titouan_Guerin_Resume_3.0.pdf" className={styles.link}>here</a>.
+      <h2 className={styles.title}>I have experience with these technologies</h2>
+      <p className={styles.description}>
+        Here are (some) technologies I am very familiar with, that I learned either at university or on my own time. 
+        All the tools I put here are used in my different open sources projects on github (so you can see what I did with them).
+        I&apos;ll keep adding more as I publish my work/projects.
       </p>
-      <div className={styles.subsection}>
-        <h3 className={styles.subtitle}>Education</h3>
-        <p className={styles.text}>
-          Master&apos;s in AI, ML, and Data Science - Sorbonne Université (2023 - Present)
-        </p>
-        <p className={styles.text}>
-          Bachelor&apos;s in Computer Science - University of Luxembourg (2020 - 2023)
-        </p>
-      </div>
-      <div className={styles.subsection}>
-        <h3 className={styles.subtitle}>Experience</h3>
-        <p className={styles.text}>
-          Research Assistant - University of Luxembourg (Jul 2024)
-        </p>
-        <p className={styles.text}>
-          Private Math Teacher - Acadomia (Jan 2025 - Current)
-        </p>
-        <p className={styles.text}>
-          Information Security Intern - Grant Thornton Luxembourg (Feb 2023 - Jun 2023)
-        </p>
-      </div>
-      <div className={styles.subsection}>
-        <h3 className={styles.subtitle}>Skills</h3>
-        <p className={styles.text}>
-          Python, Machine Learning, Data Analysis, React, Node.js, AI
-        </p>
-      </div>
-      <div className={styles.subsection}>
-        <h3 className={styles.subtitle}>Skills</h3>
-        <p className={styles.text}>
-          Python, Machine Learning, Data Analysis, React, Node.js, AI
-        </p>
-      </div>
-      <div className={styles.subsection}>
-        <h3 className={styles.subtitle}>Skills</h3>
-        <p className={styles.text}>
-          Python, Machine Learning, Data Analysis, React, Node.js, AI
-        </p>
-      </div>
-      <div className={styles.subsection}>
-        <h3 className={styles.subtitle}>Skills</h3>
-        <p className={styles.text}>
-          Python, Machine Learning, Data Analysis, React, Node.js, AI
-        </p>
+      <div className={styles.skillsContainer}>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/python_logo.png"
+            alt="Python Logo"
+            width={150}
+            height={150}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/pytorch_logo.png"
+            alt="Pytorch Logo"
+            width={170}
+            height={170}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/numpy_logo.png"
+            alt="Numpy Logo"
+            width={170}
+            height={170}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/gymnasium_logo.png"
+            alt="Gym Logo"
+            width={200}
+            height={200}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/next-js-logo-freelogovectors.net_.png"
+            alt="Next.js Logo"
+            width={100}
+            height={100}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/typescript_logo.png"
+            alt="TypeScript Logo"
+            width={150}
+            height={150}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/React-icon.svg.png"
+            alt="React Logo"
+            width={70}
+            height={70}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/fastapi_logo.svg"
+            alt="FastAPI Logo"
+            width={70}
+            height={70}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/github_logo.png"
+            alt="Github Logo"
+            width={70}
+            height={70}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        <div className={styles.skillItem}>
+          <Image
+            src="/skills/langchain_logo.png"
+            alt="Langchain Logo"
+            width={100}
+            height={100}
+            className={styles.skillIcon}
+          />
+          <h3 className={styles.skillTitle}></h3>
+        </div>
+
+        {/* Add more skill items as needed */}
       </div>
     </section>
   );
