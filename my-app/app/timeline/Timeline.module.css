@@ -1,5 +1,21 @@
 .section {
   background-color: #eecdcd;
+  padding: 50px;
+}
+
+.maintitle {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.maindescription {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 0 auto 10px auto;
 }
 
 .timelineContainer {

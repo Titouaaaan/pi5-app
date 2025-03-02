@@ -6,6 +6,12 @@ import styles from './Timeline.module.css';
 const Timeline: React.FC = () => {
   return (
     <section id="timeline" className={styles.section}>
+      <h2 className={styles.maintitle}>Education and Work Experience</h2>
+      <p className={styles.maindescription}>
+      I&apos;ve explored a bunch of different fields through my studies and internships—AR, security, data analysis, research—but over time, 
+      I got really into AI and ML. Now, with my Master&apos;s, 
+      that interest has only grown, which you can probably tell from my projects!
+      </p>
     <div className={styles.timelineContainer}>
       <VerticalTimeline lineColor="#ddd">
         <VerticalTimelineElement
