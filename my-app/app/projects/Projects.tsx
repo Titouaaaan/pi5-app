@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Projects.module.css';
 import Image from 'next/image';
+import { GitHub } from '@mui/icons-material';
 
 const projects = [
   {
@@ -95,6 +96,11 @@ const Projects: React.FC = () => {
         Down here you can find some projects I worked on! Some are university projects, some are research projects and some are just personal projects I worked on. 
         I will keep adding more projects over time.
       </p>
+      {/* GitHub Button */}
+      <a href="https://github.com/Titouaaaan" target="_blank" rel="noopener noreferrer" className={styles.githubButton}>
+        <GitHub className={styles.githubIcon} />
+        <span className={styles.githubText}>View My GitHub</span>
+      </a>
       <div className={styles.grid}>
         {projects.map((project, index) => (
           <div key={index} className={styles.project} onClick={() => openModal(project)}>
