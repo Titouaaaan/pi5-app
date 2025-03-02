@@ -2,6 +2,8 @@
 
 Welcome to my personal portfolio website! This site showcases my projects, education, and work experience, providing a comprehensive overview of my journey in computer science and software development. I created this website as a fun side project to experiment with modern web technologies and to have a personal space to share my work and achievements.
 
+Check it out here: pi.titouanguerin.com
+
 ## Table of Contents
 
 - [Frontend Technology](#frontend-technology)
