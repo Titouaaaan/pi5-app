@@ -51,9 +51,9 @@ export default function RootLayout({
     loadStats();
 
     const handleScroll = () => {
-      const sections = ['welcome', 'about', 'projects', 'resume'];
-      const tolerancePixels = 300;
-
+      const sections = ['welcome', 'about', 'projects', 'timeline', 'resume'];
+      const tolerancePixels = 600;
+    
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -75,6 +75,7 @@ export default function RootLayout({
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(sectionId);
     }
   };
 
@@ -104,6 +105,12 @@ export default function RootLayout({
               className={`text-black font-bebas ${activeSection === 'projects' ? 'font-bold text-red-600' : ''}`}
             >
               Projects
+            </button>
+            <button
+              onClick={() => scrollToSection('timeline')}
+              className={`text-black font-bebas ${activeSection === 'timeline' ? 'font-bold text-red-600' : ''}`}
+            >
+              Timeline
             </button>
             <button
               onClick={() => scrollToSection('resume')}
