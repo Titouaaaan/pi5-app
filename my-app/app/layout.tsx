@@ -116,7 +116,7 @@ export default function RootLayout({
               onClick={() => scrollToSection('resume')}
               className={`text-black font-bebas ${activeSection === 'resume' ? 'font-bold text-red-600' : ''}`}
             >
-              Resume
+              Skills
             </button>
           </nav>
         </header>
