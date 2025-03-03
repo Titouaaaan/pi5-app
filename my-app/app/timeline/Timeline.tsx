@@ -75,7 +75,7 @@ const Timeline: React.FC = () => {
           <h3 className={styles.title}>Adoption of Mochi</h3>
           <h4 className={styles.subtitle}>cat</h4>
           <p>
-          This is my cat Mochi. She's the best. 10/10. Here are some more pictures of her. You're welcome.
+          This is my cat Mochi. She&apos;s the best. 10/10. Here are some more pictures of her. You&apos;re welcome.
           </p>
           <div className={`${styles.profilePic} ${fadeOut ? styles.fadeOut : ''}`}>
               <Image
@@ -180,7 +180,7 @@ const Timeline: React.FC = () => {
             linear algebra, discrete mathematics, theoretical CS, computer infrastructures etc...
           </p>
         </VerticalTimelineElement>
-        
+
       </VerticalTimeline>
     </div>
     </section>
