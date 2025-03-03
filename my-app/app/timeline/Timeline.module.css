@@ -47,3 +47,27 @@
   margin-bottom: 10px;
   color: #555;
 }
+
+.profilePic {
+  margin-left: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px; /* Adjust as needed */
+  margin-top: 10px;
+  transition: opacity 0.5s ease; /* Smooth transition for image changes */
+  opacity: 1;
+  width: 200px; /* Fixed width for the image container */
+  height: 200px; /* Fixed height for the image container */
+  overflow: hidden; /* Ensures any overflow is hidden */
+}
+
+.profilePic img {
+  width: 100%; /* Ensures the image scales to the container width */
+  height: 100%; /* Ensures the image scales to the container height */
+  object-fit: cover; /* Ensures the image covers the container without distortion */
+}
+
+.fadeOut {
+  opacity: 0;
+}
