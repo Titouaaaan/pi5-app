@@ -47,3 +47,8 @@ header nav button.active {
   font-weight: bold;
   color: red;
 }
+
+.last-update {
+  margin-left: auto; /* Push this div to the right */
+  font-size: 0.875rem; /* Adjust font size as needed */
+}

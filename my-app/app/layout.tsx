@@ -23,6 +23,18 @@ const fetchStats = async (): Promise<SystemStats> => {
   return data;
 };
 
+const fetchLastCommitDate = async (repo: string, owner: string) => {
+  const response = await fetch(`https://api.github.com/repos/Titouaaaan/pi5-app/commits`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch commit data');
+  }
+  const commits = await response.json();
+  if (commits.length > 0) {
+    return new Date(commits[0].commit.committer.date).toLocaleString();
+  }
+  return 'Unknown';
+};
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -41,6 +53,7 @@ export default function RootLayout({
 
   const [stats, setStats] = useState<SystemStats | null>(null);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [lastUpdate, setLastUpdate] = useState<string | null>(null);
 
   useEffect(() => {
     const loadStats = async () => {
@@ -48,12 +61,22 @@ export default function RootLayout({
       setStats(statsData);
     };
 
+    const fetchDate = async () => {
+      try {
+        const date = await fetchLastCommitDate('your-repo', 'your-username');
+        setLastUpdate(date);
+      } catch (error) {
+        console.error('Error fetching last commit date:', error);
+      }
+    };
+
     loadStats();
+    fetchDate();
 
     const handleScroll = () => {
-      const sections = ['welcome', 'about', 'projects', 'timeline', 'resume'];
+      const sections = ['welcome', 'about', 'projects', 'timeline', 'resume', 'skills'];
       const tolerancePixels = 600;
-    
+
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -155,6 +178,11 @@ export default function RootLayout({
                 </Link>
               </div>
               <p className="text-center text-sm">© Titouan Guerin</p>
+            </div>
+
+            {/* Last Update on the right */}
+            <div className="text-right last-update">
+              {lastUpdate ? <p>Last Website Update: {lastUpdate}</p> : <p>Loading...</p>}
             </div>
           </div>
         </footer>
