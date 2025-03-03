@@ -23,7 +23,7 @@ const fetchStats = async (): Promise<SystemStats> => {
   return data;
 };
 
-const fetchLastCommitDate = async (repo: string, owner: string) => {
+const fetchLastCommitDate = async () => {
   const response = await fetch(`https://api.github.com/repos/Titouaaaan/pi5-app/commits`);
   if (!response.ok) {
     throw new Error('Failed to fetch commit data');
@@ -63,7 +63,7 @@ export default function RootLayout({
 
     const fetchDate = async () => {
       try {
-        const date = await fetchLastCommitDate('your-repo', 'your-username');
+        const date = await fetchLastCommitDate();
         setLastUpdate(date);
       } catch (error) {
         console.error('Error fetching last commit date:', error);
