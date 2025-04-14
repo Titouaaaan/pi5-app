@@ -13,7 +13,7 @@ const About: React.FC = () => {
           width={200}
           height={200}
         />
-        <a href="/Titouan_Guerin_Resume_3.0.pdf" download>
+        <a href="/TG_CV_2025.pdf" download>
           <button className={styles.downloadButton}>Download CV</button>
         </a>
       </div>
