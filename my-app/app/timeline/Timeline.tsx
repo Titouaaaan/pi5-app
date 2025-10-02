@@ -107,7 +107,7 @@ const Timeline: React.FC = () => {
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
           contentArrowStyle={{ borderRight: '10px solid  rgb(0, 0, 0)' }}
-          date="Aug 2022 - Sep 2022"
+          date="Feb 2023 - Jun 2023"
           icon={<Image src="/logos/grant_thornton_luxembourg_logo.jpeg" alt="Company Logo" className={styles.icon} width={50} height={50} />}
         >
           <h3 className={styles.title}>Information Security Intern</h3>
