@@ -1,7 +1,8 @@
 .section {
   text-align: center;
-  padding: 2rem 1rem;
-  background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+  padding: 4rem 2rem;
+  background: transparent;
+  position: relative;
 }
 
 .title {
@@ -19,8 +20,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
   margin: auto;
   max-width: 1400px;
 }
@@ -28,6 +29,7 @@
 @media (min-width: 640px) {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
   }
 }
 
@@ -86,10 +88,12 @@
   padding: 1.5rem;
   border-radius: 8px;
   text-align: center;
-  max-width: 90vw;
+  max-width: 70vw;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
+  color: #000;
+  position: relative;
 }
 
 @media (min-width: 640px) {
@@ -101,15 +105,15 @@
 
 .close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.75rem;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 1.2rem;
   cursor: pointer;
   z-index: 1001;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1.8rem;
+  height: 1.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,6 +121,17 @@
   transition: background 0.3s;
   border: none;
   padding: 0;
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .close {
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 
 .close:hover {
@@ -146,8 +161,12 @@
 }
 
 .descriptionText {
-  white-space: wrap; /* Preserves whitespace and wraps text as needed */
+  white-space: wrap;
   text-align: center;
+  color: #000;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 1rem 0;
 }
 
 .githubButton {

@@ -1,16 +1,14 @@
 .section {
-  position: relative;
-  width: 100%;
   min-height: 100vh;
-  background-image: url('/sorbonne_background.jpg');
-  background-size: cover;
-  background-position: center;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  z-index: 1;
-  padding: 1rem;
+  padding: 2rem;
+  position: relative;
+  margin-top: -70px;
+  padding-top: 140px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/sorbonne_background.jpg') center/cover no-repeat;
 }
 
 .overlay {

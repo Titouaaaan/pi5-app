@@ -54,12 +54,24 @@ const Timeline: React.FC = () => {
     <section id="timeline" className={styles.section}>
       <h2 className={styles.maintitle}>Education and Work Experience</h2>
       <p className={styles.maindescription}>
-      I&apos;ve explored a bunch of different fields through my studies and internships—AR, security, data analysis, research—but over time,
-      I got really into AI and ML. Now, with my Master&apos;s,
-      that interest has only grown, which you can probably tell from my projects!
+      I&apos;ve explored different fields through my studies and internships, but I&apos;ve become increasingly specialized in reinforcement learning and world models. I find this field incredibly fascinating. I&apos;ve also had the opportunity to work on projects involving large language models and multi-agent systems. After finishing my Master&apos;s degree, I&apos;m looking to pursue research through a PhD.
       </p>
     <div className={styles.timelineContainer}>
       <VerticalTimeline lineColor="#ddd">
+
+      <VerticalTimelineElement
+          className={styles.timelineElement}
+          contentStyle={{ background: '#ffffff', color: '#000000' }}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
+          date="March 2026 - August 2026"
+          icon={<TimelineIcon src="/logos/isirlabo-logo.jpeg" alt="ISIR x ONERA" />}
+        >
+          <h3 className={styles.title}>Master Internship</h3>
+          <h4 className={styles.subtitle}>ISIR x ONERA Collaboration</h4>
+          <p>
+          Working on physics-informed model-based reinforcement learning for safer and more efficient autonomous systems. This is my end of Master internship project. More detailed information will be added at the end of the internship.
+          </p>
+        </VerticalTimelineElement>
 
       <VerticalTimelineElement
           className={styles.timelineElement}

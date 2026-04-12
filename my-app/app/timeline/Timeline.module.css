@@ -1,6 +1,7 @@
 .section {
-  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-  padding: 1.5rem;
+  background: transparent;
+  padding: 4rem 2rem;
+  position: relative;
 }
 
 .maintitle {

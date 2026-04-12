@@ -94,7 +94,7 @@ const Projects: React.FC = () => {
       <h2 className={styles.title}>Project Portfolio</h2>
       <p className={styles.description}>
         Down here you can find some projects I worked on! Some are university projects, some are research projects and some are just personal projects I worked on. 
-        I will keep adding more projects over time.
+        I will keep adding more projects over time. <strong>Click on any image to learn more about the project!</strong>
       </p>
       {/* GitHub Button */}
       <a href="https://github.com/Titouaaaan" target="_blank" rel="noopener noreferrer" className={styles.githubButton}>

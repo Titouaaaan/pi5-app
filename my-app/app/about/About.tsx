@@ -20,7 +20,7 @@ const About: React.FC = () => {
       <div className={styles.right}>
         <h2 className={styles.title}>AI/ML Student at Sorbonne, in Paris</h2>
         <p className={styles.text}>
-          I graduated from the University of Luxembourg with a Bachelor&apos;s degree in Computer Science in 2023, and I am currently close to finishing my Master&apos;s at Sorbonne Universite.
+          I am currently finishing my Master&apos;s (MIND, previously called DAC) at Sorbonne Université, where I specialized in Deep Learning, Computer Vision, and Reinforcement Learning. Before that, I completed my Bachelor&apos;s degree in Computer Science at the University of Luxembourg in 2023.
         </p>
         <p className={styles.text}>
         I am passionate about the mathematics behind AI and Machine Learning, and I have recently been particularly interested in reinforcement learning. 
