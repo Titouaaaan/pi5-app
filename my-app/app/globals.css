@@ -63,22 +63,32 @@ button, a {
   transition: all 0.2s ease;
 }
 
-/* Timeline date styling */
+/* Timeline date styling - Override library defaults */
 .vertical-timeline-element-date {
-  color: #fff !important;
+  color: #ffffff !important;
+}
+
+.vertical-timeline-element-date,
+.vertical-timeline-element-date * {
+  color: #ffffff !important;
 }
 
 .vertical-timeline::before {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Force only timeline dates to white, keep content black */
-div[class*="date"] {
-  color: #fff !important;
+/* Force only timeline dates to white */
+.vertical-timeline-element-date > * {
+  color: #ffffff !important;
 }
 
-.vertical-timeline-element-date span,
+/* Target any span or p within dates */
+.vertical-timeline-element-date span {
+  color: #ffffff !important;
+  font-weight: inherit;
+}
+
 .vertical-timeline-element-date p {
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
