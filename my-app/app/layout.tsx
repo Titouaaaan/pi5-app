@@ -53,7 +53,7 @@ export default function RootLayout({
     const fetchStats = async () => {
       try {
         const backendUrl = typeof window !== 'undefined' 
-          ? `http://${window.location.hostname}:8000/system-stats`
+          ? `https://api.titouanguerin.com/system-stats`
           : 'http://localhost:8000/system-stats';
         const response = await fetch(backendUrl);
         if (response.ok) {
