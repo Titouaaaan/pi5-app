@@ -68,3 +68,12 @@ button, a {
   color: #fff !important;
 }
 
+.vertical-timeline::before {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Force all timeline dates to white */
+div[class*="vertical-timeline-element"] span {
+  color: #fff !important;
+}
+
