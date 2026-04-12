@@ -72,3 +72,15 @@ button, a {
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* Timeline content - Force black text on white background */
+.vertical-timeline-element-content {
+  color: #000000 !important;
+}
+
+.vertical-timeline-element-content p,
+.vertical-timeline-element-content h3,
+.vertical-timeline-element-content h4,
+.vertical-timeline-element-content div {
+  color: #000000 !important;
+}
+
