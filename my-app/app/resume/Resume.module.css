@@ -1,44 +1,79 @@
 .section {
-  padding: 50px 20px;
+  padding: 1.5rem;
   text-align: center;
-  background-color: rgb(182, 238, 175);
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
   justify-content: center;
 }
 
 .title {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: 1rem;
   font-family: 'Bebas Neue', sans-serif;
 }
 
 .description {
-  font-size: 1.2rem;
-  margin-bottom: 40px;
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  margin-bottom: 2rem;
   max-width: 800px;
-  margin: 0 auto 40px auto;
+  margin: 0 auto 2rem auto;
+  padding: 0 0.5rem;
 }
 
 .skillsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .skillItem {
-  flex: 1 1 calc(20% - 20px); /* Adjust the width to fit 3 per row */
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  max-width: calc(20% - 20px); /* Ensure it fits within the container */
-  padding-left: 100px;
+  padding: 0.5rem;
 }
 
 .skillIcon {
-  border-radius: 10px; /* Adjust as needed */
-  margin-bottom: 10px;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  width: 60px !important;
+  height: 60px !important;
+  object-fit: contain;
 }
 
 .skillTitle {
-  font-size: 1.2rem;
-  margin-top: 5px;
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .skillsContainer {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skillIcon {
+    width: 80px !important;
+    height: 80px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 3rem;
+  }
+
+  .skillsContainer {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 2rem;
+  }
+
+  .skillIcon {
+    width: 100px !important;
+    height: 100px !important;
+  }
 }

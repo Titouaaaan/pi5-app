@@ -1,73 +1,112 @@
 .section {
-  background-color: #eecdcd;
-  padding: 50px;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 1.5rem;
 }
 
 .maintitle {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: 1rem;
   font-family: 'Bebas Neue', sans-serif;
 }
 
 .maindescription {
   text-align: center;
-  font-size: 1.2rem;
-  margin-bottom: 20px;
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  margin-bottom: 1.5rem;
   max-width: 600px;
-  margin: 0 auto 10px auto;
+  margin: 0 auto 1.5rem auto;
+  padding: 0 0.5rem;
 }
 
 .timelineContainer {
-    padding: 40px;
+    padding: 1rem;
     max-width: 1500px;
     margin: 0 auto;
   }
 
 .timelineElement {
-  margin-bottom: 100px;
+  margin-bottom: 2rem;
 }
 
 .icon {
-  width: 63px;
-  height: 63px;
+  width: 50px;
+  height: 50px;
   border-radius: 100%;
   object-fit: cover;
-  position: justify;
+}
+
+.iconWrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconImage {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+  }
 }
 
 .title {
-  font-size: 1.5rem;
-  margin-bottom: 5px;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  margin-bottom: 0.5rem;
   font-family: 'Bebas Neue', sans-serif;
 }
 
 .subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  margin-bottom: 0.75rem;
   color: #555;
 }
 
 .profilePic {
-  margin-left: 25%;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px; /* Adjust as needed */
-  margin-top: 10px;
-  transition: opacity 0.5s ease; /* Smooth transition for image changes */
+  border-radius: 10px;
+  margin-top: 1rem;
+  transition: opacity 0.5s ease;
   opacity: 1;
-  width: 200px; /* Fixed width for the image container */
-  height: 200px; /* Fixed height for the image container */
-  overflow: hidden; /* Ensures any overflow is hidden */
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
 }
 
 .profilePic img {
-  width: 100%; /* Ensures the image scales to the container width */
-  height: 100%; /* Ensures the image scales to the container height */
-  object-fit: cover; /* Ensures the image covers the container without distortion */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .fadeOut {
   opacity: 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 3rem;
+  }
+
+  .timelineContainer {
+    padding: 2rem;
+  }
+
+  .profilePic {
+    width: 200px;
+    height: 200px;
+  }
 }

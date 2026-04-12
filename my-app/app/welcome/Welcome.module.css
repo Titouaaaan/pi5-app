@@ -1,7 +1,7 @@
 .section {
   position: relative;
   width: 100%;
-  height: 100vh; /* Full viewport height */
+  min-height: 100vh;
   background-image: url('/sorbonne_background.jpg');
   background-size: cover;
   background-position: center;
@@ -10,14 +10,14 @@
   align-items: center;
   text-align: center;
   z-index: 1;
-  padding: 20px;
+  padding: 1rem;
 }
 
 .overlay {
   background: rgba(0, 0, 0, 0.5);
-  padding: 20px;
+  padding: 1.5rem;
   border-radius: 10px;
-  width: min(100%, 800px); /* Ensures it scales down */
+  width: min(100%, 600px);
   box-sizing: border-box;
   text-align: center;
   position: relative;
@@ -30,21 +30,21 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   display: block;
   margin: 0 auto;
-  width: clamp(150px, 30vw, 300px); /* Scales with screen */
-  height: auto; /* Maintain aspect ratio */
+  width: clamp(100px, 30vw, 250px);
+  height: auto;
 }
 
 /* Text Scaling */
 .name {
-  font-size: clamp(2rem, 5vw, 6rem); /* Scales text size */
+  font-size: clamp(1.5rem, 4vw, 6rem);
   color: white;
-  margin-top: 20px;
+  margin-top: 1rem;
   font-family: 'Bebas Neue', sans-serif;
 }
 
 .title {
-  font-size: clamp(1.5rem, 3vw, 4rem);
+  font-size: clamp(1rem, 2.5vw, 4rem);
   color: #ddd;
-  margin-top: 10px;
+  margin-top: 0.5rem;
   font-family: 'Bebas Neue', sans-serif;
 }

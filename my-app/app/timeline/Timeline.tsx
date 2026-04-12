@@ -4,6 +4,20 @@ import 'react-vertical-timeline-component/style.min.css';
 import styles from './Timeline.module.css';
 import Image from 'next/image';
 
+// Wrapper component for timeline icons with proper styling
+const TimelineIcon: React.FC<{ src: string; alt: string }> = ({ src, alt }) => (
+  <div className={styles.iconWrapper}>
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes="(max-width: 640px) 40px, 50px"
+      className={styles.iconImage}
+      style={{ objectFit: 'cover' }}
+    />
+  </div>
+);
+
 const Timeline: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
@@ -26,14 +40,14 @@ const Timeline: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setFadeOut(true); // Trigger fade-out effect
+      setFadeOut(true);
       setTimeout(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-        setFadeOut(false); // Reset fade-out effect
-      }, 500); // Match this duration with the CSS transition duration
-    }, 5000); // Change image every 5 seconds
+        setFadeOut(false);
+      }, 500);
+    }, 5000);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    return () => clearInterval(interval);
   }, [images.length]);
 
   return (
@@ -50,9 +64,9 @@ const Timeline: React.FC = () => {
       <VerticalTimelineElement
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
-          contentArrowStyle={{ borderRight: '10px solid  rgb(0, 0, 0)' }}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
           date="July 2024 - August 2024"
-          icon={<Image src="/logos/university_of_luxembourg_logo.jpeg" alt="Company Logo" className={styles.icon} width={50} height={50} />}
+          icon={<TimelineIcon src="/logos/university_of_luxembourg_logo.jpeg" alt="University of Luxembourg" />}
         >
           <h3 className={styles.title}>Research Assistant</h3>
           <h4 className={styles.subtitle}>University of Luxembourg</h4>
@@ -68,9 +82,9 @@ const Timeline: React.FC = () => {
         <VerticalTimelineElement
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
-          contentArrowStyle={{ borderRight: '10px solid  rgb(0, 0, 0)' }}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
           date="May 2024 - Present"
-          icon={<Image src="/Mochi/Mochi/3.jpg" alt="Company Logo" className={styles.icon} width={50} height={50} />}
+          icon={<TimelineIcon src="/Mochi/Mochi/3.jpg" alt="Mochi" />}
         >
           <h3 className={styles.title}>Adoption of Mochi</h3>
           <h4 className={styles.subtitle}>cat</h4>
@@ -90,9 +104,9 @@ const Timeline: React.FC = () => {
         <VerticalTimelineElement
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
-          contentArrowStyle={{ borderRight: '10px solid  rgb(0, 0, 0)' }}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
           date="Sep 2023 - Present"
-          icon={<Image src="/logos/sorbonne_universite_logo.jpeg" alt="Company Logo" className={styles.icon} width={50} height={50} />}
+          icon={<TimelineIcon src="/logos/sorbonne_universite_logo.jpeg" alt="Sorbonne Universite" />}
         >
           <h3 className={styles.title}>ML/AI Master&apos;s Degree</h3>
           <h4 className={styles.subtitle}>Sorbonne Universite</h4>
@@ -106,9 +120,9 @@ const Timeline: React.FC = () => {
         <VerticalTimelineElement
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
-          contentArrowStyle={{ borderRight: '10px solid  rgb(0, 0, 0)' }}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
           date="Feb 2023 - Jun 2023"
-          icon={<Image src="/logos/grant_thornton_luxembourg_logo.jpeg" alt="Company Logo" className={styles.icon} width={50} height={50} />}
+          icon={<TimelineIcon src="/logos/grant_thornton_luxembourg_logo.jpeg" alt="Grant Thornton" />}
         >
           <h3 className={styles.title}>Information Security Intern</h3>
           <h4 className={styles.subtitle}>Grant Thornton Luxembourg</h4>
@@ -122,9 +136,9 @@ const Timeline: React.FC = () => {
         <VerticalTimelineElement
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
-          contentArrowStyle={{ borderRight: '10px solid  rgb(0, 0, 0)' }}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
           date="Feb 2022 - Jan 2023"
-          icon={<Image src="/logos/university_of_luxembourg_logo.jpeg" alt="Company Logo" className={styles.icon} width={50} height={50} />}
+          icon={<TimelineIcon src="/logos/university_of_luxembourg_logo.jpeg" alt="University of Luxembourg" />}
         >
           <h3 className={styles.title}>Bachelor Semester Project Tutor</h3>
           <h4 className={styles.subtitle}>University of Luxembourg</h4>
@@ -136,9 +150,9 @@ const Timeline: React.FC = () => {
         <VerticalTimelineElement
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
-          contentArrowStyle={{ borderRight: '10px solid  rgb(0, 0, 0)' }}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
           date="Aug 2022 - Sep 2022"
-          icon={<Image src="/logos/grant_thornton_luxembourg_logo.jpeg" alt="Company Logo" className={styles.icon} width={50} height={50} />}
+          icon={<TimelineIcon src="/logos/grant_thornton_luxembourg_logo.jpeg" alt="Grant Thornton" />}
         >
           <h3 className={styles.title}>Data Analysis Internship</h3>
           <h4 className={styles.subtitle}>Grant Thornton Luxembourg</h4>
@@ -152,9 +166,9 @@ const Timeline: React.FC = () => {
         <VerticalTimelineElement
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
-          contentArrowStyle={{ borderRight: '10px solid  rgb(0, 0, 0)' }}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
           date="Sep 2020 - Jan 2021"
-          icon={<Image src="/logos/goodyear_logo.jpeg" alt="Company Logo" className={styles.icon} width={50} height={50} />}
+          icon={<TimelineIcon src="/logos/goodyear_logo.jpeg" alt="Goodyear" />}
         >
           <h3 className={styles.title}>Augmented Reality Internship</h3>
           <h4 className={styles.subtitle}>The Goodyear Tire & Rubber Company</h4>
@@ -169,9 +183,9 @@ const Timeline: React.FC = () => {
         <VerticalTimelineElement
           className={styles.timelineElement}
           contentStyle={{ background: '#ffffff', color: '#000000' }}
-          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)'}}
+          contentArrowStyle={{ borderRight: '10px solid rgb(0, 0, 0)' }}
           date="Sep 2020 - Aug 2023"
-          icon={<Image src="/logos/university_of_luxembourg_logo.jpeg" alt="University Logo" className={styles.icon} width={50} height={50} />}
+          icon={<TimelineIcon src="/logos/university_of_luxembourg_logo.jpeg" alt="University of Luxembourg" />}
         >
           <h3 className={styles.title}>Bachelor of Computer Science</h3>
           <h4 className={styles.subtitle}>University of Luxembourg</h4>

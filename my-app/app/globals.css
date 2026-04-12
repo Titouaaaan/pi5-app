@@ -15,20 +15,24 @@ main {
 header {
   position: sticky;
   top: 0;
-  z-index: 1000; /* Ensure the header stays above other elements */
-  background-color: white; /* Ensure the background is consistent */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
-  padding: 1rem; /* Padding for the header */
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
 }
 
 header .font-bebas {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.5rem; /* Adjust this value to your desired size */
+  font-size: clamp(0.9rem, 4vw, 1.5rem);
   color: black;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 header .font-bebas.active {
@@ -37,10 +41,13 @@ header .font-bebas.active {
 }
 
 header nav button {
-  font-size: 1.2rem; /* Adjust this value to your desired size */
+  font-size: clamp(0.65rem, 2vw, 1rem);
   background: none;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
+  padding: 0.25rem 0.3rem;
+  flex-shrink: 0;
 }
 
 header nav button.active {
@@ -48,7 +55,32 @@ header nav button.active {
   color: red;
 }
 
+header nav {
+  display: flex;
+  gap: clamp(0.2rem, 1vw, 0.5rem);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .last-update {
-  margin-left: auto; /* Push this div to the right */
-  font-size: 0.875rem; /* Adjust font size as needed */
+  margin-left: auto;
+  font-size: 0.6rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tablet and desktop adjustments */
+@media (min-width: 769px) {
+  header {
+    gap: 1rem;
+  }
+
+  .last-update {
+    font-size: 0.75rem;
+    max-width: none;
+  }
 }

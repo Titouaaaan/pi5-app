@@ -10,8 +10,24 @@
 !.yarn/releases
 !.yarn/versions
 
-# pychache
+# pycache
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Python
+venv/
+env/
+ENV/
+.venv/
+.env
+.env.local
+.env.*.local
+*.egg-info/
+dist/
+build/
 
 # testing
 /coverage
@@ -26,6 +42,7 @@ __pycache__/
 # misc
 .DS_Store
 *.pem
+*.deb
 
 # debug
 npm-debug.log*
@@ -33,12 +50,23 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-/venv
-
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# OS
+Thumbs.db
+.AppleDouble
+.LSOverride

@@ -4,7 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import '@fontsource/bebas-neue';
 import React, { useEffect, useState } from 'react';
-import { GitHub, LinkedIn, Email } from '@mui/icons-material';
+import { GitHub, LinkedIn, Email, Menu, X } from '@mui/icons-material';
 
 interface SystemStats {
   cpu: string;
@@ -54,6 +54,7 @@ export default function RootLayout({
   const [stats, setStats] = useState<SystemStats | null>(null);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const loadStats = async () => {
@@ -104,55 +105,153 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* Header Section */}
-        <header className="sticky top-0 left-0 w-full z-50 bg-white shadow-md p-2 flex justify-between items-center">
+        <header className="sticky top-0 left-0 w-full z-50 bg-white shadow-md p-3 flex justify-between items-center">
           {/* Name on the Left */}
           <div
-            className={`text-black font-bebas ${activeSection === 'welcome' ? 'font-bold' : ''}`}
+            className={`text-black font-bebas text-lg md:text-2xl ${activeSection === 'welcome' ? 'font-bold' : ''}`}
             onClick={() => scrollToSection('welcome')}
             style={{ cursor: 'pointer' }}
           >
             Titouan Guerin
           </div>
-          {/* Navigation Links on the Right */}
-          <nav className="flex space-x-8">
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-6">
             <button
               onClick={() => scrollToSection('about')}
-              className={`text-black font-bebas ${activeSection === 'about' ? 'font-bold' : ''}`}
+              className={`text-black font-bebas text-sm ${activeSection === 'about' ? 'font-bold text-red-600' : ''}`}
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('projects')}
-              className={`text-black font-bebas ${activeSection === 'projects' ? 'font-bold' : ''}`}
+              className={`text-black font-bebas text-sm ${activeSection === 'projects' ? 'font-bold text-red-600' : ''}`}
             >
               Projects
             </button>
             <button
               onClick={() => scrollToSection('timeline')}
-              className={`text-black font-bebas ${activeSection === 'timeline' ? 'font-bold' : ''}`}
+              className={`text-black font-bebas text-sm ${activeSection === 'timeline' ? 'font-bold text-red-600' : ''}`}
             >
               Timeline
             </button>
             <button
               onClick={() => scrollToSection('resume')}
-              className={`text-black font-bebas ${activeSection === 'resume' ? 'font-bold text-red-600' : ''}`}
+              className={`text-black font-bebas text-sm ${activeSection === 'resume' ? 'font-bold text-red-600' : ''}`}
             >
               Skills
             </button>
           </nav>
+
+          {/* Mobile Hamburger Menu */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-black p-2"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X /> : <Menu />}
+          </button>
         </header>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <nav className="md:hidden sticky top-16 z-40 bg-white border-b border-gray-200 shadow-md">
+            <div className="flex flex-col">
+              <button
+                onClick={() => {
+                  scrollToSection('about');
+                  setMobileMenuOpen(false);
+                }}
+                className={`px-4 py-3 text-black font-bebas border-b border-gray-100 text-sm ${activeSection === 'about' ? 'bg-gray-100 font-bold text-red-600' : ''}`}
+              >
+                About
+              </button>
+              <button
+                onClick={() => {
+                  scrollToSection('projects');
+                  setMobileMenuOpen(false);
+                }}
+                className={`px-4 py-3 text-black font-bebas border-b border-gray-100 text-sm ${activeSection === 'projects' ? 'bg-gray-100 font-bold text-red-600' : ''}`}
+              >
+                Projects
+              </button>
+              <button
+                onClick={() => {
+                  scrollToSection('timeline');
+                  setMobileMenuOpen(false);
+                }}
+                className={`px-4 py-3 text-black font-bebas border-b border-gray-100 text-sm ${activeSection === 'timeline' ? 'bg-gray-100 font-bold text-red-600' : ''}`}
+              >
+                Timeline
+              </button>
+              <button
+                onClick={() => {
+                  scrollToSection('resume');
+                  setMobileMenuOpen(false);
+                }}
+                className={`px-4 py-3 text-black font-bebas text-sm ${activeSection === 'resume' ? 'bg-gray-100 font-bold text-red-600' : ''}`}
+              >
+                Skills
+              </button>
+            </div>
+          </nav>
+        )}
 
         {/* Main Content */}
         {children}
 
         {/* Footer Banner */}
-        <footer id="footer" className="bg-black text-white p-4 mt-5">
-          <div className="flex justify-between mb-4 text-xs">
+        <footer id="footer" className="bg-black text-white p-4 mt-5 w-full">
+          {/* Mobile Layout */}
+          <div className="block md:hidden">
+            <div className="flex flex-col gap-4">
+              {/* Stats */}
+              <div className="text-center text-xs">
+                <h1 className="text-sm font-semibold mb-2">Pi5 System Stats</h1>
+                {stats ? (
+                  <div className="space-y-1">
+                    <p>CPU: {stats.cpu}</p>
+                    <p>Memory: {stats.memory}</p>
+                    <p>Disk: {stats.disk}</p>
+                  </div>
+                ) : (
+                  <p>Loading...</p>
+                )}
+              </div>
+              
+              {/* Social Icons */}
+              <div className="flex flex-col items-center justify-center">
+                <div className="flex justify-center gap-4 mb-2">
+                  <Link href="https://github.com/Titouaaaan" target="_blank" rel="noopener noreferrer">
+                    <GitHub fontSize="medium" />
+                  </Link>
+                  <Link href="https://www.linkedin.com/in/tguerin02/" target="_blank" rel="noopener noreferrer">
+                    <LinkedIn fontSize="medium" />
+                  </Link>
+                  <Link href="mailto:titouanguerin@gmail.com">
+                    <Email fontSize="medium" />
+                  </Link>
+                </div>
+                <p className="text-center text-xs">© Titouan Guerin</p>
+              </div>
+
+              {/* Last Update */}
+              <div className="text-center text-xs">
+                {lastUpdate ? <p>Last Update: {lastUpdate.split(' ')[0]}</p> : <p>Loading...</p>}
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden md:flex justify-between items-center gap-4">
             {/* Stats on the left */}
-            <div className="text-left">
-              <h1 className="text-xl font-semibold mb-2 text-xs">Pi5 System Stats</h1>
+            <div className="text-left text-xs flex-1">
+              <h1 className="text-sm font-semibold mb-2">Pi5 System Stats</h1>
               {stats ? (
                 <div>
                   <p>CPU: {stats.cpu}</p>
@@ -165,8 +264,8 @@ export default function RootLayout({
             </div>
 
             {/* Centered Icons and Name */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center w-full">
-              <div className="flex justify-center gap-6">
+            <div className="flex flex-col items-center justify-center flex-1">
+              <div className="flex justify-center gap-6 mb-2">
                 <Link href="https://github.com/Titouaaaan" target="_blank" rel="noopener noreferrer">
                   <GitHub fontSize="large" />
                 </Link>
@@ -181,7 +280,7 @@ export default function RootLayout({
             </div>
 
             {/* Last Update on the right */}
-            <div className="text-right last-update">
+            <div className="text-right text-xs flex-1">
               {lastUpdate ? <p>Last Website Update: {lastUpdate}</p> : <p>Loading...</p>}
             </div>
           </div>
