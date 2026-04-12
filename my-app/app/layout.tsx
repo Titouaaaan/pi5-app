@@ -52,7 +52,10 @@ export default function RootLayout({
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('http://localhost:8000/system-stats');
+        const backendUrl = typeof window !== 'undefined' 
+          ? `http://${window.location.hostname}:8000/system-stats`
+          : 'http://localhost:8000/system-stats';
+        const response = await fetch(backendUrl);
         if (response.ok) {
           const data = await response.json();
           setStats(data);
