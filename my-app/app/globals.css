@@ -77,3 +77,21 @@ div[class*="vertical-timeline-element"] span {
   color: #fff !important;
 }
 
+/* More aggressive timeline styling */
+.vertical-timeline-element-date,
+[class*="date"],
+.vertical-timeline-element-title {
+  color: #fff !important;
+}
+
+/* Target any text in timeline elements */
+.vertical-timeline-element,
+.vertical-timeline-element-content {
+  color: #fff !important;
+}
+
+.vertical-timeline-element-content p,
+.vertical-timeline-element-content div {
+  color: #fff !important;
+}
+
