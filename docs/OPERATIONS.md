@@ -24,7 +24,8 @@ Cloudflare dashboard and **not** in any file on the Pi. There is no
 `journalctl -u cloudflared` for `originService=`, and probe a path unique to
 each backend (`/health` only exists on FastAPI).
 
-`pi.titouanguerin.com` is a **dead record** — Cloudflare error 1016.
+`www.titouanguerin.com` redirects to the apex (Cloudflare redirect rule).
+`pi.titouanguerin.com` is a **dead record**, Cloudflare error 1016.
 The live site is the apex domain.
 
 ## Ports in use

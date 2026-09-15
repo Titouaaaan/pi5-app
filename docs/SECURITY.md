@@ -38,6 +38,8 @@ frames or connections from any other origin.
 - No `Access-Control-*` headers on any response, including cross-origin `POST /api/visit`
 - `npm audit` 0, `pip-audit` (inside the live venv) 0
 - Backend process runs as `titouan`, from the versioned unit, from `backend/.venv`
+- `http://` redirects to `https://` (Cloudflare "Always Use HTTPS", enabled 2026-09-15)
+- `www.titouanguerin.com` resolves and 301s to the apex (CNAME + redirect rule, added 2026-09-15); a resolver that looked it up before that may cache "no such name" for up to 30 minutes
 
 ## Dependencies
 
@@ -130,22 +132,7 @@ by the site. Removing its tunnel route removes an entire public entry point.
 Running 2025.9.1 against a current 2026.9.1, with `--no-autoupdate` set while a
 `cloudflared-update.service` exists unused.
 
-### 5. Turn on "Always Use HTTPS" in Cloudflare
-
-`http://titouanguerin.com` currently serves the page over plain HTTP with a
-200 rather than redirecting. Since HSTS is now sent, any browser that has
-visited once will upgrade on its own from then on, but a first visit typed
-without `https://` is still plaintext. The fix is a single toggle in the
-Cloudflare dashboard (SSL/TLS, Edge Certificates, Always Use HTTPS); the
-origin cannot see the original scheme through the tunnel.
-
-### 6. Add a `www` DNS record
-
-`www.titouanguerin.com` does not resolve. Anyone typing it gets nothing.
-A CNAME `www` to the tunnel, plus "Always Use HTTPS", and it redirects to
-the apex. Cloudflare dashboard only.
-
-### 7. Remove the stale `pi.` DNS record
+### 5. Remove the stale `pi.` DNS record
 
 `pi.titouanguerin.com` returns Cloudflare error 1016 (origin DNS error). It is
 a dead record still advertised in the old README.
