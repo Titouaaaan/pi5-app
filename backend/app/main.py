@@ -7,7 +7,7 @@ is no CORS middleware here and none is wanted.
 
 from fastapi import FastAPI
 
-from . import deploy, system
+from . import deploy, github, system
 
 app = FastAPI(
     title="titouanguerin.com backend",
@@ -20,3 +20,4 @@ app = FastAPI(
 
 app.include_router(system.router)
 app.include_router(deploy.router)
+app.include_router(github.router)

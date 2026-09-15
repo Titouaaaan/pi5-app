@@ -163,5 +163,6 @@ never edit the copy in `/etc` by hand.
 | `GET /health` | liveness probe, suitable for uptime-kuma |
 | `GET /system-stats` | CPU, memory, disk and uptime, shown in the site footer |
 | `GET /deploy` | commit and time of the running deploy, from `.deploy/info.json`; `deploy.sh` checks it after a restart |
+| `GET /github/activity` | last push and stars for every public, non-fork repo of the account; one GitHub request per hour, cached, served stale if GitHub is down. `GITHUB_TOKEN` in the unit's environment raises the quota but is not needed |
 
 Interactive docs are disabled deliberately — see `SECURITY.md`.

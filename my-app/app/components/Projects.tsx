@@ -1,11 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { projects } from "@/content/projects";
 import SectionHeading from "./SectionHeading";
 
+type RepoActivity = { pushed_at: string; stars: number };
+type Activity = Record<string, RepoActivity>;
+
+const GITHUB_PREFIX = "https://github.com/Titouaaaan/";
+
+function repoName(links: { href: string }[]): string | null {
+  const link = links.find((l) => l.href.startsWith(GITHUB_PREFIX));
+  return link ? link.href.slice(GITHUB_PREFIX.length).split("/")[0] : null;
+}
+
+function timeAgo(iso: string): string {
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
+  if (days < 1) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return `${days} days ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
+  const years = Math.floor(days / 365);
+  return `${years} year${years === 1 ? "" : "s"} ago`;
+}
+
 export default function Projects() {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [activity, setActivity] = useState<Activity | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/github/activity", { signal: controller.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => data && setActivity(data.repos))
+      .catch(() => {
+        // Leave the rows without activity; the section works without it.
+      });
+    return () => controller.abort();
+  }, []);
 
   return (
     <section className="flex flex-col gap-3.5">
@@ -20,6 +53,8 @@ export default function Projects() {
         {projects.map((project) => {
           const isOpen = project.id === openId;
           const panelId = `project-panel-${project.id}`;
+          const repo = repoName(project.links);
+          const repoActivity = repo && activity ? activity[repo] : null;
 
           return (
             <div key={project.id} className="flex flex-col border-b border-rule-light">
@@ -60,6 +95,14 @@ export default function Projects() {
                   ) : null}
                   {project.stack ? (
                     <p className="font-mono text-xs text-faint">{project.stack}</p>
+                  ) : null}
+                  {repoActivity ? (
+                    <p className="font-mono text-xs text-fainter">
+                      last push {timeAgo(repoActivity.pushed_at)}
+                      {repoActivity.stars > 0
+                        ? ` · ${repoActivity.stars} star${repoActivity.stars === 1 ? "" : "s"}`
+                        : ""}
+                    </p>
                   ) : null}
                   <div className="flex flex-wrap gap-4">
                     {project.links.map((link) => (
