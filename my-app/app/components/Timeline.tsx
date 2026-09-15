@@ -10,7 +10,8 @@ export default function Timeline() {
           <div key={`${entry.date}-${entry.role}`} className="contents">
             <dt className="font-mono text-[13px] text-faint">{entry.date}</dt>
             <dd className="text-body">
-              {entry.role}, <span className="text-muted">{entry.org}</span>
+              <span className={entry.education ? "font-semibold" : undefined}>{entry.role}</span>,{" "}
+              <span className="text-muted">{entry.org}</span>
               {entry.detail ? <span className="text-muted">. {entry.detail}</span> : null}
             </dd>
           </div>

@@ -1,7 +1,7 @@
 export const profile = {
   name: "Titouan Guerin",
   tagline:
-    "PhD student in deep reinforcement learning at ONERA and Sorbonne Université, from November 2026. World models and model-based control for drones.",
+    "PhD student in deep reinforcement learning, physics-informed models and model-based control at ONERA and Sorbonne Université, from November 2026.",
   links: [
     { label: "github", href: "https://github.com/Titouaaaan" },
     { label: "linkedin", href: "https://linkedin.com/in/tguerin02" },
@@ -10,6 +10,6 @@ export const profile = {
   ],
   about: [
     "I studied AI and Machine Learning at Sorbonne Université (the MIND Master's, previously called DAC), specialising in probabilistic modelling, deep learning and reinforcement learning. Before that I completed a Bachelor's in Computer Science at the University of Luxembourg in 2023.",
-    "I am drawn to the mathematics behind machine learning, and to reinforcement learning in particular. My final Master's internship at ISIR and ONERA was on world models for drone control, and in November 2026 I am continuing that work there as a PhD. Outside research I have done some software development and a little tutoring.",
+    "I am drawn to the mathematics behind machine learning, and to reinforcement learning in particular. My final Master's internship at ISIR and ONERA was on RL and physics-informed models for drone control, and in November 2026 I am continuing that work there as a PhD. Outside research I have done some software development and a little tutoring.",
   ],
 } as const;

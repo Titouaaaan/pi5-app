@@ -3,12 +3,15 @@ export type TimelineEntry = {
   role: string;
   org: string;
   detail?: string;
+  /** Degrees are set in bold in the timeline. */
+  education?: true;
 };
 
 export const timeline: TimelineEntry[] = [
   {
     date: "2026.11",
     role: "PhD student",
+    education: true,
     org: "ONERA and ISIR, Sorbonne Université",
     detail: "Model-based reinforcement learning for drone control.",
   },
@@ -28,6 +31,7 @@ export const timeline: TimelineEntry[] = [
   {
     date: "2023.09",
     role: "MSc AI and Machine Learning",
+    education: true,
     org: "Sorbonne Université",
   },
   {
@@ -48,6 +52,7 @@ export const timeline: TimelineEntry[] = [
   {
     date: "2020.09",
     role: "BSc Computer Science",
+    education: true,
     org: "University of Luxembourg",
   },
   {

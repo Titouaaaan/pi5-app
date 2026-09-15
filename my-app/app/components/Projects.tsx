@@ -49,16 +49,31 @@ export default function Projects() {
 
               {isOpen ? (
                 <div id={panelId} className="flex flex-col gap-2.5 pb-[18px] pl-[22px] pt-0.5">
+                  {project.title ? (
+                    <p className="text-[15px] font-medium leading-snug text-body">{project.title}</p>
+                  ) : null}
                   <p className="text-sm leading-[1.7] text-muted">{project.body}</p>
-                  <p className="font-mono text-xs text-faint">{project.stack}</p>
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="self-start font-mono text-[13px]"
-                  >
-                    view on github
-                  </a>
+                  {project.quote ? (
+                    <blockquote className="border-l border-rule pl-4 text-sm leading-[1.7] text-muted">
+                      {project.quote}
+                    </blockquote>
+                  ) : null}
+                  {project.stack ? (
+                    <p className="font-mono text-xs text-faint">{project.stack}</p>
+                  ) : null}
+                  <div className="flex flex-wrap gap-4">
+                    {project.links.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target={link.href.startsWith("http") ? "_blank" : undefined}
+                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="font-mono text-[13px]"
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               ) : null}
             </div>
