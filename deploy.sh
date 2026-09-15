@@ -16,14 +16,18 @@
 
 set -Eeuo pipefail
 
-APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/my-app" && pwd)"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_DIR="$REPO_DIR/my-app"
 SITE_URL="https://titouanguerin.com"
 LOCAL_URL="http://localhost:3000"
 BUILD_DIR="$APP_DIR/.next-build"
 LIVE_DIR="$APP_DIR/.next"
-PREV_DIR="$APP_DIR/.next-previous"
 MODULES_DIR="$APP_DIR/node_modules"
-MODULES_PREV="$APP_DIR/node_modules.previous"
+# Previous build and modules are parked OUTSIDE my-app/ so that no tool run
+# inside the project (tsc's "**/*.ts" include, in particular) can crawl them.
+KEEP_DIR="$REPO_DIR/.deploy"
+PREV_DIR="$KEEP_DIR/next-previous"
+MODULES_PREV="$KEEP_DIR/node_modules-previous"
 LOCK_HASH_FILE="$MODULES_DIR/.deploy-lock-hash"
 RESTART_BACKEND=0
 SERVICE_STOPPED=0
@@ -50,6 +54,7 @@ start_if_stopped() {
 }
 
 cd "$APP_DIR"
+mkdir -p "$KEEP_DIR"
 
 # --- 1. Refuse to deploy anything that is not committed and pushed ----------
 log "Checking working tree"
