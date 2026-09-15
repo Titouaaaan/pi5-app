@@ -1,19 +1,27 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./content/**/*.{js,ts}"],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        paper: "#F9FAFA",
+        ink: "#16191C",
+        body: "#2A3036",
+        muted: "#545C64",
+        faint: "#9AA3AB",
+        fainter: "#B6BDC4",
+        rule: "#E3E7EA",
+        "rule-light": "#EDF0F2",
+        accent: "oklch(0.52 0.09 230)",
+        "accent-hover": "oklch(0.40 0.08 230)",
       },
       fontFamily: {
-        bebas: ['Bebas Neue', 'sans-serif'],
+        sans: ["var(--font-plex-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-plex-mono)", "ui-monospace", "monospace"],
+      },
+      maxWidth: {
+        column: "680px",
       },
     },
   },

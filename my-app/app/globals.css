@@ -2,85 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: #000;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 4rem 2rem;
-  position: relative;
-  z-index: 1;
-}
-
-section:first-of-type {
-  border-top: none;
-  padding-top: 6rem;
-}
-
-@media (max-width: 768px) {
-  section {
-    padding: 2.5rem 1rem;
+@layer base {
+  html {
+    scroll-behavior: smooth;
   }
 
-  section:first-of-type {
-    padding-top: 5rem;
+  body {
+    @apply bg-paper text-ink antialiased;
+  }
+
+  /* Links are the only coloured element in the design; give anchors a
+     consistent treatment rather than relying on browser defaults. */
+  a {
+    @apply text-accent underline decoration-1 underline-offset-[3px];
+  }
+
+  a:hover {
+    @apply text-accent-hover;
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
-/* Link styling */
-a {
-  color: inherit;
-  text-decoration: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
-
-a:hover {
-  opacity: 0.8;
-}
-
-/* Smooth transitions */
-button, a {
-  transition: all 0.2s ease;
-}
-
-/* Timeline date styling - Only target the date element */
-.vertical-timeline-element-date {
-  color: #ffffff !important;
-}
-
-.vertical-timeline::before {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Timeline content - Force black text on white background */
-.vertical-timeline-element-content {
-  color: #000000 !important;
-}
-
-.vertical-timeline-element-content p,
-.vertical-timeline-element-content h3,
-.vertical-timeline-element-content h4,
-.vertical-timeline-element-content div {
-  color: #000000 !important;
-}
-

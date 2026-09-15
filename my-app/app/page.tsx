@@ -1,23 +1,25 @@
-"use client";
-import dynamic from 'next/dynamic';
+import About from "./components/About";
+import Footer from "./components/Footer";
+import Hero from "./components/Hero";
+import Projects from "./components/Projects";
+import Rule from "./components/Rule";
+import Timeline from "./components/Timeline";
+import Tools from "./components/Tools";
 
-// Dynamically import each component
-const Welcome = dynamic(() => import('./welcome/Welcome'), { ssr: false });
-const About = dynamic(() => import('./about/About'), { ssr: false });
-const Projects = dynamic(() => import('./projects/Projects'), { ssr: false });
-const Resume = dynamic(() => import('./resume/Resume'), { ssr: false });
-const Timeline = dynamic(() => import('./timeline/Timeline'), { ssr: false });
-
-const HomePage: React.FC = () => {
+export default function HomePage() {
   return (
-    <main>
-      <Welcome />
+    <main className="mx-auto flex max-w-column flex-col gap-10 px-8 pb-16 pt-20">
+      <Hero />
+      <Rule />
       <About />
+      <Rule />
       <Projects />
+      <Rule />
       <Timeline />
-      <Resume />
+      <Rule />
+      <Tools />
+      <Rule />
+      <Footer />
     </main>
   );
-};
-
-export default HomePage;
+}
