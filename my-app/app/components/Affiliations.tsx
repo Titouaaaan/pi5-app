@@ -3,9 +3,17 @@ import { profile } from "@/content/profile";
 
 const LOGO_HEIGHT = 64;
 
+/**
+ * Host lab and co-directing universities. Always one line: logo height and
+ * gap scale with the viewport, from 40px/20px on a phone to 64px/48px on
+ * desktop, so the row never wraps.
+ */
 export default function Affiliations() {
   return (
-    <ul className="flex flex-wrap items-center justify-center gap-12" aria-label="Institutions">
+    <ul
+      className="flex flex-nowrap items-center justify-center gap-[clamp(20px,6vw,48px)]"
+      aria-label="Institutions"
+    >
       {profile.institutions.map((inst) => (
         <li key={inst.name}>
           <a
@@ -20,7 +28,7 @@ export default function Affiliations() {
               width={Math.round((inst.width * LOGO_HEIGHT) / inst.height)}
               height={LOGO_HEIGHT}
               priority
-              className="rounded-sm"
+              className="h-[clamp(40px,12vw,64px)] w-auto rounded-sm"
             />
           </a>
         </li>
