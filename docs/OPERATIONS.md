@@ -151,22 +151,25 @@ enabled and start on boot.
 
 ## Backend API
 
-Reached by the browser only through the same-origin `/api/*` rewrite.
+Documented endpoint by endpoint, with response shapes, caching and upstream
+sources, in [API.md](API.md). Short version: `/health`, `/system-stats`,
+`/deploy`, `/github/activity`, `/publications`, `POST /visit`, `/visits`, all
+under `https://titouanguerin.com/api/`.
 
 Code lives in `backend/app/`, one module per concern, with tests in
-`backend/tests/`. Anything that talks to an outside service goes through
-`cache.py`: fetch at most once per TTL, serve stale on failure, so the site
-never depends on a third party being up. The systemd unit is versioned at
+`backend/tests/`. The systemd unit is versioned at
 `deploy/fastapi-backend.service` and installed by `deploy.sh --backend`;
 never edit the copy in `/etc` by hand.
 
-| Endpoint | Purpose |
-|---|---|
-| `GET /health` | liveness probe, suitable for uptime-kuma |
-| `GET /system-stats` | CPU, memory, disk and uptime, shown in the site footer |
-| `GET /deploy` | commit and time of the running deploy, from `.deploy/info.json`; `deploy.sh` checks it after a restart |
-| `GET /github/activity` | last push and stars for every public, non-fork repo of the account; one GitHub request per hour, cached, served stale if GitHub is down. `GITHUB_TOKEN` in the unit's environment raises the quota but is not needed |
-| `GET /publications` | citation counts from OpenAlex for the DOIs listed in `backend/app/publications.py`; one request per paper per day, cached, served stale if OpenAlex is down |
-| `POST /visit`, `GET /visits` | unique-visitor counts (today, last 30 days, all time). Stores `sha256(ip + day + secret)` only, in `.data/visits.db`; the secret is generated on first run and never leaves the Pi. No cookies, no addresses, nothing joinable across days |
+## Search engines and sharing
 
-Interactive docs are disabled deliberately — see `SECURITY.md`.
+Generated at build, all from `my-app/app/`:
+
+| Path | Source | What it is |
+|---|---|---|
+| `/robots.txt` | `robots.ts` | allows everything except `/api/`, points at the sitemap. Cloudflare prepends its own "content signals" comment block at the edge; the directives are ours |
+| `/sitemap.xml` | `sitemap.ts` | the one page, `lastmod` = deploy time |
+| `/opengraph-image` | `opengraph-image.tsx` | the 1200×630 card shown when the link is shared; built from `content/profile.ts` with the site's own fonts |
+| JSON-LD in `<head>` | `components/StructuredData.tsx` | schema.org `Person` (affiliations, profiles, topics) and one `ScholarlyArticle` per entry in `content/publications.ts` |
+
+Title, description, canonical URL and Open Graph tags are in `layout.tsx`.

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import StructuredData from "./components/StructuredData";
 
 const plexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
@@ -33,10 +34,11 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Titouan Guerin",
     description,
   },
+  robots: { index: true, follow: true },
   alternates: {
     canonical: "https://titouanguerin.com",
   },
@@ -48,6 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plexSans.variable} ${plexMono.variable} font-sans`}>
+        <StructuredData />
         {children}
       </body>
     </html>

@@ -26,6 +26,34 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
+          // Two years, subdomains included: browsers that have seen this once
+          // will refuse plain http afterwards (the redirect itself is a
+          // Cloudflare setting, "Always Use HTTPS").
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains",
+          },
+          // Everything the page needs is same-origin: next/font self-hosts the
+          // fonts, images are local, the API is proxied under /api. 'unsafe-inline'
+          // on script and style is the price of Next's hydration and Tailwind
+          // without a nonce (which would make every page dynamic); the other
+          // directives still stop external script/style/frame/connect injection.
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data:",
+              "font-src 'self'",
+              "connect-src 'self'",
+              "frame-ancestors 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "object-src 'none'",
+              "upgrade-insecure-requests",
+            ].join("; "),
+          },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Frame-Options", value: "DENY" },

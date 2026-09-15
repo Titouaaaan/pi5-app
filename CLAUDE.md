@@ -41,7 +41,8 @@ docs/SECURITY.md                what is hardened, what is still open
 backend/app/                    FastAPI, one module per concern; main.py wires routers
 backend/tests/                  pytest; run before every backend deploy
 my-app/app/                     Next.js App Router: layout, page, components/
-my-app/content/*.ts             all site copy: profile, phd, projects, timeline, skills
+my-app/content/*.ts             all site copy: profile, phd, projects, publications, timeline, skills
+my-app/app/robots.ts, sitemap.ts, opengraph-image.tsx   generated at build
 ```
 
 Content edits go in `my-app/content/`, not in components. Components are

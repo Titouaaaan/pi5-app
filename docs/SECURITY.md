@@ -10,9 +10,34 @@ outstanding. Update it whenever the security posture changes.
 | **CORS wildcard with credentials** | `allow_origins=["*"]` together with `allow_credentials=True`, so any website could read the stats endpoint from a visitor's browser | `CORSMiddleware` removed entirely. The browser now reaches the backend through the same-origin `/api/*` rewrite, so cross-origin access is not needed |
 | **Public API docs** | `api.titouanguerin.com/docs` served the interactive Swagger UI to the internet, advertising the API surface | `docs_url`, `redoc_url` and `openapi_url` all set to `None` |
 | **Framework fingerprinting** | `X-Powered-By: Next.js` on every response | `poweredByHeader: false` |
-| **Missing response headers** | none set | `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: DENY`, `Permissions-Policy` denying camera/microphone/geolocation |
+| **Missing response headers** | none set | `Strict-Transport-Security` (2 years, subdomains), `Content-Security-Policy` (see below), `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: DENY`, `Permissions-Policy` denying camera/microphone/geolocation |
 | **GitHub API called from every visitor's browser** | each visitor hit `api.github.com` unauthenticated, against a 60-requests-per-hour-per-IP limit | fetched server-side in `Footer.tsx` and cached for an hour with `next: { revalidate: 3600 }` |
 | **Undocumented Python dependencies** | no `requirements.txt`; the venv was unreproducible | `backend/requirements.txt`, pinned; `deploy.sh --backend` rebuilds the venv from it |
+
+## Content-Security-Policy
+
+```
+default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';
+img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';
+base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+```
+
+Everything the page needs is same-origin (fonts self-hosted by `next/font`,
+images local, API under `/api`), so every directive except two is strict.
+`script-src` and `style-src` carry `'unsafe-inline'` because Next's hydration
+script and Tailwind's styles are inline; removing it needs a per-request
+nonce, which turns the static page into a dynamic one. The trade is
+deliberate: the remaining directives still block loading scripts, styles,
+frames or connections from any other origin.
+
+## Verified 2026-09-15, from the public URL
+
+- Response headers as listed above present; `X-Powered-By` absent
+- `/api/docs`, `/api/openapi.json`, `/api/redoc` all 404
+- `/.env`, `/.git/HEAD`, path-traversal probes all 404
+- No `Access-Control-*` headers on any response, including cross-origin `POST /api/visit`
+- `npm audit` 0, `pip-audit` (inside the live venv) 0
+- Backend process runs as `titouan`, from the versioned unit, from `backend/.venv`
 
 ## Dependencies
 
@@ -105,7 +130,22 @@ by the site. Removing its tunnel route removes an entire public entry point.
 Running 2025.9.1 against a current 2026.9.1, with `--no-autoupdate` set while a
 `cloudflared-update.service` exists unused.
 
-### 5. Remove the stale `pi.` DNS record
+### 5. Turn on "Always Use HTTPS" in Cloudflare
+
+`http://titouanguerin.com` currently serves the page over plain HTTP with a
+200 rather than redirecting. Since HSTS is now sent, any browser that has
+visited once will upgrade on its own from then on, but a first visit typed
+without `https://` is still plaintext. The fix is a single toggle in the
+Cloudflare dashboard (SSL/TLS, Edge Certificates, Always Use HTTPS); the
+origin cannot see the original scheme through the tunnel.
+
+### 6. Add a `www` DNS record
+
+`www.titouanguerin.com` does not resolve. Anyone typing it gets nothing.
+A CNAME `www` to the tunnel, plus "Always Use HTTPS", and it redirects to
+the apex. Cloudflare dashboard only.
+
+### 7. Remove the stale `pi.` DNS record
 
 `pi.titouanguerin.com` returns Cloudflare error 1016 (origin DNS error). It is
 a dead record still advertised in the old README.
