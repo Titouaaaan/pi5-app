@@ -6,7 +6,7 @@ export default function About() {
     <section className="flex flex-col gap-3">
       <SectionHeading>about</SectionHeading>
       {profile.about.map((paragraph) => (
-        <p key={paragraph.slice(0, 32)} className="text-[15px] leading-[1.7] text-body">
+        <p key={paragraph.slice(0, 32)} className="text-[16px] leading-[1.7] text-body">
           {paragraph}
         </p>
       ))}

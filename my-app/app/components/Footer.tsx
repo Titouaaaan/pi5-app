@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="flex flex-col gap-1.5">
       <PiStats />
       <Visits />
-      <p className="font-mono text-xs leading-[1.7] text-fainter">
+      <p className="font-mono text-[13px] leading-[1.7] text-fainter">
         raspberry pi 5
         {commit ? ` · ${commit}` : ""}
         {deployedAt ? ` · deployed ${deployedAt}` : ""}

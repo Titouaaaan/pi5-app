@@ -44,7 +44,7 @@ export default function Projects() {
     <section className="flex flex-col gap-3.5">
       <div className="flex items-baseline justify-between gap-4">
         <SectionHeading>selected work</SectionHeading>
-        <p aria-hidden="true" className="font-mono text-[11px] text-fainter">
+        <p aria-hidden="true" className="font-mono text-[12px] text-fainter">
           click to expand
         </p>
       </div>
@@ -71,15 +71,15 @@ export default function Projects() {
                 >
                   <span
                     aria-hidden="true"
-                    className="w-3 shrink-0 font-mono text-sm text-fainter group-hover:text-accent"
+                    className="w-3 shrink-0 font-mono text-[15px] text-fainter group-hover:text-accent"
                   >
                     {isOpen ? "−" : "+"}
                   </span>
-                  <span className="font-mono text-[15px] font-medium text-accent group-hover:text-accent-hover">
+                  <span className="font-mono text-[16px] font-medium text-accent group-hover:text-accent-hover">
                     {project.slug}
                   </span>
-                  <span className="grow text-[13px] text-faint">{project.tag}</span>
-                  <span className="shrink-0 font-mono text-xs text-fainter">
+                  <span className="grow text-[14px] text-faint">{project.tag}</span>
+                  <span className="shrink-0 font-mono text-[13px] text-fainter">
                     {project.year}
                   </span>
                 </button>
@@ -88,26 +88,26 @@ export default function Projects() {
               {isOpen ? (
                 <div id={panelId} className="flex flex-col gap-2.5 pb-[18px] pl-[22px] pt-0.5">
                   {project.title ? (
-                    <p className="text-[15px] font-medium leading-snug text-body">{project.title}</p>
+                    <p className="text-[16px] font-medium leading-snug text-body">{project.title}</p>
                   ) : null}
-                  <p className="text-sm leading-[1.7] text-muted">{project.body}</p>
+                  <p className="text-[15px] leading-[1.7] text-muted">{project.body}</p>
                   {project.quote ? (
-                    <blockquote className="border-l border-rule pl-4 text-sm leading-[1.7] text-muted">
+                    <blockquote className="border-l border-rule pl-4 text-[15px] leading-[1.7] text-muted">
                       {project.quote}
                     </blockquote>
                   ) : null}
                   {project.stack ? (
-                    <p className="font-mono text-xs text-faint">{project.stack}</p>
+                    <p className="font-mono text-[13px] text-faint">{project.stack}</p>
                   ) : null}
                   {repoActivity ? (
-                    <p className="font-mono text-xs text-fainter">
+                    <p className="font-mono text-[13px] text-fainter">
                       last push {timeAgo(repoActivity.pushed_at)}
                       {repoActivity.stars > 0
                         ? ` · ${repoActivity.stars} star${repoActivity.stars === 1 ? "" : "s"}`
                         : ""}
                     </p>
                   ) : repoIsPrivate ? (
-                    <p className="font-mono text-xs text-fainter">repository currently private</p>
+                    <p className="font-mono text-[13px] text-fainter">repository currently private</p>
                   ) : null}
                   <div className="flex flex-wrap gap-4">
                     {project.links.map((link) => (
@@ -116,7 +116,7 @@ export default function Projects() {
                         href={link.href}
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                         rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="font-mono text-[13px]"
+                        className="font-mono text-[14px]"
                       >
                         {link.label}
                       </a>

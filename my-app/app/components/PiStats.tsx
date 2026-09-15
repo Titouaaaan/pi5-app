@@ -42,11 +42,11 @@ export default function PiStats() {
 
   // Reserve the line's height so the footer does not shift when stats land.
   if (!stats) {
-    return <p className="font-mono text-xs leading-[1.7] text-faint">&nbsp;</p>;
+    return <p className="font-mono text-[13px] leading-[1.7] text-faint">&nbsp;</p>;
   }
 
   return (
-    <p className="font-mono text-xs leading-[1.7] text-faint">
+    <p className="font-mono text-[13px] leading-[1.7] text-faint">
       cpu {stats.cpu}&nbsp; mem {stats.memory}&nbsp; disk {stats.disk}&nbsp; up{" "}
       {stats.uptime}
     </p>

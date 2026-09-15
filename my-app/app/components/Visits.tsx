@@ -27,7 +27,7 @@ export default function Visits() {
 
   const plural = (n: number) => (n === 1 ? "visitor" : "visitors");
   return (
-    <p className="font-mono text-xs leading-[1.7] text-fainter">
+    <p className="font-mono text-[13px] leading-[1.7] text-fainter">
       {counts.today} {plural(counts.today)} today · {counts.last_30_days} in the last 30 days
     </p>
   );
