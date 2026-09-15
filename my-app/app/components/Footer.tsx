@@ -1,4 +1,5 @@
 import PiStats from "./PiStats";
+import Visits from "./Visits";
 
 // Baked in at build time by deploy.sh, so the line is always true for the
 // build that is serving it. Both are unset in development.
@@ -9,6 +10,7 @@ export default function Footer() {
   return (
     <footer className="flex flex-col gap-1.5">
       <PiStats />
+      <Visits />
       <p className="font-mono text-xs leading-[1.7] text-fainter">
         raspberry pi 5
         {commit ? ` · ${commit}` : ""}

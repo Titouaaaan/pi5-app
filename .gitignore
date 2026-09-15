@@ -2,6 +2,9 @@
 # and writes info.json describing the current deploy.
 /.deploy/
 
+# backend state: visitor counter database and its secret
+/.data/
+
 # Python
 /backend/.venv/
 __pycache__/

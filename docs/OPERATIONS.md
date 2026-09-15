@@ -167,5 +167,6 @@ never edit the copy in `/etc` by hand.
 | `GET /deploy` | commit and time of the running deploy, from `.deploy/info.json`; `deploy.sh` checks it after a restart |
 | `GET /github/activity` | last push and stars for every public, non-fork repo of the account; one GitHub request per hour, cached, served stale if GitHub is down. `GITHUB_TOKEN` in the unit's environment raises the quota but is not needed |
 | `GET /publications` | citation counts from OpenAlex for the DOIs listed in `backend/app/publications.py`; one request per paper per day, cached, served stale if OpenAlex is down |
+| `POST /visit`, `GET /visits` | unique-visitor counts (today, last 30 days, all time). Stores `sha256(ip + day + secret)` only, in `.data/visits.db`; the secret is generated on first run and never leaves the Pi. No cookies, no addresses, nothing joinable across days |
 
 Interactive docs are disabled deliberately — see `SECURITY.md`.

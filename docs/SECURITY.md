@@ -36,6 +36,20 @@ If it does not, `npm update` first; if an advisory only resolves with a major
 bump, treat that as its own change with its own test cycle rather than folding
 it into a deploy.
 
+## Visitor counter
+
+`POST /visit` records `sha256(ip + day + secret)`. The daily component means
+the same person on two days yields two unrelated hashes, so nothing can be
+joined across days; the secret (`.data/visits.secret`, mode 600, generated on
+first run) means the hash cannot be reversed from the IP space by anyone who
+reads the database. No cookies are set and no address is stored. This is
+counting, not analytics.
+
+The client address is taken from `CF-Connecting-IP` (set by Cloudflare and
+verified to survive the Next.js rewrite). Direct LAN requests to port 8000
+could spoof that header to inflate the count; binding to `127.0.0.1` (item 2
+below) closes that.
+
 ## Still outstanding
 
 These need changes outside the repo and are listed in the order they matter.
