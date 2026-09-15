@@ -59,6 +59,7 @@ npm audit              # must report 0 vulnerabilities before deploying
 
 cd ../backend
 .venv/bin/python -m pytest      # after: python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
+.venv/bin/pip-audit             # must report nothing; run inside the venv, not with -r
 
 cd .. && ./deploy.sh   # add --backend when backend/ or deploy/ changed
 ```

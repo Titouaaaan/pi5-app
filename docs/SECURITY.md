@@ -31,7 +31,14 @@ here, but an advisory is an advisory). `package.json` carries
 which is the same pin Next itself adopted in 16. Remove the override when Next
 is upgraded to 16.
 
-**Before every deploy:** `npm audit` in `my-app/` must report 0 vulnerabilities.
+**Python:** `fastapi` only sets a floor on `starlette`, so `starlette` is pinned
+explicitly in `backend/requirements.txt`; otherwise `pip install -r` leaves an
+old one in place. Audit the backend with `pip-audit` (in
+`requirements-dev.txt`) run **inside the venv**, not with `-r`, so it checks
+what is installed rather than what a fresh resolve would pick.
+
+**Before every deploy:** `npm audit` in `my-app/` and `pip-audit` in
+`backend/.venv` must both report nothing.
 If it does not, `npm update` first; if an advisory only resolves with a major
 bump, treat that as its own change with its own test cycle rather than folding
 it into a deploy.

@@ -1,4 +1,6 @@
-fastapi==0.118.0
-uvicorn==0.37.0
-psutil==7.1.0
+fastapi==0.141.1
+# fastapi only sets a floor on starlette; pin it so pip actually upgrades it.
+starlette==1.6.0
+uvicorn==0.53.0
+psutil==7.2.2
 httpx==0.28.1

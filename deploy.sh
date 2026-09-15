@@ -95,6 +95,8 @@ fi
 if [[ $RESTART_BACKEND -eq 1 ]]; then
   log "Updating backend"
   [[ -x "$BACKEND_VENV/bin/pip" ]] || python3 -m venv "$BACKEND_VENV"
+  # The Pi's Python seeds venvs with an old setuptools; keep the tooling current too.
+  "$BACKEND_VENV/bin/pip" install --quiet --upgrade pip setuptools
   "$BACKEND_VENV/bin/pip" install --quiet -r "$BACKEND_DIR/requirements.txt"
   if ! sudo cmp -s "$BACKEND_UNIT_SRC" "$BACKEND_UNIT_DST"; then
     log "Installing updated systemd unit"
