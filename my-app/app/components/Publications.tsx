@@ -1,0 +1,59 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { publications } from "@/content/publications";
+import SectionHeading from "./SectionHeading";
+
+type Paper = { doi: string; citations: number; source: string };
+
+export default function Publications() {
+  const [papers, setPapers] = useState<Record<string, Paper>>({});
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/publications", { signal: controller.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data) return;
+        setPapers(Object.fromEntries((data.papers as Paper[]).map((p) => [p.doi, p])));
+      })
+      .catch(() => {
+        // No count; the entry still renders in full.
+      });
+    return () => controller.abort();
+  }, []);
+
+  return (
+    <section className="flex flex-col gap-4">
+      <SectionHeading>publications</SectionHeading>
+      <ul className="flex flex-col gap-5">
+        {publications.map((pub) => {
+          const paper = papers[pub.doi];
+          return (
+            <li key={pub.doi} className="flex flex-col gap-1.5">
+              <p className="text-[15px] font-medium leading-snug text-body">{pub.title}</p>
+              <p className="text-sm leading-relaxed text-muted">{pub.authors}</p>
+              <p className="font-mono text-xs leading-relaxed text-faint">
+                {pub.venue} · {pub.year}
+              </p>
+              <div className="flex flex-wrap items-baseline gap-4 font-mono text-[13px]">
+                <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer">
+                  doi
+                </a>
+                <a href={pub.scholarUrl} target="_blank" rel="noopener noreferrer">
+                  google scholar
+                </a>
+                {paper ? (
+                  <span className="text-xs text-fainter">
+                    cited {paper.citations} time{paper.citations === 1 ? "" : "s"} (
+                    {paper.source.toLowerCase()})
+                  </span>
+                ) : null}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}

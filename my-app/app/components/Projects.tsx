@@ -6,7 +6,6 @@ import SectionHeading from "./SectionHeading";
 
 type RepoActivity = { pushed_at: string; stars: number };
 type Activity = Record<string, RepoActivity>;
-type Paper = { doi: string; citations: number; source: string };
 
 const GITHUB_PREFIX = "https://github.com/Titouaaaan/";
 
@@ -29,24 +28,15 @@ function timeAgo(iso: string): string {
 export default function Projects() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [activity, setActivity] = useState<Activity | null>(null);
-  const [papers, setPapers] = useState<Record<string, Paper>>({});
 
   useEffect(() => {
     const controller = new AbortController();
-    const load = (url: string, onData: (data: unknown) => void) =>
-      fetch(url, { signal: controller.signal })
-        .then((r) => (r.ok ? r.json() : null))
-        .then((data) => data && onData(data))
-        .catch(() => {
-          // Leave the rows without the extra line; the section works without it.
-        });
-
-    load("/api/github/activity", (data) => setActivity((data as { repos: Activity }).repos));
-    load("/api/publications", (data) =>
-      setPapers(
-        Object.fromEntries((data as { papers: Paper[] }).papers.map((p) => [p.doi, p])),
-      ),
-    );
+    fetch("/api/github/activity", { signal: controller.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => data && setActivity(data.repos))
+      .catch(() => {
+        // Leave the rows without the activity line; the section works without it.
+      });
     return () => controller.abort();
   }, []);
 
@@ -65,7 +55,9 @@ export default function Projects() {
           const panelId = `project-panel-${project.id}`;
           const repo = repoName(project.links);
           const repoActivity = repo && activity ? activity[repo] : null;
-          const paper = project.doi ? papers[project.doi] : null;
+          // The activity feed lists every public repo, so a linked repo that is
+          // absent from a successfully loaded feed is private.
+          const repoIsPrivate = Boolean(repo && activity && !repoActivity);
 
           return (
             <div key={project.id} className="flex flex-col border-b border-rule-light">
@@ -107,20 +99,15 @@ export default function Projects() {
                   {project.stack ? (
                     <p className="font-mono text-xs text-faint">{project.stack}</p>
                   ) : null}
-                  {repoActivity || paper ? (
+                  {repoActivity ? (
                     <p className="font-mono text-xs text-fainter">
-                      {[
-                        repoActivity ? `last push ${timeAgo(repoActivity.pushed_at)}` : null,
-                        repoActivity && repoActivity.stars > 0
-                          ? `${repoActivity.stars} star${repoActivity.stars === 1 ? "" : "s"}`
-                          : null,
-                        paper
-                          ? `cited ${paper.citations} time${paper.citations === 1 ? "" : "s"} (${paper.source.toLowerCase()})`
-                          : null,
-                      ]
-                        .filter(Boolean)
-                        .join(" · ")}
+                      last push {timeAgo(repoActivity.pushed_at)}
+                      {repoActivity.stars > 0
+                        ? ` · ${repoActivity.stars} star${repoActivity.stars === 1 ? "" : "s"}`
+                        : ""}
                     </p>
+                  ) : repoIsPrivate ? (
+                    <p className="font-mono text-xs text-fainter">repository currently private</p>
                   ) : null}
                   <div className="flex flex-wrap gap-4">
                     {project.links.map((link) => (
