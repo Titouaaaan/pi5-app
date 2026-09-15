@@ -12,7 +12,7 @@ export const timeline: TimelineEntry[] = [
     date: "2026.11",
     role: "PhD student",
     education: true,
-    org: "ONERA and ISIR, Sorbonne Université",
+    org: "ONERA - Université Paris-Saclay & Sorbonne Université",
     detail: "Model-based reinforcement learning for drone control.",
   },
   {
