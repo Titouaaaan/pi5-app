@@ -4,6 +4,10 @@
 
 /* Every text colour clears WCAG AA (4.5:1) on its background in both themes;
    see the contrast table in docs/OPERATIONS.md before changing one. */
+/* Theme: the OS preference by default; data-theme="light|dark" on <html>,
+   set by the header toggle and restored before first paint by the inline
+   script in layout.tsx, overrides it. The dark block appears twice because
+   CSS cannot share a rule between a media query and an attribute selector. */
 :root {
   color-scheme: light dark;
   --paper: #f9fafa;
@@ -16,10 +20,13 @@
   --rule-light: #edf0f2;
   --accent: oklch(0.52 0.09 230);
   --accent-hover: oklch(0.4 0.08 230);
+  --logo-tile: transparent;
+  --show-in-light: inline;
+  --show-in-dark: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --paper: #121417;
     --ink: #e8ebee;
     --body: #d2d6da;
@@ -30,7 +37,26 @@
     --rule-light: #1e2327;
     --accent: oklch(0.74 0.1 230);
     --accent-hover: oklch(0.84 0.09 230);
+    --logo-tile: #f9fafa;
+    --show-in-light: none;
+    --show-in-dark: inline;
   }
+}
+
+:root[data-theme="dark"] {
+  --paper: #121417;
+  --ink: #e8ebee;
+  --body: #d2d6da;
+  --muted: #a4acb3;
+  --faint: #8a939b;
+  --fainter: #7a838b;
+  --rule: #272c31;
+  --rule-light: #1e2327;
+  --accent: oklch(0.74 0.1 230);
+  --accent-hover: oklch(0.84 0.09 230);
+  --logo-tile: #f9fafa;
+  --show-in-light: none;
+  --show-in-dark: inline;
 }
 
 @layer base {
@@ -42,9 +68,15 @@
     @apply bg-paper text-ink antialiased;
   }
 
-  /* Deep links (#publications) land with the heading clear of the top edge. */
+  /* Deep links (#publications) land clear of the top edge and, from sm up,
+     clear of the sticky header. */
   [id] {
     scroll-margin-top: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    [id] {
+      scroll-margin-top: 4.5rem;
+    }
   }
 
   a {

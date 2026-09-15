@@ -11,7 +11,7 @@ import Tools from "./components/Tools";
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex max-w-column flex-col gap-10 px-8 pb-16 pt-10">
+    <main className="mx-auto flex max-w-column flex-col gap-10 px-8 pb-16 pt-8">
       <Affiliations />
       <Hero />
       <Rule />

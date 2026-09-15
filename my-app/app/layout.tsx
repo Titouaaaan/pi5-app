@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import Header from "./components/Header";
 import StructuredData from "./components/StructuredData";
 
 const plexSans = IBM_Plex_Sans({
@@ -50,7 +51,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plexSans.variable} ${plexMono.variable} font-sans`}>
+        {/* Restore a saved theme before anything paints, so there is no flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}})()",
+          }}
+        />
         <StructuredData />
+        <Header />
         {children}
       </body>
     </html>
