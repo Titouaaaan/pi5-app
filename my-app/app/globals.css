@@ -68,15 +68,9 @@
     @apply bg-paper text-ink antialiased;
   }
 
-  /* Deep links (#publications) land clear of the top edge and, from sm up,
-     clear of the sticky header. */
+  /* Deep links (#publications) land clear of the sticky header. */
   [id] {
-    scroll-margin-top: 1.5rem;
-  }
-  @media (min-width: 640px) {
-    [id] {
-      scroll-margin-top: 4.5rem;
-    }
+    scroll-margin-top: 4.5rem;
   }
 
   a {

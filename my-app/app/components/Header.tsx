@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MobileMenu from "./MobileMenu";
 import ThemeToggle from "./ThemeToggle";
 
 const sections = [
@@ -12,12 +13,9 @@ const sections = [
 
 export default function Header() {
   return (
-    <header className="border-b border-rule bg-paper sm:sticky sm:top-0 sm:z-10">
+    <header className="sticky top-0 z-10 border-b border-rule bg-paper">
       <div className="mx-auto flex max-w-column items-center justify-between gap-4 px-8 py-2.5">
-        <nav
-          aria-label="Sections"
-          className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[13px]"
-        >
+        <div className="flex items-center gap-4 font-mono text-[13px]">
           <Link
             href="/"
             className="flex items-center gap-2 text-faint no-underline hover:text-ink"
@@ -30,14 +28,19 @@ export default function Header() {
             </span>
             welcome
           </Link>
-          {sections.map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="text-faint no-underline hover:text-ink">
-              <span className="text-fainter">## </span>
-              {s.label}
-            </a>
-          ))}
-        </nav>
-        <ThemeToggle />
+          <nav aria-label="Sections" className="hidden items-center gap-4 sm:flex">
+            {sections.map((s) => (
+              <a key={s.id} href={`#${s.id}`} className="text-faint no-underline hover:text-ink">
+                <span className="text-fainter">## </span>
+                {s.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+        <div className="hidden sm:block">
+          <ThemeToggle />
+        </div>
+        <MobileMenu sections={sections} />
       </div>
     </header>
   );
