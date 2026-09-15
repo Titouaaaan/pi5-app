@@ -6,7 +6,7 @@ export const profile = {
     { label: "github", href: "https://github.com/Titouaaaan" },
     { label: "linkedin", href: "https://linkedin.com/in/tguerin02" },
     { label: "email", href: "mailto:titouanguerin@gmail.com" },
-    { label: "cv.pdf", href: "/cv.pdf" },
+    { label: "cv.pdf", href: "/Titouan_Guerin_CV.pdf" },
   ],
   about: [
     "I studied AI and Machine Learning at Sorbonne Université (the MIND Master's, previously called DAC), specialising in probabilistic modelling, deep learning and reinforcement learning. Before that I completed a Bachelor's in Computer Science at the University of Luxembourg in 2023.",
