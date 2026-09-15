@@ -14,6 +14,28 @@ outstanding. Update it whenever the security posture changes.
 | **GitHub API called from every visitor's browser** | each visitor hit `api.github.com` unauthenticated, against a 60-requests-per-hour-per-IP limit | fetched server-side in `Footer.tsx` and cached for an hour with `next: { revalidate: 3600 }` |
 | **Undocumented Python dependencies** | no `requirements.txt`; the venv was unreproducible | `my-app/app/requirements.txt`, pinned |
 
+## Dependencies
+
+Audited and brought to **0 vulnerabilities** on 2026-09-15. Next moved from
+15.1.3 (January 2025, one critical and several high advisories) to 15.5.25, the
+latest on the 15.x line; everything else updated within its semver range.
+
+One fix needed a hand: Next 15.5 still pins a vulnerable nested `postcss`
+(build-time advisories — attacker-controlled CSS input, which does not apply
+here, but an advisory is an advisory). `package.json` carries
+
+```json
+"overrides": { "next": { "postcss": "8.5.28" } }
+```
+
+which is the same pin Next itself adopted in 16. Remove the override when Next
+is upgraded to 16.
+
+**Before every deploy:** `npm audit` in `my-app/` must report 0 vulnerabilities.
+If it does not, `npm update` first; if an advisory only resolves with a major
+bump, treat that as its own change with its own test cycle rather than folding
+it into a deploy.
+
 ## Still outstanding
 
 These need changes outside the repo and are listed in the order they matter.

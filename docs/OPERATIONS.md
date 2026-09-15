@@ -110,6 +110,25 @@ git push
 The `v1-original` tag is an archive of the site as it was before the redesign,
 kept for reference. It predates `deploy.sh` and is **not deployable with it**.
 
+## Keeping dependencies current
+
+```bash
+cd my-app
+npm outdated        # what has moved
+npm update          # everything within its semver range
+npm audit           # must be 0 before deploying
+npm run lint && npx tsc --noEmit && npm run build
+```
+
+Held deliberately on their current major: **Next 15.x**, **Tailwind 3.x**,
+**ESLint 9.x** (`eslint-config-next` caps at 9), **TypeScript 5.x**. Each of
+those majors is a real migration and should be done on its own, not as part of
+a routine update. When Next goes to 16, drop the `postcss` override in
+`package.json` (see `SECURITY.md`) and note that `next lint` is gone — the
+`lint` script already uses the ESLint CLI directly in readiness.
+
+Node on the Pi is 20.x. Next 15.5 requires 18.18+; Next 16 requires 20.9+.
+
 ## Service management
 
 ```bash
