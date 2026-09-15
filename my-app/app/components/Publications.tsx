@@ -25,7 +25,7 @@ export default function Publications() {
 
   return (
     <section className="flex flex-col gap-4">
-      <SectionHeading>publications</SectionHeading>
+      <SectionHeading id="publications">publications</SectionHeading>
       <ul className="flex flex-col gap-5">
         {publications.map((pub) => {
           const paper = papers[pub.doi];

@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Every text colour clears WCAG AA (4.5:1) on its background in both themes;
+   see the contrast table in docs/OPERATIONS.md before changing one. */
+:root {
+  color-scheme: light dark;
+  --paper: #f9fafa;
+  --ink: #16191c;
+  --body: #2a3036;
+  --muted: #545c64;
+  --faint: #606870;
+  --fainter: #6e767e;
+  --rule: #e3e7ea;
+  --rule-light: #edf0f2;
+  --accent: oklch(0.52 0.09 230);
+  --accent-hover: oklch(0.4 0.08 230);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121417;
+    --ink: #e8ebee;
+    --body: #d2d6da;
+    --muted: #a4acb3;
+    --faint: #8a939b;
+    --fainter: #7a838b;
+    --rule: #272c31;
+    --rule-light: #1e2327;
+    --accent: oklch(0.74 0.1 230);
+    --accent-hover: oklch(0.84 0.09 230);
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -11,8 +42,11 @@
     @apply bg-paper text-ink antialiased;
   }
 
-  /* Links are the only coloured element in the design; give anchors a
-     consistent treatment rather than relying on browser defaults. */
+  /* Deep links (#publications) land with the heading clear of the top edge. */
+  [id] {
+    scroll-margin-top: 1.5rem;
+  }
+
   a {
     @apply text-accent underline decoration-1 underline-offset-[3px];
   }

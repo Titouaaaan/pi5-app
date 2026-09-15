@@ -20,7 +20,7 @@ export default function Affiliations() {
             href={inst.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="block no-underline opacity-90 hover:opacity-100"
+            className="block rounded-md no-underline opacity-90 hover:opacity-100 dark:bg-[#f9fafa] dark:p-1.5"
           >
             <Image
               src={inst.src}

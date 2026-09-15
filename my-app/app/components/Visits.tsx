@@ -23,7 +23,8 @@ export default function Visits() {
     return () => controller.abort();
   }, []);
 
-  if (!counts) return null;
+  // Reserve the line so the footer does not shift when the count arrives.
+  if (!counts) return <p className="font-mono text-[13px] leading-[1.7] text-fainter">&nbsp;</p>;
 
   const plural = (n: number) => (n === 1 ? "visitor" : "visitors");
   return (

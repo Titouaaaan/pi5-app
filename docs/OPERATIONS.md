@@ -162,6 +162,26 @@ Code lives in `backend/app/`, one module per concern, with tests in
 `deploy/fastapi-backend.service` and installed by `deploy.sh --backend`;
 never edit the copy in `/etc` by hand.
 
+## Colours and themes
+
+Tokens are CSS variables in `my-app/app/globals.css`, one set under `:root`
+and one under `prefers-color-scheme: dark`; Tailwind classes (`text-faint`,
+`bg-paper`, ...) read them, so components carry no theme logic. Every text
+colour clears WCAG AA, 4.5:1, on its background. Measured 2026-09-15:
+
+| Token | Light | ratio | Dark | ratio | Used for |
+|---|---|---|---|---|---|
+| `ink` | `#16191C` | 16.9 | `#E8EBEE` | 15.4 | name, headings |
+| `body` | `#2A3036` | 12.8 | `#D2D6DA` | 12.6 | paragraphs |
+| `muted` | `#545C64` | 6.5 | `#A4ACB3` | 8.0 | tagline, project bodies |
+| `faint` | `#606870` | 5.6 | `#8A939B` | 5.9 | section labels, dates |
+| `fainter` | `#6E767E` | 4.5 | `#7A838B` | 4.8 | footer, metadata |
+
+Before changing one, re-check the ratio (any online contrast checker, or the
+three-line Python in the git history of this file's commit). The
+institution logos get a light tile behind them in dark mode, since one is a
+white-background PNG.
+
 ## Search engines and sharing
 
 Generated at build, all from `my-app/app/`:
@@ -170,6 +190,7 @@ Generated at build, all from `my-app/app/`:
 |---|---|---|
 | `/robots.txt` | `robots.ts` | allows everything except `/api/`, points at the sitemap. Cloudflare prepends its own "content signals" comment block at the edge; the directives are ours |
 | `/sitemap.xml` | `sitemap.ts` | the one page, `lastmod` = deploy time |
+| `/icon` | `icon.tsx` | the favicon, a `#` on ink, 64px |
 | `/opengraph-image` | `opengraph-image.tsx` | the 1200×630 card shown when the link is shared; built from `content/profile.ts` with the site's own fonts |
 | JSON-LD in `<head>` | `components/StructuredData.tsx` | schema.org `Person` (affiliations, profiles, topics) and one `ScholarlyArticle` per entry in `content/publications.ts` |
 

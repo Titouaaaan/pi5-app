@@ -1,20 +1,22 @@
 import type { Config } from "tailwindcss";
 
+// Colours are CSS variables so the same classes serve both themes; the
+// values live in globals.css under :root and prefers-color-scheme: dark.
 export default {
   content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./content/**/*.{js,ts}"],
   theme: {
     extend: {
       colors: {
-        paper: "#F9FAFA",
-        ink: "#16191C",
-        body: "#2A3036",
-        muted: "#545C64",
-        faint: "#9AA3AB",
-        fainter: "#B6BDC4",
-        rule: "#E3E7EA",
-        "rule-light": "#EDF0F2",
-        accent: "oklch(0.52 0.09 230)",
-        "accent-hover": "oklch(0.40 0.08 230)",
+        paper: "var(--paper)",
+        ink: "var(--ink)",
+        body: "var(--body)",
+        muted: "var(--muted)",
+        faint: "var(--faint)",
+        fainter: "var(--fainter)",
+        rule: "var(--rule)",
+        "rule-light": "var(--rule-light)",
+        accent: "var(--accent)",
+        "accent-hover": "var(--accent-hover)",
       },
       fontFamily: {
         sans: ["var(--font-plex-sans)", "system-ui", "sans-serif"],

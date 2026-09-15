@@ -43,7 +43,7 @@ export default function Projects() {
   return (
     <section className="flex flex-col gap-3.5">
       <div className="flex items-baseline justify-between gap-4">
-        <SectionHeading>selected work</SectionHeading>
+        <SectionHeading id="work">selected work</SectionHeading>
         <p aria-hidden="true" className="font-mono text-[12px] text-fainter">
           click to expand
         </p>
