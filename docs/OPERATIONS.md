@@ -154,7 +154,9 @@ enabled and start on boot.
 Reached by the browser only through the same-origin `/api/*` rewrite.
 
 Code lives in `backend/app/`, one module per concern, with tests in
-`backend/tests/`. The systemd unit is versioned at
+`backend/tests/`. Anything that talks to an outside service goes through
+`cache.py`: fetch at most once per TTL, serve stale on failure, so the site
+never depends on a third party being up. The systemd unit is versioned at
 `deploy/fastapi-backend.service` and installed by `deploy.sh --backend`;
 never edit the copy in `/etc` by hand.
 
@@ -164,5 +166,6 @@ never edit the copy in `/etc` by hand.
 | `GET /system-stats` | CPU, memory, disk and uptime, shown in the site footer |
 | `GET /deploy` | commit and time of the running deploy, from `.deploy/info.json`; `deploy.sh` checks it after a restart |
 | `GET /github/activity` | last push and stars for every public, non-fork repo of the account; one GitHub request per hour, cached, served stale if GitHub is down. `GITHUB_TOKEN` in the unit's environment raises the quota but is not needed |
+| `GET /publications` | citation counts from OpenAlex for the DOIs listed in `backend/app/publications.py`; one request per paper per day, cached, served stale if OpenAlex is down |
 
 Interactive docs are disabled deliberately — see `SECURITY.md`.

@@ -9,6 +9,8 @@ export type Project = {
   title?: string;
   /** Quoted verbatim, for example a paper abstract. */
   quote?: string;
+  /** A published paper's DOI; the row shows its citation count. */
+  doi?: string;
   links: { label: string; href: string }[];
 };
 
@@ -49,8 +51,12 @@ export const projects: Project[] = [
     tag: "llm multi-agent system",
     year: "2024",
     stack: "langgraph · gpt-4o · rag",
-    body: "Rather than one chatbot, a multi-agent system where each agent specialises in a different part of language learning: reading, conversation, listening, grammar. Aimed at Luxembourgish, a low-resource language. Co-authored paper published at PRIMA, demoed in Kyoto.",
-    links: [{ label: "view on github", href: "https://github.com/Titouaaaan/ELL-MMA" }],
+    body: "Rather than one chatbot, a multi-agent system where each agent specialises in a different part of language learning: reading, conversation, listening, grammar. Aimed at Luxembourgish, a low-resource language. Co-authored paper published at PRIMA 2024, demoed in Kyoto.",
+    doi: "10.1007/978-3-031-77367-9_29",
+    links: [
+      { label: "view on github", href: "https://github.com/Titouaaaan/ELL-MMA" },
+      { label: "read paper", href: "https://doi.org/10.1007/978-3-031-77367-9_29" },
+    ],
   },
   {
     id: "pi5-app",
