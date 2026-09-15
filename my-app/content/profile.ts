@@ -4,7 +4,6 @@ export const profile = {
     "M2 student in ML, AI & Data Science at Sorbonne Université. Reinforcement learning and world models.",
   links: [
     { label: "github", href: "https://github.com/Titouaaaan" },
-    { label: "email", href: "mailto:titouanguerin@gmail.com" },
     { label: "cv.pdf", href: "/TG_CV_2025.pdf" },
   ],
   about: [

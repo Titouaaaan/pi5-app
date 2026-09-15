@@ -37,12 +37,14 @@ For the full picture — architecture, ports, deploying, rolling back — see
 ```bash
 cd my-app
 npm install
-npm run dev -- -p 3002
 
-# backend, in another shell
+# backend
 python3 -m venv app/venv
 app/venv/bin/pip install -r app/requirements.txt
-app/venv/bin/uvicorn main:app --app-dir app --port 8000
+app/venv/bin/uvicorn main:app --app-dir app --port 8001 --reload
+
+# frontend, in another shell
+BACKEND_URL=http://127.0.0.1:8001 npm run dev -- -p 3002
 ```
 
 ## Deploying
@@ -53,7 +55,8 @@ app/venv/bin/uvicorn main:app --app-dir app --port 8000
 
 It refuses to deploy anything uncommitted or unpushed, builds into a scratch
 directory and only swaps it in once the build succeeds, then health-checks the
-site and rolls back on its own if something went wrong.
+site and rolls back on its own if something went wrong. Full detail in
+[docs/OPERATIONS.md](docs/OPERATIONS.md).
 
 ## Notes
 

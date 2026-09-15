@@ -2,13 +2,17 @@
 #
 # Deploy the portfolio site on the Raspberry Pi.
 #
-#   ./deploy.sh            deploy the current branch's committed state
-#   ./deploy.sh --backend  also restart the FastAPI service
+#   ./deploy.sh            deploy the current, pushed commit
+#   ./deploy.sh --backend  also update Python deps and restart FastAPI
 #
-# The build goes into a scratch directory and is swapped in only after it
-# succeeds, so a failed build can never corrupt the .next that the running
-# server is reading. If the health check fails afterwards, the previous
-# build is put back and the service restarted again.
+# The Next.js build goes into a scratch directory and is swapped in only
+# after it succeeds, so a failed build can never corrupt the .next the running
+# server is reading. If the health check fails afterwards, the previous build
+# is restored and the service restarted again.
+#
+# Downtime: none for code and content changes. When package-lock.json has
+# changed, the service is stopped for the reinstall (a few minutes on the Pi),
+# because npm ci replaces node_modules and the running server reads from it.
 
 set -Eeuo pipefail
 
@@ -18,12 +22,32 @@ LOCAL_URL="http://localhost:3000"
 BUILD_DIR="$APP_DIR/.next-build"
 LIVE_DIR="$APP_DIR/.next"
 PREV_DIR="$APP_DIR/.next-previous"
+MODULES_DIR="$APP_DIR/node_modules"
+MODULES_PREV="$APP_DIR/node_modules.previous"
+LOCK_HASH_FILE="$MODULES_DIR/.deploy-lock-hash"
 RESTART_BACKEND=0
+SERVICE_STOPPED=0
+DEPS_CHANGED=0
 
 [[ "${1:-}" == "--backend" ]] && RESTART_BACKEND=1
 
 log()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33mwarning:\033[0m %s\n' "$*" >&2; }
 fail() { printf '\033[1;31mERROR:\033[0m %s\n' "$*" >&2; exit 1; }
+
+restore_modules() {
+  if [[ $DEPS_CHANGED -eq 1 && -d "$MODULES_PREV" ]]; then
+    rm -rf "$MODULES_DIR"
+    mv "$MODULES_PREV" "$MODULES_DIR"
+  fi
+}
+
+start_if_stopped() {
+  if [[ $SERVICE_STOPPED -eq 1 ]]; then
+    sudo systemctl start nextjs-app.service
+    SERVICE_STOPPED=0
+  fi
+}
 
 cd "$APP_DIR"
 
@@ -31,16 +55,28 @@ cd "$APP_DIR"
 log "Checking working tree"
 [[ -z "$(git status --porcelain)" ]] || fail "Uncommitted changes. Commit them first."
 
-branch="$(git rev-parse --abbrev-ref HEAD)"
-git fetch --quiet origin "$branch" || fail "Could not reach origin."
-if [[ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$branch")" ]]; then
-  fail "HEAD differs from origin/$branch. Push first, so production never runs code that exists only on this Pi."
+git fetch --quiet origin || fail "Could not reach origin."
+if [[ -z "$(git branch -r --contains HEAD 2>/dev/null)" ]]; then
+  fail "HEAD is not on any remote branch. Push first, so production never runs code that exists only on this Pi."
 fi
 
 # --- 2. Dependencies -------------------------------------------------------
-if ! git diff --quiet HEAD@{1} HEAD -- package-lock.json 2>/dev/null; then
-  log "Lockfile changed, running npm ci"
-  npm ci --no-audit --no-fund
+lock_hash="$(sha256sum package-lock.json | cut -d' ' -f1)"
+if [[ ! -d "$MODULES_DIR" || "$(cat "$LOCK_HASH_FILE" 2>/dev/null)" != "$lock_hash" ]]; then
+  DEPS_CHANGED=1
+  log "Lockfile changed — stopping the service for the reinstall"
+  sudo systemctl stop nextjs-app.service
+  SERVICE_STOPPED=1
+
+  rm -rf "$MODULES_PREV"
+  [[ -d "$MODULES_DIR" ]] && mv "$MODULES_DIR" "$MODULES_PREV"
+
+  if ! npm ci --no-audit --no-fund; then
+    restore_modules
+    start_if_stopped
+    fail "npm ci failed. Previous node_modules restored and service restarted."
+  fi
+  echo "$lock_hash" > "$LOCK_HASH_FILE"
 else
   log "Lockfile unchanged, skipping npm ci"
 fi
@@ -53,7 +89,11 @@ fi
 # --- 3. Build into a scratch directory -------------------------------------
 log "Building (into .next-build)"
 rm -rf "$BUILD_DIR"
-NEXT_DIST_DIR=".next-build" npm run build || fail "Build failed. Nothing was swapped in; the site is still serving the previous build."
+if ! NEXT_DIST_DIR=".next-build" npm run build; then
+  restore_modules
+  start_if_stopped
+  fail "Build failed. Nothing was swapped in; the site is serving the previous build."
+fi
 
 # --- 4. Swap the new build in ----------------------------------------------
 log "Swapping in the new build"
@@ -64,6 +104,7 @@ mv "$BUILD_DIR" "$LIVE_DIR"
 # --- 5. Restart ------------------------------------------------------------
 log "Restarting services"
 sudo systemctl restart nextjs-app.service
+SERVICE_STOPPED=0
 [[ $RESTART_BACKEND -eq 1 ]] && sudo systemctl restart fastapi-backend.service
 
 # --- 6. Health check, with rollback ----------------------------------------
@@ -82,24 +123,27 @@ if [[ $healthy -ne 1 ]]; then
   if [[ -d "$PREV_DIR" ]]; then
     rm -rf "$LIVE_DIR"
     mv "$PREV_DIR" "$LIVE_DIR"
+    restore_modules
     sudo systemctl restart nextjs-app.service
-    fail "Rolled back to the previous build. The site should be up; check: sudo journalctl -u nextjs-app -n 50"
+    fail "Rolled back to the previous build. Check: sudo journalctl -u nextjs-app -n 50"
   fi
   fail "No previous build to roll back to. Check: sudo journalctl -u nextjs-app -n 50"
 fi
 
-curl -fsS --max-time 5 "http://127.0.0.1:8000/health" >/dev/null 2>&1 \
-  && log "Backend healthy" \
-  || printf '\033[1;33mwarning:\033[0m backend /health did not answer\n'
+if curl -fsS --max-time 5 "http://127.0.0.1:8000/health" >/dev/null 2>&1; then
+  log "Backend healthy"
+else
+  warn "backend /health did not answer"
+fi
 
 # --- 7. Done ---------------------------------------------------------------
-rm -rf "$PREV_DIR"
+rm -rf "$PREV_DIR" "$MODULES_PREV"
 log "Local site healthy"
 
 if curl -fsS -o /dev/null --max-time 15 "$SITE_URL" 2>/dev/null; then
   log "Public site healthy — $SITE_URL"
 else
-  printf '\033[1;33mwarning:\033[0m %s did not answer. Local site is fine, so check the tunnel: sudo systemctl status cloudflared\n' "$SITE_URL"
+  warn "$SITE_URL did not answer. Local site is fine, so check the tunnel: sudo systemctl status cloudflared"
 fi
 
-log "Deployed $(git rev-parse --short HEAD) ($branch)"
+log "Deployed $(git rev-parse --short HEAD)"

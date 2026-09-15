@@ -7,12 +7,13 @@ const nextConfig: NextConfig = {
 
   // Proxy the FastAPI backend under the site's own origin. This keeps every
   // browser request same-origin, so the backend needs no CORS middleware and
-  // no separate public hostname.
+  // no separate public hostname. BACKEND_URL overrides the target for local
+  // development, where port 8000 may already be taken by the live service.
   async rewrites() {
     return [
       {
         source: "/api/:path*",
-        destination: "http://127.0.0.1:8000/:path*",
+        destination: `${process.env.BACKEND_URL ?? "http://127.0.0.1:8000"}/:path*`,
       },
     ];
   },
