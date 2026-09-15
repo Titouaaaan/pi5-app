@@ -1,6 +1,7 @@
 import About from "./components/About";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
+import Phd from "./components/Phd";
 import Projects from "./components/Projects";
 import Rule from "./components/Rule";
 import Timeline from "./components/Timeline";
@@ -12,6 +13,8 @@ export default function HomePage() {
       <Hero />
       <Rule />
       <About />
+      <Rule />
+      <Phd />
       <Rule />
       <Projects />
       <Rule />

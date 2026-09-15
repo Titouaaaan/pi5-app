@@ -7,21 +7,27 @@ export type TimelineEntry = {
 
 export const timeline: TimelineEntry[] = [
   {
+    date: "2026.11",
+    role: "PhD student",
+    org: "ONERA and ISIR, Sorbonne Université",
+    detail: "Model-based reinforcement learning for drone control.",
+  },
+  {
     date: "2026.03",
-    role: "Master's internship",
-    org: "ISIR × ONERA",
-    detail: "physics-informed model-based RL for safer autonomous systems.",
+    role: "Research internship",
+    org: "ISIR x ONERA",
+    detail: "World models and deep reinforcement learning for drone control.",
   },
   {
     date: "2024.07",
-    role: "Research assistant",
-    org: "University of Luxembourg",
+    role: "AI research assistant",
+    org: "AI Robolab, University of Luxembourg",
     detail:
-      "LangGraph multi-agent backend; co-authored paper, demo in Kyoto.",
+      "Backend for a multi-agent language learning app built with LangGraph. Co-authored a paper presented at PRIMA in Kyoto.",
   },
   {
     date: "2023.09",
-    role: "MSc Machine Learning & AI",
+    role: "MSc AI and Machine Learning",
     org: "Sorbonne Université",
   },
   {

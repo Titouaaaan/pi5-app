@@ -17,7 +17,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 const description =
-  "M2 student in ML, AI & Data Science at Sorbonne Université, working on reinforcement learning and world models. Projects, education and experience.";
+  "PhD student in deep reinforcement learning at ONERA and Sorbonne Université. World models and model-based control for drones. Projects, education and experience.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://titouanguerin.com"),

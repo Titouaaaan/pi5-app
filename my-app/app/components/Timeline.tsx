@@ -11,7 +11,7 @@ export default function Timeline() {
             <dt className="font-mono text-[13px] text-faint">{entry.date}</dt>
             <dd className="text-body">
               {entry.role}, <span className="text-muted">{entry.org}</span>
-              {entry.detail ? <span className="text-muted"> — {entry.detail}</span> : null}
+              {entry.detail ? <span className="text-muted">. {entry.detail}</span> : null}
             </dd>
           </div>
         ))}
