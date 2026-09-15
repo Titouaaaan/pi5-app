@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { profile } from "@/content/profile";
 
-const LOGO_HEIGHT = 48;
+const LOGO_HEIGHT = 64;
 
 export default function Affiliations() {
   return (
-    <ul className="flex flex-wrap items-center gap-7" aria-label="Institutions">
+    <ul className="flex flex-wrap items-center justify-center gap-12" aria-label="Institutions">
       {profile.institutions.map((inst) => (
         <li key={inst.name}>
           <a
