@@ -1,8 +1,5 @@
-import Image from "next/image";
 import { phd } from "@/content/phd";
 import SectionHeading from "./SectionHeading";
-
-const LOGO_HEIGHT = 36;
 
 export default function Phd() {
   return (
@@ -14,26 +11,6 @@ export default function Phd() {
           {paragraph}
         </p>
       ))}
-      <ul className="flex flex-wrap items-center gap-6 pt-2" aria-label="Institutions">
-        {phd.institutions.map((inst) => (
-          <li key={inst.name}>
-            <a
-              href={inst.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block no-underline opacity-90 hover:opacity-100"
-            >
-              <Image
-                src={inst.src}
-                alt={inst.name}
-                width={Math.round((inst.width * LOGO_HEIGHT) / inst.height)}
-                height={LOGO_HEIGHT}
-                className="rounded-sm"
-              />
-            </a>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }

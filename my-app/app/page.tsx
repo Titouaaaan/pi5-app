@@ -1,4 +1,5 @@
 import About from "./components/About";
+import Affiliations from "./components/Affiliations";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Phd from "./components/Phd";
@@ -10,7 +11,8 @@ import Tools from "./components/Tools";
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex max-w-column flex-col gap-10 px-8 pb-16 pt-20">
+    <main className="mx-auto flex max-w-column flex-col gap-10 px-8 pb-16 pt-10">
+      <Affiliations />
       <Hero />
       <Rule />
       <About />
