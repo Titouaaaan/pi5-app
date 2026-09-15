@@ -1,36 +1,18 @@
 import PiStats from "./PiStats";
 
-const COMMITS_URL =
-  "https://api.github.com/repos/Titouaaaan/pi5-app/commits?per_page=1";
+// Baked in at build time by deploy.sh, so the line is always true for the
+// build that is serving it. Both are unset in development.
+const commit = process.env.NEXT_PUBLIC_DEPLOY_COMMIT;
+const deployedAt = process.env.NEXT_PUBLIC_DEPLOY_AT;
 
-/**
- * Fetched on the server and cached for an hour, so visitors' browsers never
- * hit GitHub's unauthenticated 60-requests-per-hour-per-IP limit themselves.
- */
-async function getLastDeploy(): Promise<string | null> {
-  try {
-    const response = await fetch(COMMITS_URL, {
-      next: { revalidate: 3600 },
-      headers: { Accept: "application/vnd.github+json" },
-    });
-    if (!response.ok) return null;
-
-    const commits = await response.json();
-    const date = commits?.[0]?.commit?.committer?.date;
-    return typeof date === "string" ? date.slice(0, 10) : null;
-  } catch {
-    return null;
-  }
-}
-
-export default async function Footer() {
-  const lastDeploy = await getLastDeploy();
-
+export default function Footer() {
   return (
     <footer className="flex flex-col gap-1.5">
       <PiStats />
       <p className="font-mono text-xs leading-[1.7] text-fainter">
-        raspberry pi 5{lastDeploy ? ` · last deploy ${lastDeploy}` : ""}
+        raspberry pi 5
+        {commit ? ` · ${commit}` : ""}
+        {deployedAt ? ` · deployed ${deployedAt}` : ""}
       </p>
     </footer>
   );

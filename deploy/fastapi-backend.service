@@ -1,0 +1,20 @@
+# Installed by deploy.sh --backend into /etc/systemd/system/.
+# Edit it here, commit, and deploy; never edit the copy in /etc by hand.
+[Unit]
+Description=FastAPI backend for titouanguerin.com
+After=network.target
+
+[Service]
+WorkingDirectory=/home/titouan/home/pi/pi5-app/backend
+Environment=DEPLOY_INFO_PATH=/home/titouan/home/pi/pi5-app/.deploy/info.json
+# 0.0.0.0 because uptime-kuma's "FastApi" monitor polls the LAN address.
+# Repoint that monitor at http://127.0.0.1:8000/health, then change this to
+# --host 127.0.0.1 so the port is no longer reachable from the LAN or tailnet.
+ExecStart=/home/titouan/home/pi/pi5-app/backend/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+User=titouan
+Group=titouan
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,8 +1,8 @@
 # CLAUDE.md
 
 Personal portfolio at **https://titouanguerin.com**, self-hosted on a Raspberry
-Pi 5. Next.js 15 (App Router, Tailwind) in `my-app/`, a small FastAPI backend
-in `my-app/app/main.py`, exposed through a Cloudflare tunnel.
+Pi 5. Next.js 15 (App Router, Tailwind) in `my-app/`, a FastAPI backend in
+`backend/`, exposed through a Cloudflare tunnel.
 
 Read `docs/OPERATIONS.md` before touching how the site runs, and
 `docs/SECURITY.md` before touching anything network-facing. They are the source
@@ -34,28 +34,33 @@ of truth; this file is the short version.
 ## Layout
 
 ```
-deploy.sh                 the only sanctioned way to ship
-docs/OPERATIONS.md        architecture, ports, deploy, rollback, tunnel routes
-docs/SECURITY.md          what is hardened, what is still open
-my-app/app/               Next.js App Router — layout, page, components/
-my-app/app/main.py        FastAPI: GET /health, GET /system-stats
-my-app/app/requirements.txt
-my-app/content/*.ts       all site copy — profile, projects, timeline, skills
+deploy.sh                       the only sanctioned way to ship
+deploy/fastapi-backend.service  systemd unit, installed by deploy.sh --backend
+docs/OPERATIONS.md              architecture, ports, deploy, rollback, tunnel routes
+docs/SECURITY.md                what is hardened, what is still open
+backend/app/                    FastAPI, one module per concern; main.py wires routers
+backend/tests/                  pytest; run before every backend deploy
+my-app/app/                     Next.js App Router: layout, page, components/
+my-app/content/*.ts             all site copy: profile, phd, projects, timeline, skills
 ```
 
 Content edits go in `my-app/content/`, not in components. Components are
 server-rendered except `Projects.tsx` (expandable rows) and `PiStats.tsx`
-(polls `/api/system-stats`).
+(polls `/api/system-stats`). The footer's commit and deploy date are baked in at build time by `deploy.sh`, not fetched.
 
 ## Commands
 
 ```bash
 cd my-app
-npm run lint           # eslint . — flat config in eslint.config.mjs
+npm run lint           # eslint . (flat config in eslint.config.mjs)
 npx tsc --noEmit
 npm run build
 npm audit              # must report 0 vulnerabilities before deploying
-cd .. && ./deploy.sh   # or ./deploy.sh --backend if main.py or requirements changed
+
+cd ../backend
+.venv/bin/python -m pytest      # after: python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
+
+cd .. && ./deploy.sh   # add --backend when backend/ or deploy/ changed
 ```
 
 ## Where things stand

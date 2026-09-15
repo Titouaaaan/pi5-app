@@ -12,7 +12,7 @@ outstanding. Update it whenever the security posture changes.
 | **Framework fingerprinting** | `X-Powered-By: Next.js` on every response | `poweredByHeader: false` |
 | **Missing response headers** | none set | `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: DENY`, `Permissions-Policy` denying camera/microphone/geolocation |
 | **GitHub API called from every visitor's browser** | each visitor hit `api.github.com` unauthenticated, against a 60-requests-per-hour-per-IP limit | fetched server-side in `Footer.tsx` and cached for an hour with `next: { revalidate: 3600 }` |
-| **Undocumented Python dependencies** | no `requirements.txt`; the venv was unreproducible | `my-app/app/requirements.txt`, pinned |
+| **Undocumented Python dependencies** | no `requirements.txt`; the venv was unreproducible | `backend/requirements.txt`, pinned; `deploy.sh --backend` rebuilds the venv from it |
 
 ## Dependencies
 
@@ -65,16 +65,14 @@ ExecStart=/usr/bin/cloudflared --no-autoupdate tunnel run --token ${TUNNEL_TOKEN
 
 ### 2. Bind the backend to localhost
 
-`fastapi-backend.service` runs uvicorn with `--host 0.0.0.0`, so port 8000 is
-reachable from the whole LAN and tailnet. Both cloudflared and uptime-kuma run
-on this host, so nothing legitimate needs the wider bind:
+The unit (versioned at `deploy/fastapi-backend.service`) runs uvicorn with
+`--host 0.0.0.0`, so port 8000 is reachable from the whole LAN and tailnet.
+The one thing that needs it is uptime-kuma's "FastApi" monitor, which polls
+`http://192.168.1.41:8000/system-stats`. Two steps, in this order:
 
-```ini
-ExecStart=.../uvicorn main:app --host 127.0.0.1 --port 8000
-```
-
-Check uptime-kuma's monitor URL afterwards — if it points at the Pi's LAN
-address it must become `127.0.0.1`.
+1. In uptime-kuma, change that monitor's URL to `http://127.0.0.1:8000/health`.
+2. In `deploy/fastapi-backend.service`, change `--host 0.0.0.0` to
+   `--host 127.0.0.1`, commit, and run `./deploy.sh --backend`.
 
 ### 3. Retire the `api.` hostname
 

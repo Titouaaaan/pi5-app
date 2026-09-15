@@ -14,8 +14,8 @@ Cloudflare tunnel (cloudflared.service, token mode)
    |                                  |
    |                                  +-- /api/* rewritten to 127.0.0.1:8000
    |
-   +-- api.titouanguerin.com --> localhost:8000   FastAPI  (fastapi-backend.service)
-                                                  (legacy; see SECURITY.md #3)
+   +-- api.titouanguerin.com --> localhost:8000   FastAPI  (fastapi-backend.service, backend/)
+                                                  (legacy hostname; see SECURITY.md #3)
 ```
 
 The tunnel runs in **token mode**, which means its routing table lives in the
@@ -53,18 +53,23 @@ What it does, in order:
    on this Pi.
 2. If `package-lock.json` changed since the last deploy, **stops the service**,
    sets the old `node_modules` aside and runs `npm ci`. This is the only case
-   with downtime — a few minutes on the Pi — and it is deliberate: replacing
+   with downtime, a few minutes on the Pi, and it is deliberate: replacing
    `node_modules` under a running server is worse than a clean stop.
-3. Builds into `.next-build`, a scratch directory the running server never
-   reads. A failed build leaves the live site exactly as it was.
-4. Swaps `.next-build` into `.next` (the previous build is kept as
-   `.next-previous`) and restarts the service.
-5. Polls `localhost:3000` for up to 40 s looking for the page. If it does not
-   come up, restores the previous build (and previous `node_modules`, if
-   they were replaced) and restarts again.
-6. Checks the backend's `/health` and the public URL, warning rather than
-   failing if either is unreachable — a tunnel problem is not a deploy
-   problem.
+3. With `--backend`: creates `backend/.venv` if missing, installs
+   `backend/requirements.txt`, and if `deploy/fastapi-backend.service` differs
+   from the copy in `/etc/systemd/system/`, installs it and reloads systemd.
+4. Records the commit and time as `.deploy/info.json` and bakes both into the
+   page footer, then builds into `.next-build`, a scratch directory the
+   running server never reads. A failed build leaves the live site exactly as
+   it was.
+5. Swaps `.next-build` into `.next` (the previous build is parked in
+   `.deploy/`) and restarts the service(s).
+6. Polls `localhost:3000` for up to 40 s until the page **contains the commit
+   hash it just built**. If it does not, restores the previous build (and
+   previous `node_modules`, if they were replaced) and restarts again.
+7. Asks the backend's `/deploy` which commit it is running and warns if it
+   differs (that means `--backend` was needed). Checks the public URL, warning
+   rather than failing if the tunnel is the problem.
 
 **Do not run `npm run build` by hand in the live tree.** `next start` reads
 static chunks lazily off disk, so a build that fails partway can break the live
@@ -86,9 +91,13 @@ backend on another port and point the `/api` rewrite at it:
 
 ```bash
 # backend, in one shell
-app/venv/bin/uvicorn main:app --app-dir app --port 8001 --reload
+cd backend
+python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
+.venv/bin/uvicorn app.main:app --port 8001 --reload
+.venv/bin/python -m pytest               # run the tests
 
 # frontend, in another
+cd my-app
 BACKEND_URL=http://127.0.0.1:8001 npm run dev -- -p 3002
 ```
 
@@ -144,9 +153,15 @@ enabled and start on boot.
 
 Reached by the browser only through the same-origin `/api/*` rewrite.
 
+Code lives in `backend/app/`, one module per concern, with tests in
+`backend/tests/`. The systemd unit is versioned at
+`deploy/fastapi-backend.service` and installed by `deploy.sh --backend`;
+never edit the copy in `/etc` by hand.
+
 | Endpoint | Purpose |
 |---|---|
-| `GET /health` | liveness probe, used by `deploy.sh` and suitable for uptime-kuma |
+| `GET /health` | liveness probe, suitable for uptime-kuma |
 | `GET /system-stats` | CPU, memory, disk and uptime, shown in the site footer |
+| `GET /deploy` | commit and time of the running deploy, from `.deploy/info.json`; `deploy.sh` checks it after a restart |
 
 Interactive docs are disabled deliberately — see `SECURITY.md`.

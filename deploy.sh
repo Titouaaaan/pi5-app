@@ -3,7 +3,8 @@
 # Deploy the portfolio site on the Raspberry Pi.
 #
 #   ./deploy.sh            deploy the current, pushed commit
-#   ./deploy.sh --backend  also update Python deps and restart FastAPI
+#   ./deploy.sh --backend  also (re)build the backend venv, install its systemd
+#                          unit from deploy/, and restart FastAPI
 #
 # The Next.js build goes into a scratch directory and is swapped in only
 # after it succeeds, so a failed build can never corrupt the .next the running
@@ -28,6 +29,11 @@ MODULES_DIR="$APP_DIR/node_modules"
 KEEP_DIR="$REPO_DIR/.deploy"
 PREV_DIR="$KEEP_DIR/next-previous"
 MODULES_PREV="$KEEP_DIR/node_modules-previous"
+DEPLOY_INFO="$KEEP_DIR/info.json"
+BACKEND_DIR="$REPO_DIR/backend"
+BACKEND_VENV="$BACKEND_DIR/.venv"
+BACKEND_UNIT_SRC="$REPO_DIR/deploy/fastapi-backend.service"
+BACKEND_UNIT_DST="/etc/systemd/system/fastapi-backend.service"
 LOCK_HASH_FILE="$MODULES_DIR/.deploy-lock-hash"
 RESTART_BACKEND=0
 SERVICE_STOPPED=0
@@ -87,14 +93,24 @@ else
 fi
 
 if [[ $RESTART_BACKEND -eq 1 ]]; then
-  log "Updating Python dependencies"
-  ./app/venv/bin/pip install --quiet -r app/requirements.txt
+  log "Updating backend"
+  [[ -x "$BACKEND_VENV/bin/pip" ]] || python3 -m venv "$BACKEND_VENV"
+  "$BACKEND_VENV/bin/pip" install --quiet -r "$BACKEND_DIR/requirements.txt"
+  if ! sudo cmp -s "$BACKEND_UNIT_SRC" "$BACKEND_UNIT_DST"; then
+    log "Installing updated systemd unit"
+    sudo install -m 644 "$BACKEND_UNIT_SRC" "$BACKEND_UNIT_DST"
+    sudo systemctl daemon-reload
+  fi
 fi
 
 # --- 3. Build into a scratch directory -------------------------------------
-log "Building (into .next-build)"
+COMMIT="$(git rev-parse --short HEAD)"
+DEPLOYED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+printf '{"commit":"%s","deployed_at":"%s"}\n' "$COMMIT" "$DEPLOYED_AT" > "$DEPLOY_INFO.next"
+
+log "Building $COMMIT (into .next-build)"
 rm -rf "$BUILD_DIR"
-if ! NEXT_DIST_DIR=".next-build" npm run build; then
+if ! NEXT_DIST_DIR=".next-build" NEXT_PUBLIC_DEPLOY_COMMIT="$COMMIT" NEXT_PUBLIC_DEPLOY_AT="${DEPLOYED_AT%%T*}" npm run build; then
   restore_modules
   start_if_stopped
   fail "Build failed. Nothing was swapped in; the site is serving the previous build."
@@ -105,6 +121,7 @@ log "Swapping in the new build"
 rm -rf "$PREV_DIR"
 [[ -d "$LIVE_DIR" ]] && mv "$LIVE_DIR" "$PREV_DIR"
 mv "$BUILD_DIR" "$LIVE_DIR"
+mv "$DEPLOY_INFO.next" "$DEPLOY_INFO"
 
 # --- 5. Restart ------------------------------------------------------------
 log "Restarting services"
@@ -116,7 +133,7 @@ SERVICE_STOPPED=0
 log "Health checking"
 healthy=0
 for _ in $(seq 1 20); do
-  if curl -fsS --max-time 5 "$LOCAL_URL" 2>/dev/null | grep -q "Titouan Guerin"; then
+  if curl -fsS --max-time 5 "$LOCAL_URL" 2>/dev/null | grep -q "$COMMIT"; then
     healthy=1
     break
   fi
@@ -135,10 +152,13 @@ if [[ $healthy -ne 1 ]]; then
   fail "No previous build to roll back to. Check: sudo journalctl -u nextjs-app -n 50"
 fi
 
-if curl -fsS --max-time 5 "http://127.0.0.1:8000/health" >/dev/null 2>&1; then
-  log "Backend healthy"
+backend_commit="$(curl -fsS --max-time 5 "http://127.0.0.1:8000/deploy" 2>/dev/null | sed -n 's/.*"commit":"\([^"]*\)".*/\1/p')"
+if [[ "$backend_commit" == "$COMMIT" ]]; then
+  log "Backend healthy, reports $COMMIT"
+elif [[ -n "$backend_commit" ]]; then
+  warn "backend is up but reports $backend_commit, not $COMMIT. If main.py or the unit changed, run with --backend."
 else
-  warn "backend /health did not answer"
+  warn "backend /deploy did not answer"
 fi
 
 # --- 7. Done ---------------------------------------------------------------
@@ -151,4 +171,4 @@ else
   warn "$SITE_URL did not answer. Local site is fine, so check the tunnel: sudo systemctl status cloudflared"
 fi
 
-log "Deployed $(git rev-parse --short HEAD)"
+log "Deployed $COMMIT at $DEPLOYED_AT"

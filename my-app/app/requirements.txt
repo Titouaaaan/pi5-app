@@ -1,6 +1,0 @@
-# Backend dependencies for the FastAPI service (app/main.py).
-# Rebuild the venv with:
-#   python3 -m venv app/venv && app/venv/bin/pip install -r app/requirements.txt
-fastapi==0.118.0
-uvicorn==0.37.0
-psutil==7.1.0

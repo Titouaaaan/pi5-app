@@ -38,13 +38,14 @@ For the full picture — architecture, ports, deploying, rolling back — see
 cd my-app
 npm install
 
-# backend
-python3 -m venv app/venv
-app/venv/bin/pip install -r app/requirements.txt
-app/venv/bin/uvicorn main:app --app-dir app --port 8001 --reload
-
-# frontend, in another shell
+# frontend
 BACKEND_URL=http://127.0.0.1:8001 npm run dev -- -p 3002
+
+# backend, in another shell
+cd ../backend
+python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
+.venv/bin/uvicorn app.main:app --port 8001 --reload
+.venv/bin/python -m pytest        # tests
 ```
 
 ## Deploying

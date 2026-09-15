@@ -1,2 +1,8 @@
-# deploy.sh parks the previous build and node_modules here for rollback
+# deploy.sh parks the previous build and node_modules here for rollback,
+# and writes info.json describing the current deploy.
 /.deploy/
+
+# Python
+/backend/.venv/
+__pycache__/
+.pytest_cache/
