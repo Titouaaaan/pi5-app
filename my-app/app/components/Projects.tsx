@@ -5,7 +5,7 @@ import { projects } from "@/content/projects";
 import SectionHeading from "./SectionHeading";
 
 export default function Projects() {
-  const [openId, setOpenId] = useState<string | null>(projects[0]?.id ?? null);
+  const [openId, setOpenId] = useState<string | null>(null);
 
   return (
     <section className="flex flex-col gap-3.5">

@@ -21,7 +21,7 @@ export default {
         mono: ["var(--font-plex-mono)", "ui-monospace", "monospace"],
       },
       maxWidth: {
-        column: "680px",
+        column: "800px",
       },
     },
   },
