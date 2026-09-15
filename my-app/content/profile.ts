@@ -5,6 +5,7 @@ export const profile = {
   links: [
     { label: "github", href: "https://github.com/Titouaaaan" },
     { label: "linkedin", href: "https://linkedin.com/in/tguerin02" },
+    { label: "scholar", href: "https://scholar.google.com/citations?user=IgYkGZ0AAAAJ" },
     { label: "email", href: "mailto:titouanguerin@gmail.com" },
     { label: "cv.pdf", href: "/Titouan_Guerin_CV.pdf" },
   ],
