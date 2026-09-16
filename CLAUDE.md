@@ -72,6 +72,9 @@ Redesign shipped 2026-09-15. The pre-redesign site is archived at tag
 `docs/SECURITY.md` under "Still outstanding" — all of it needs changes to
 systemd units or the Cloudflare dashboard, which is why it is still open.
 
+Open issues live on GitHub (`gh issue list`); the Pi is logged in as Titouaaaan.
+The translate dropdown is disabled behind `TRANSLATE_ENABLED` pending issue #1.
+
 Dependencies: Next is held on the 15.x line deliberately. `package.json` has an
 `overrides` entry pinning Next's nested `postcss` to a patched release; keep it
 until Next is upgraded to 16, at which point it can go. Next 16, Tailwind 4,

@@ -1,6 +1,6 @@
 /**
  * Site translation is switched off pending a better approach; see the
- * "Translation without Google's proxy" issue. Flip this to re-enable the
+ * "Translation without Google's proxy" issue (#1). Flip this to re-enable the
  * dropdown in the header and mobile menu. Everything else stays wired.
  */
 export const TRANSLATE_ENABLED = false;
