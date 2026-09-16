@@ -8,12 +8,15 @@ import { others, pinned } from "@/content/languages";
 const PROXY = "https://titouanguerin-com.translate.goog/";
 
 function go(code: string) {
+  // Carried in both the query and the fragment: the fragment never reaches
+  // any server or proxy, so it survives whatever the proxy does to the query.
   const theme = document.documentElement.dataset.theme;
-  const keep = theme ? `theme=${theme}` : "";
-  location.href =
-    code === "en"
-      ? `/${keep ? `?${keep}` : ""}`
-      : `${PROXY}?_x_tr_sl=en&_x_tr_tl=${code}&_x_tr_hl=${code}${keep ? `&${keep}` : ""}`;
+  const tail = theme ? `theme=${theme}` : "";
+  const base =
+    code === "en" ? "/" : `${PROXY}?_x_tr_sl=en&_x_tr_tl=${code}&_x_tr_hl=${code}`;
+  location.href = tail
+    ? `${base}${code === "en" ? "?" : "&"}${tail}#${tail}`
+    : base;
 }
 
 export default function LanguageSelect() {
