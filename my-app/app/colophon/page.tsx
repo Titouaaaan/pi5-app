@@ -39,7 +39,11 @@ export default function ColophonPage() {
       </section>
 
       <figure className="flex flex-col gap-2">
-        <div className="rounded-md border border-rule bg-white p-3">
+        {/* The tile is white in both themes, so the diagram always uses the light palette. */}
+        <div
+          className="rounded-md border border-rule bg-white p-3"
+          style={{ "--ink": "#16191c", "--body": "#2a3036", "--faint": "#606870", "--fainter": "#6e767e", "--rule": "#e3e7ea" } as React.CSSProperties}
+        >
           <TunnelDiagram />
         </div>
         <figcaption className="font-mono text-[13px] leading-relaxed text-faint">
