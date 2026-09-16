@@ -75,7 +75,7 @@ export default function Projects() {
                   >
                     {isOpen ? "−" : "+"}
                   </span>
-                  <span className="font-mono text-[16px] font-medium text-accent group-hover:text-accent-hover">
+                  <span translate="no" className="font-mono text-[16px] font-medium text-accent group-hover:text-accent-hover">
                     {project.slug}
                   </span>
                   <span className="grow text-[14px] text-faint">{project.tag}</span>
@@ -88,7 +88,7 @@ export default function Projects() {
               {isOpen ? (
                 <div id={panelId} className="flex flex-col gap-2.5 pb-[18px] pl-[22px] pt-0.5">
                   {project.title ? (
-                    <p className="text-[16px] font-medium leading-snug text-body">{project.title}</p>
+                    <p translate="no" className="text-[16px] font-medium leading-snug text-body">{project.title}</p>
                   ) : null}
                   <p className="text-[15px] leading-[1.7] text-muted">{project.body}</p>
                   {project.video ? (

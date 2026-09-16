@@ -3,20 +3,25 @@
 import { others, pinned } from "@/content/languages";
 
 // Google's site-translation proxy renders the whole page in the chosen
-// language with no script on our side and no change to our CSP.
+// language with no script on our side and no change to our CSP. The theme
+// choice is saved per origin, so it is carried across in the URL.
 const PROXY = "https://titouanguerin-com.translate.goog/";
 
 function go(code: string) {
+  const theme = document.documentElement.dataset.theme;
+  const keep = theme ? `theme=${theme}` : "";
   location.href =
-    code === "en" ? "/" : `${PROXY}?_x_tr_sl=en&_x_tr_tl=${code}&_x_tr_hl=${code}`;
+    code === "en"
+      ? `/${keep ? `?${keep}` : ""}`
+      : `${PROXY}?_x_tr_sl=en&_x_tr_tl=${code}&_x_tr_hl=${code}${keep ? `&${keep}` : ""}`;
 }
 
 export default function LanguageSelect() {
   return (
-    <label className="flex items-center gap-1.5 font-mono text-[13px] text-faint hover:text-ink">
+    <span className="relative flex h-8 w-8 items-center justify-center rounded-md text-faint hover:text-ink">
       <svg
-        width="16"
-        height="16"
+        width="18"
+        height="18"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -27,11 +32,12 @@ export default function LanguageSelect() {
         <circle cx="12" cy="12" r="9" />
         <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
       </svg>
-      <span className="sr-only">Translate this page</span>
       <select
+        aria-label="Translate this page"
+        title="Translate this page"
         defaultValue=""
         onChange={(e) => e.target.value && go(e.target.value)}
-        className="cursor-pointer appearance-none bg-transparent text-inherit"
+        className="absolute inset-0 cursor-pointer opacity-0"
       >
         <option value="" disabled>
           translate
@@ -44,6 +50,6 @@ export default function LanguageSelect() {
           <option key={code} value={code}>{name}</option>
         ))}
       </select>
-    </label>
+    </span>
   );
 }

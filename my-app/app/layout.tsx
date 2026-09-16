@@ -55,7 +55,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}})()",
+              "(function(){try{var u=new URL(location.href),q=u.searchParams.get('theme'),t=q||localStorage.getItem('theme');if(t==='dark'||t==='light'){document.documentElement.dataset.theme=t;if(q){localStorage.setItem('theme',t);u.searchParams.delete('theme');history.replaceState(null,'',u)}}}catch(e){}})()",
           }}
         />
         <StructuredData />

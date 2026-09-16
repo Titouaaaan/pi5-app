@@ -14,7 +14,7 @@ export default function Hero() {
       <p className="pl-[26px] text-[17px] leading-relaxed text-muted">
         {profile.tagline}
       </p>
-      <nav className="flex gap-[18px] pl-[26px] pt-1 font-mono text-[14px]">
+      <nav translate="no" className="flex gap-[18px] pl-[26px] pt-1 font-mono text-[14px]">
         {profile.links.map((link) => (
           <a key={link.label} href={link.href}>
             {link.label}

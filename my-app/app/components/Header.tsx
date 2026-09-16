@@ -14,7 +14,7 @@ const sections = [
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-10 border-b border-rule bg-paper">
+    <header translate="no" className="sticky top-0 z-10 border-b border-rule bg-paper">
       <div className="mx-auto flex max-w-column items-center justify-between gap-4 px-8 py-2.5">
         <div className="flex items-center gap-4 font-mono text-[13px]">
           <Link
@@ -39,8 +39,8 @@ export default function Header() {
           </nav>
         </div>
         <div className="hidden items-center gap-3 sm:flex">
-          <LanguageSelect />
           <ThemeToggle />
+          <LanguageSelect />
         </div>
         <MobileMenu sections={sections} />
       </div>
