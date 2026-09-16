@@ -1,7 +1,7 @@
 export const profile = {
   name: "Titouan Guerin",
   tagline:
-    "PhD student in deep reinforcement learning, physics-informed models and model-based control at ONERA and Sorbonne Université, from November 2026.",
+    "PhD student in deep reinforcement learning, physics-informed models and model-based control at ONERA, the French Aerospace Lab, from November 2026.",
   links: [
     { label: "github", href: "https://github.com/Titouaaaan" },
     { label: "linkedin", href: "https://linkedin.com/in/tguerin02" },
