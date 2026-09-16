@@ -32,7 +32,7 @@ export default function Header() {
           </Link>
           <nav aria-label="Sections" className="hidden items-center gap-4 sm:flex">
             {sections.map((s) => (
-              <a key={s.id} href={`#${s.id}`} className="text-faint no-underline hover:text-ink">
+              <a key={s.id} href={`/#${s.id}`} className="text-faint no-underline hover:text-ink">
                 <span className="text-fainter">## </span>
                 {s.label}
               </a>

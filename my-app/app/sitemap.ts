@@ -10,5 +10,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: "https://titouanguerin.com/PhINODE",
+      lastModified: process.env.NEXT_PUBLIC_DEPLOY_AT
+        ? new Date(process.env.NEXT_PUBLIC_DEPLOY_AT)
+        : new Date(),
+      changeFrequency: "yearly",
+      priority: 0.8,
+    },
   ];
 }

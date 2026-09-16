@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { projects } from "@/content/projects";
 import SectionHeading from "./SectionHeading";
@@ -48,6 +49,16 @@ export default function Projects() {
           click to expand
         </p>
       </div>
+
+      <Link
+        href="/PhINODE"
+        className="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md border border-rule px-4 py-3 no-underline hover:border-accent"
+      >
+        <span className="font-mono text-[13px] text-fainter">most recent work</span>
+        <span translate="no" className="font-mono text-[16px] font-medium text-accent">PhINODE</span>
+        <span className="text-[14px] text-muted">model-based RL for fixed-wing UAV attitude control, my Master&apos;s thesis at ISIR and ONERA</span>
+        <span className="ml-auto font-mono text-[13px] text-faint">project page →</span>
+      </Link>
 
       <div className="flex flex-col gap-0.5">
         {projects.map((project) => {

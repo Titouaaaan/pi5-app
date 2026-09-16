@@ -55,7 +55,7 @@ export default function MobileMenu({ sections }: { sections: Section[] }) {
             {sections.map((s) => (
               <a
                 key={s.id}
-                href={`#${s.id}`}
+                href={`/#${s.id}`}
                 onClick={() => setOpen(false)}
                 className="py-2.5 text-faint no-underline hover:text-ink"
               >

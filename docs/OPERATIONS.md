@@ -182,6 +182,18 @@ three-line Python in the git history of this file's commit). The
 institution logos get a light tile behind them in dark mode, since one is a
 white-background PNG.
 
+## Static assets
+
+`my-app/public/` is organised by kind:
+
+| Folder | Contents |
+|---|---|
+| `docs/` | PDFs, each named as it should land in a downloads folder: `Titouan_Guerin_CV.pdf`, `Titouan_Guerin_Master_Thesis.pdf`, `..._Slides_EN.pdf`, `..._Slides_FR.pdf`. Replace a file in place to update it; links never change |
+| `phinode/` | figures for the `/PhINODE` page, extracted from the thesis PDF and composited onto white |
+| `logos/` | institution logos |
+
+Nothing else belongs at the top level. Assets the old site used (photos, skill logos) were removed in the reorganisation and remain in git history and under the `v1-original` tag.
+
 ## Search engines and sharing
 
 Generated at build, all from `my-app/app/`:

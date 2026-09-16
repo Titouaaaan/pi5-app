@@ -41,7 +41,11 @@ docs/SECURITY.md                what is hardened, what is still open
 backend/app/                    FastAPI, one module per concern; main.py wires routers
 backend/tests/                  pytest; run before every backend deploy
 my-app/app/                     Next.js App Router: layout, page, components/
-my-app/content/*.ts             all site copy: profile, phd, projects, publications, timeline, skills
+my-app/app/PhINODE/             the thesis project page; long-form JSX, metadata in content/phinode.ts
+my-app/content/*.ts             all site copy: profile, phd, projects, publications, timeline, skills, phinode
+my-app/public/docs/             PDFs, named as they should download (CV, thesis, slides)
+my-app/public/phinode/          thesis figures, extracted from the report onto white
+my-app/public/logos/            institution logos
 my-app/app/robots.ts, sitemap.ts, opengraph-image.tsx   generated at build
 ```
 
