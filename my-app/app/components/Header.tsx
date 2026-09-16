@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LanguageSelect from "./LanguageSelect";
 import MobileMenu from "./MobileMenu";
 import ThemeToggle from "./ThemeToggle";
 
@@ -37,7 +38,8 @@ export default function Header() {
             ))}
           </nav>
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden items-center gap-3 sm:flex">
+          <LanguageSelect />
           <ThemeToggle />
         </div>
         <MobileMenu sections={sections} />

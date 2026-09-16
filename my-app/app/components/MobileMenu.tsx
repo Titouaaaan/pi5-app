@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LanguageSelect from "./LanguageSelect";
 import ThemeToggle from "./ThemeToggle";
 
 type Section = { id: string; label: string };
@@ -62,6 +63,12 @@ export default function MobileMenu({ sections }: { sections: Section[] }) {
               </a>
             ))}
           </nav>
+          <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[15px] text-faint">
+            <span>
+              <span className="text-fainter">## </span>language
+            </span>
+            <LanguageSelect />
+          </div>
           <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[15px] text-faint">
             <span>
               <span className="text-fainter">## </span>theme
