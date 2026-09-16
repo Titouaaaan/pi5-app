@@ -5,6 +5,7 @@ import { others, pinned } from "@/content/languages";
 // Google's site-translation proxy renders the whole page in the chosen
 // language with no script on our side and no change to our CSP. The theme
 // choice is saved per origin, so it is carried across in the URL.
+const ORIGIN = "https://titouanguerin.com/";
 const PROXY = "https://titouanguerin-com.translate.goog/";
 
 function go(code: string) {
@@ -12,8 +13,11 @@ function go(code: string) {
   // any server or proxy, so it survives whatever the proxy does to the query.
   const theme = document.documentElement.dataset.theme;
   const tail = theme ? `theme=${theme}` : "";
+  // Absolute on purpose: on the proxied page a relative "/" resolves to the
+  // proxy's own domain (it rewrites <base>), which then errors with no
+  // target language. English means the untranslated original, not a translation.
   const base =
-    code === "en" ? "/" : `${PROXY}?_x_tr_sl=en&_x_tr_tl=${code}&_x_tr_hl=${code}`;
+    code === "en" ? ORIGIN : `${PROXY}?_x_tr_sl=en&_x_tr_tl=${code}&_x_tr_hl=${code}`;
   location.href = tail
     ? `${base}${code === "en" ? "?" : "&"}${tail}#${tail}`
     : base;
