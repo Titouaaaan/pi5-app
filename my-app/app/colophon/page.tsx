@@ -78,7 +78,7 @@ export default function ColophonPage() {
       </section>
 
       <Rule />
-      <Footer />
+      <Footer colophonLink={false} />
     </main>
   );
 }
