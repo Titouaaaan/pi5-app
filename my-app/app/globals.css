@@ -64,6 +64,11 @@
     scroll-behavior: smooth;
   }
 
+  /* Section headings (SectionHeading.tsx) are numbered I., II., ... per page. */
+  main {
+    counter-reset: sec;
+  }
+
   body {
     @apply bg-paper text-ink antialiased;
   }
