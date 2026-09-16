@@ -27,7 +27,7 @@ export default function About() {
         <a href={coursework.repo} target="_blank" rel="noopener noreferrer" className="font-mono text-[14px]">
           {coursework.name}
         </a>
-        : homeworks, notes and small projects. If it helps a student somewhere, good{" "}
+        : homeworks, notes and small projects. Maybe it can help future students {" "}
         <span className="font-mono text-[14px] text-faint">(it does not include most of the big projects, those I kept for myself ;)</span>
       </p>
     </section>
