@@ -171,11 +171,11 @@ colour clears WCAG AA, 4.5:1, on its background. Measured 2026-09-15:
 
 | Token | Light | ratio | Dark | ratio | Used for |
 |---|---|---|---|---|---|
-| `ink` | `#16191C` | 16.9 | `#E8EBEE` | 15.4 | name, headings |
-| `body` | `#2A3036` | 12.8 | `#D2D6DA` | 12.6 | paragraphs |
-| `muted` | `#545C64` | 6.5 | `#A4ACB3` | 8.0 | tagline, project bodies |
-| `faint` | `#606870` | 5.6 | `#8A939B` | 5.9 | section labels, dates |
-| `fainter` | `#6E767E` | 4.5 | `#7A838B` | 4.8 | footer, metadata |
+| `ink` | `#16191C` | 16.9 | `#F5F7F8` | 17.3 | name, headings |
+| `body` | `#2A3036` | 12.8 | `#E6E9EC` | 15.2 | paragraphs |
+| `muted` | `#545C64` | 6.5 | `#C4CAD0` | 11.2 | tagline, project bodies, section headings |
+| `faint` | `#606870` | 5.6 | `#AAB2B9` | 8.4 | dates, captions |
+| `fainter` | `#6E767E` | 4.5 | `#98A1A8` | 6.6 | footer, metadata |
 
 Before changing one, re-check the ratio (any online contrast checker, or the
 three-line Python in the git history of this file's commit). The

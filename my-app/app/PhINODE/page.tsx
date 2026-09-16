@@ -28,7 +28,7 @@ function Fig({
 }
 
 const H3 = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="text-[16px] font-medium text-body">{children}</h3>
+  <h3 className="text-[16px] font-semibold text-ink">{children}</h3>
 );
 const P = ({ children }: { children: React.ReactNode }) => (
   <p className="text-[16px] leading-[1.7] text-body">{children}</p>

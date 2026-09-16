@@ -28,11 +28,11 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #121417;
-    --ink: #e8ebee;
-    --body: #d2d6da;
-    --muted: #a4acb3;
-    --faint: #8a939b;
-    --fainter: #7a838b;
+    --ink: #f5f7f8;
+    --body: #e6e9ec;
+    --muted: #c4cad0;
+    --faint: #aab2b9;
+    --fainter: #98a1a8;
     --rule: #272c31;
     --rule-light: #1e2327;
     --accent: oklch(0.74 0.1 230);
@@ -45,11 +45,11 @@
 
 :root[data-theme="dark"] {
   --paper: #121417;
-  --ink: #e8ebee;
-  --body: #d2d6da;
-  --muted: #a4acb3;
-  --faint: #8a939b;
-  --fainter: #7a838b;
+  --ink: #f5f7f8;
+  --body: #e6e9ec;
+  --muted: #c4cad0;
+  --faint: #aab2b9;
+  --fainter: #98a1a8;
   --rule: #272c31;
   --rule-light: #1e2327;
   --accent: oklch(0.74 0.1 230);
@@ -66,6 +66,17 @@
 
   body {
     @apply bg-paper text-ink antialiased;
+  }
+
+  /* Light text on a dark ground renders visibly thinner with grayscale
+     antialiasing on Mac browsers; let the browser's default smoothing apply. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) body {
+      -webkit-font-smoothing: auto;
+    }
+  }
+  :root[data-theme="dark"] body {
+    -webkit-font-smoothing: auto;
   }
 
   /* Deep links (#publications) land clear of the sticky header. */
