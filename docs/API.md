@@ -16,6 +16,10 @@ Environment (set in `deploy/fastapi-backend.service`):
 | `DEPLOY_INFO_PATH` | file written by `deploy.sh`, read by `/deploy` | unset (endpoint returns nulls) |
 | `DATA_DIR` | SQLite database and secret for `/visit` | `.data` relative to the working directory |
 | `GITHUB_TOKEN` | raises the GitHub quota for `/github/activity` | unset (unauthenticated, 60 req/h, plenty) |
+| `CLOUDFLARE_API_TOKEN` | read-only token (Zone > Analytics > Read) for `/visitors` | unset (endpoint returns 503) |
+
+Secrets live in `/etc/pi5-app/backend.env` (root, mode 600), loaded by the
+unit's `EnvironmentFile=`; never in the repo.
 
 Anything that calls an outside service goes through `backend/app/cache.py`:
 fetch at most once per TTL, serve the cached value otherwise, and if a refresh
@@ -130,6 +134,28 @@ taken from `CF-Connecting-IP`, then `X-Forwarded-For` (first hop), then
 survive the Next.js rewrite. The secret is 32 random bytes generated on first
 run at `DATA_DIR/visits.secret`, mode 600. Nothing stored can identify a
 visitor or link two days. Module `visits.py`.
+
+## `GET /visitors`
+
+Unique visitors as Cloudflare counts them. Shown in the footer.
+
+```json
+{"today": 100, "yesterday": 196, "last_30_days": 5822, "source": "Cloudflare", "stale": false}
+```
+
+Cloudflare's "unique visitor" is every distinct IP that made any request to
+the zone, on any hostname: crawlers, scanners, uptime checks and the dead
+`pi.` record all count. The API exposes uniques only per day, so
+`last_30_days` is the **sum of daily uniques** (31 calendar days including
+today), not a distinct count over the period; the dashboard's multi-day
+figure is computed differently and will be lower. Upstream: Cloudflare
+GraphQL, `httpRequests1dGroups`, one query per hour, cached, stale on
+failure. `503` if the token is missing or nothing was ever fetched. Module
+`cloudflare.py`.
+
+For comparison, `/visits` below counts only browsers that ran the page:
+in the first 24 hours both existed, Cloudflare reported ~300/day and this
+site's counter ~15, i.e. roughly 95% of Cloudflare's figure is machines.
 
 ## `GET /visits`
 
