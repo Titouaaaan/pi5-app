@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "../components/Footer";
-import PiStats from "../components/PiStats";
 import Rule from "../components/Rule";
 import SectionHeading from "../components/SectionHeading";
 import TunnelDiagram from "../components/TunnelDiagram";
@@ -74,15 +73,6 @@ export default function ColophonPage() {
           <Item title="The visitor counter cannot track you.">It stores a hash of your address mixed with the date and a secret that never leaves the Pi. Same person tomorrow, different hash. No cookies, nothing to join.</Item>
           <Item title="Nothing loads from anyone else.">Fonts are self-hosted, there is no analytics script, no embeds except a video you have to click. The whole page is about 110 kB of JavaScript.</Item>
         </ul>
-      </section>
-
-      <Rule />
-      <section className="flex flex-col gap-2">
-        <SectionHeading id="numbers">in numbers</SectionHeading>
-        <p className="font-mono text-[13px] leading-[1.7] text-faint">
-          raspberry pi 5, 8 gb · debian 12 · node 20 · python 3.11 · next.js 15 · 3 services · 29 backend tests · 0 third-party scripts
-        </p>
-        <PiStats />
       </section>
 
       <Rule />

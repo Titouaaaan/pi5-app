@@ -9,6 +9,8 @@ export type Project = {
   title?: string;
   /** Quoted verbatim, for example a paper abstract. */
   quote?: string;
+  /** A box at the top of the expanded row linking to a page about the project. */
+  callout?: { text: string; href: string; label: string };
   /** YouTube video id; embedded and autoplayed while the row is expanded. */
   video?: string;
   links: { label: string; href: string }[];
@@ -68,9 +70,7 @@ export const projects: Project[] = [
     year: "2024",
     stack: "next.js · fastapi · cloudflare",
     body: "A full-stack app self-hosted on a Raspberry Pi 5, with Next.js on the front and FastAPI behind it, exposed through a Cloudflare tunnel so no ports are opened and the Pi keeps its address to itself. The statistics at the bottom of this page come from that backend, live.",
-    links: [
-      { label: "how it runs", href: "/colophon" },
-      { label: "view on github", href: "https://github.com/Titouaaaan/pi5-app" },
-    ],
+    callout: { text: "want to know how it runs?", href: "/colophon", label: "project page →" },
+    links: [{ label: "view on github", href: "https://github.com/Titouaaaan/pi5-app" }],
   },
 ];

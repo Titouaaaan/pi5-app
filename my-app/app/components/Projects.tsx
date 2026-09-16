@@ -98,6 +98,15 @@ export default function Projects() {
 
               {isOpen ? (
                 <div id={panelId} className="flex flex-col gap-2.5 pb-[18px] pl-[22px] pt-0.5">
+                  {project.callout ? (
+                    <Link
+                      href={project.callout.href}
+                      className="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md border border-rule px-4 py-3 no-underline hover:border-accent"
+                    >
+                      <span className="text-[14px] text-muted">{project.callout.text}</span>
+                      <span className="ml-auto font-mono text-[13px] text-faint">{project.callout.label}</span>
+                    </Link>
+                  ) : null}
                   {project.title ? (
                     <p translate="no" className="text-[16px] font-medium leading-snug text-body">{project.title}</p>
                   ) : null}
