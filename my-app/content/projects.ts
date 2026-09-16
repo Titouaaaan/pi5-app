@@ -68,6 +68,9 @@ export const projects: Project[] = [
     year: "2024",
     stack: "next.js · fastapi · cloudflare",
     body: "A full-stack app self-hosted on a Raspberry Pi 5, with Next.js on the front and FastAPI behind it, exposed through a Cloudflare tunnel so no ports are opened and the Pi keeps its address to itself. The statistics at the bottom of this page come from that backend, live.",
-    links: [{ label: "view on github", href: "https://github.com/Titouaaaan/pi5-app" }],
+    links: [
+      { label: "how it runs", href: "/colophon" },
+      { label: "view on github", href: "https://github.com/Titouaaaan/pi5-app" },
+    ],
   },
 ];

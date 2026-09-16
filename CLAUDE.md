@@ -28,7 +28,8 @@ of truth; this file is the short version.
 5. **Cloudflare is configured in the dashboard, not on disk.** The tunnel is
    token-mode. Titouan has asked not to change Cloudflare config; the routes are
    documented in `docs/OPERATIONS.md`.
-6. **Do not publish personal data without asking.** The email link in
+6. **The colophon page is public and describes the infrastructure.** Keep it to the stack, the Pi and the tunnel: never ports, paths, hostnames, service names, monitoring tools, network details or anything from docs/.
+7. **Do not publish personal data without asking.** The email link in
    `content/profile.ts` is there because Titouan explicitly chose it.
 
 ## Layout
@@ -42,6 +43,7 @@ backend/app/                    FastAPI, one module per concern; main.py wires r
 backend/tests/                  pytest; run before every backend deploy
 my-app/app/                     Next.js App Router: layout, page, components/
 my-app/app/PhINODE/             the thesis project page; long-form JSX, metadata in content/phinode.ts
+my-app/app/colophon/            how the site runs; prose is in the page, diagram in components/TunnelDiagram.tsx
 my-app/content/*.ts             all site copy: profile, phd, projects, publications, timeline, skills, phinode
 my-app/public/docs/             PDFs, named as they should download (CV, thesis, slides)
 my-app/public/phinode/          thesis figures, extracted from the report onto white

@@ -18,5 +18,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.8,
     },
+    {
+      url: "https://titouanguerin.com/colophon",
+      lastModified: process.env.NEXT_PUBLIC_DEPLOY_AT
+        ? new Date(process.env.NEXT_PUBLIC_DEPLOY_AT)
+        : new Date(),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
   ];
 }

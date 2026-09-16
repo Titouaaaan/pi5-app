@@ -1,4 +1,5 @@
 import About from "./components/About";
+import ColophonLink from "./components/ColophonLink";
 import Affiliations from "./components/Affiliations";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <Rule />
       <Tools />
       <Rule />
+      <ColophonLink />
       <Footer />
     </main>
   );

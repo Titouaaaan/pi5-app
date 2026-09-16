@@ -1,0 +1,92 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import Footer from "../components/Footer";
+import PiStats from "../components/PiStats";
+import Rule from "../components/Rule";
+import SectionHeading from "../components/SectionHeading";
+import TunnelDiagram from "../components/TunnelDiagram";
+
+export const metadata: Metadata = {
+  title: "How this site runs",
+  description: "titouanguerin.com is served from a Raspberry Pi 5 at home through a Cloudflare tunnel. The stack and a few things worth liking about it.",
+  alternates: { canonical: "https://titouanguerin.com/colophon" },
+  openGraph: { title: "How this site runs", url: "https://titouanguerin.com/colophon" },
+};
+
+const P = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-[16px] leading-[1.7] text-body">{children}</p>
+);
+const Item = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <li className="text-[16px] leading-[1.7] text-body">
+    <b className="font-semibold text-ink">{title}</b> {children}
+  </li>
+);
+
+export default function ColophonPage() {
+  return (
+    <main className="mx-auto flex max-w-column flex-col gap-9 px-8 pb-16 pt-8">
+      <p className="font-mono text-[14px]">
+        <Link href="/">← titouanguerin.com</Link> <span className="text-faint">/ colophon</span>
+      </p>
+
+      <section className="flex flex-col gap-3">
+        <h1 className="flex items-baseline gap-2.5 text-[38px] font-semibold leading-tight tracking-tight">
+          <span aria-hidden="true" className="font-mono text-[28px] font-normal text-fainter">#</span>
+          how this site runs
+        </h1>
+        <p className="text-[18px] leading-relaxed text-body">
+          I did not want to pay for a server, so the site runs on a Raspberry Pi 5 on a shelf in my flat. This page is how.
+        </p>
+      </section>
+
+      <figure className="flex flex-col gap-2">
+        <div className="rounded-md border border-rule bg-white p-3">
+          <TunnelDiagram />
+        </div>
+        <figcaption className="font-mono text-[13px] leading-relaxed text-faint">
+          A request, left to right. The Pi never accepts a connection from the internet: it opens one outbound tunnel to Cloudflare and answers through it.
+        </figcaption>
+      </figure>
+
+      <Rule />
+      <section className="flex flex-col gap-3.5">
+        <SectionHeading id="why">why a pi</SectionHeading>
+        <P>A portfolio gets a few hundred requests a day, most of them from crawlers. That is nothing for a small ARM board, and a Pi 5 draws a few watts, so hosting at home costs less than a coffee a month. The catch is that a home connection sits behind a router with no fixed address and no ports you would want to open. A Cloudflare tunnel solves exactly that: the Pi dials out, Cloudflare holds the public address, and nothing on my network is reachable directly. I also get to play with a new toy, which is always fun.</P>
+      </section>
+
+      <Rule />
+      <section className="flex flex-col gap-3.5">
+        <SectionHeading id="stack">the stack</SectionHeading>
+        <ul className="flex flex-col gap-2.5">
+          <Item title="Next.js and TypeScript">for the pages, rendered on the server so the site is plain HTML to a crawler and works with JavaScript off.</Item>
+          <Item title="Tailwind">for the styling, one set of colour tokens for light and dark.</Item>
+          <Item title="FastAPI">in Python for the little backend: the live stats in the footer, the visitor counter, and a cache in front of GitHub, OpenAlex and Cloudflare so the page never depends on them being up.</Item>
+          <Item title="Cloudflare">for DNS, TLS and the tunnel. <b className="font-semibold text-ink">systemd</b> keeps the three services running through reboots.</Item>
+        </ul>
+      </section>
+
+      <Rule />
+      <section className="flex flex-col gap-3.5">
+        <SectionHeading id="likes">things i like about it</SectionHeading>
+        <ul className="flex flex-col gap-2.5">
+          <Item title="The footer is live.">CPU, memory, disk and uptime come from the Pi every thirty seconds. If the numbers move, the machine is real.</Item>
+          <Item title="Deploys cannot half-break it.">A script builds the new version into a scratch folder, swaps it in only if the build succeeded, restarts, checks that the page now carries the new commit hash, and rolls back on its own if it does not. It has done that once, for real.</Item>
+          <Item title="The visitor counter cannot track you.">It stores a hash of your address mixed with the date and a secret that never leaves the Pi. Same person tomorrow, different hash. No cookies, nothing to join.</Item>
+          <Item title="Nothing loads from anyone else.">Fonts are self-hosted, there is no analytics script, no embeds except a video you have to click. The whole page is about 110 kB of JavaScript.</Item>
+        </ul>
+      </section>
+
+      <Rule />
+      <section className="flex flex-col gap-2">
+        <SectionHeading id="numbers">in numbers</SectionHeading>
+        <p className="font-mono text-[13px] leading-[1.7] text-faint">
+          raspberry pi 5, 8 gb · debian 12 · node 20 · python 3.11 · next.js 15 · 3 services · 29 backend tests · 0 third-party scripts
+        </p>
+        <PiStats />
+      </section>
+
+      <Rule />
+      <Footer />
+    </main>
+  );
+}
