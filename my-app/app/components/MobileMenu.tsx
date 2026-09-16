@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TRANSLATE_ENABLED } from "@/content/languages";
 import LanguageSelect from "./LanguageSelect";
 import ThemeToggle from "./ThemeToggle";
 
@@ -63,12 +64,14 @@ export default function MobileMenu({ sections }: { sections: Section[] }) {
               </a>
             ))}
           </nav>
-          <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[15px] text-faint">
-            <span>
-              <span className="text-fainter">## </span>language
-            </span>
-            <LanguageSelect />
-          </div>
+          {TRANSLATE_ENABLED ? (
+            <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[15px] text-faint">
+              <span>
+                <span className="text-fainter">## </span>language
+              </span>
+              <LanguageSelect />
+            </div>
+          ) : null}
           <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[15px] text-faint">
             <span>
               <span className="text-fainter">## </span>theme

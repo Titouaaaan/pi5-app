@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TRANSLATE_ENABLED } from "@/content/languages";
 import LanguageSelect from "./LanguageSelect";
 import MobileMenu from "./MobileMenu";
 import ThemeToggle from "./ThemeToggle";
@@ -40,7 +41,7 @@ export default function Header() {
         </div>
         <div className="hidden items-center gap-3 sm:flex">
           <ThemeToggle />
-          <LanguageSelect />
+          {TRANSLATE_ENABLED ? <LanguageSelect /> : null}
         </div>
         <MobileMenu sections={sections} />
       </div>
