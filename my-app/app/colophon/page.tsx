@@ -34,7 +34,7 @@ export default function ColophonPage() {
           how this site runs
         </h1>
         <p className="text-[18px] leading-relaxed text-body">
-          I did not want to pay for a server, so the site runs on a Raspberry Pi 5 on a shelf in my flat. This page is how.
+          I did not want to pay for a server, so the site is hosted on my Raspberry Pi 5 sitting on my desk, and briefly explain here how.
         </p>
       </section>
 
@@ -50,17 +50,19 @@ export default function ColophonPage() {
       <Rule />
       <section className="flex flex-col gap-3.5">
         <SectionHeading id="why">why a pi</SectionHeading>
-        <P>A portfolio gets a few hundred requests a day, most of them from crawlers. That is nothing for a small ARM board, and a Pi 5 draws a few watts, so hosting at home costs less than a coffee a month. The catch is that a home connection sits behind a router with no fixed address and no ports you would want to open. A Cloudflare tunnel solves exactly that: the Pi dials out, Cloudflare holds the public address, and nothing on my network is reachable directly. I also get to play with a new toy, which is always fun.</P>
+        <P>This kind of portoflio website doesn&apos;t get thousands or millions of visitors per day (for now?), therefore a Pi 5 can easily handle it. The device only draws a few watts, so hosting at home costs less than a coffee a month, and much less than if I had to pay for a server provider. 
+          The one catch of this setup is that a home connection sits behind a router with no fixed address and no ports I want to open. A Cloudflare tunnel solves exactly that: the Pi dials out, Cloudflare holds the public address, and nothing on my network is reachable directly. 
+          I also get to play around with this awesome toy, which is always fun. I also have other services setup on the Pi, such as OpenMediaVault, and I made my own little google drive for photos and videos, and I&apos;ll probably make a dedicated page for it eventually.</P>
       </section>
 
       <Rule />
       <section className="flex flex-col gap-3.5">
         <SectionHeading id="stack">the stack</SectionHeading>
         <ul className="flex flex-col gap-2.5">
-          <Item title="Next.js and TypeScript">for the pages, rendered on the server so the site is plain HTML to a crawler and works with JavaScript off.</Item>
-          <Item title="Tailwind">for the styling, one set of colour tokens for light and dark.</Item>
+          <Item title="Next.js and TypeScript">for the pages, rendered on the server so the site is plain HTML to a crawler and works (mostly) with JavaScript off.</Item>
+          <Item title="Tailwind">for the styling, and it&apos;s a bit better than vanilla CSS from my experience.</Item>
           <Item title="FastAPI">in Python for the little backend: the live stats in the footer, the visitor counter, and a cache in front of GitHub, OpenAlex and Cloudflare so the page never depends on them being up.</Item>
-          <Item title="Cloudflare">for DNS, TLS and the tunnel. <b className="font-semibold text-ink">systemd</b> keeps the three services running through reboots.</Item>
+          <Item title="Cloudflare">for DNS, TLS and the tunnel, and <b className="font-semibold text-ink">systemd</b> keeps the three services running through reboots on my Pi.</Item>
         </ul>
       </section>
 
@@ -68,7 +70,7 @@ export default function ColophonPage() {
       <section className="flex flex-col gap-3.5">
         <SectionHeading id="likes">things i like about it</SectionHeading>
         <ul className="flex flex-col gap-2.5">
-          <Item title="The footer is live.">CPU, memory, disk and uptime come from the Pi every thirty seconds. If the numbers move, the machine is real.</Item>
+          <Item title="The footer is live.">CPU, memory, disk and uptime come from the Pi every 5 seconds.</Item>
           <Item title="Deploys cannot half-break it.">A script builds the new version into a scratch folder, swaps it in only if the build succeeded, restarts, checks that the page now carries the new commit hash, and rolls back on its own if it does not. It has done that once, for real.</Item>
           <Item title="The visitor counter cannot track you.">It stores a hash of your address mixed with the date and a secret that never leaves the Pi. Same person tomorrow, different hash. No cookies, nothing to join.</Item>
           <Item title="Nothing loads from anyone else.">Fonts are self-hosted, there is no analytics script, no embeds except a video you have to click. The whole page is about 110 kB of JavaScript.</Item>
