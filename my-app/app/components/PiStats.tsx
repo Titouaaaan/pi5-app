@@ -9,7 +9,7 @@ type Stats = {
   uptime: string;
 };
 
-const REFRESH_MS = 30_000;
+const REFRESH_MS = 5_000;
 
 export default function PiStats() {
   const [stats, setStats] = useState<Stats | null>(null);
