@@ -182,6 +182,17 @@ three-line Python in the git history of this file's commit). The
 institution logos get a light tile behind them in dark mode, since one is a
 white-background PNG.
 
+## Pages
+
+| Route | Source | Notes |
+|---|---|---|
+| `/` | `app/page.tsx` | sections in `app/components/`, copy in `content/*.ts` |
+| `/PhINODE` | `app/PhINODE/page.tsx` | the thesis project page; figures in `public/phinode/`, metadata in `content/phinode.ts` |
+| `/colophon` | `app/colophon/page.tsx` | how the site runs; the diagram is `components/TunnelDiagram.tsx`. Public: stack, Pi and tunnel only, never ports, paths, hostnames or service names |
+
+All three share the layout (header with theme toggle, footer with live stats
+and, except on the colophon itself, a link to it).
+
 ## Static assets
 
 `my-app/public/` is organised by kind:
@@ -201,7 +212,7 @@ Generated at build, all from `my-app/app/`:
 | Path | Source | What it is |
 |---|---|---|
 | `/robots.txt` | `robots.ts` | allows everything except `/api/`, points at the sitemap. Cloudflare prepends its own "content signals" comment block at the edge; the directives are ours |
-| `/sitemap.xml` | `sitemap.ts` | the one page, `lastmod` = deploy time |
+| `/sitemap.xml` | `sitemap.ts` | `/`, `/PhINODE`, `/colophon`; `lastmod` = deploy time |
 | `/icon` | `icon.tsx` | the favicon, a `#` on ink, 64px |
 | `/opengraph-image` | `opengraph-image.tsx` | the 1200×630 card shown when the link is shared; built from `content/profile.ts` with the site's own fonts |
 | JSON-LD in `<head>` | `components/StructuredData.tsx` | schema.org `Person` (affiliations, profiles, topics) and one `ScholarlyArticle` per entry in `content/publications.ts` |

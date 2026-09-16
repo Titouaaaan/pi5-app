@@ -44,14 +44,14 @@ backend/tests/                  pytest; run before every backend deploy
 my-app/app/                     Next.js App Router: layout, page, components/
 my-app/app/PhINODE/             the thesis project page; long-form JSX, metadata in content/phinode.ts
 my-app/app/colophon/            how the site runs; prose is in the page, diagram in components/TunnelDiagram.tsx
-my-app/content/*.ts             all site copy: profile, phd, projects, publications, timeline, skills, knowledge, phinode
+my-app/content/*.ts             all site copy: profile, phd, projects, publications, timeline, skills, knowledge, phinode, languages (disabled)
 my-app/public/docs/             PDFs, named as they should download (CV, thesis, slides)
 my-app/public/phinode/          thesis figures, extracted from the report onto white
 my-app/public/logos/            institution logos
 my-app/app/robots.ts, sitemap.ts, opengraph-image.tsx   generated at build
 ```
 
-Content edits go in `my-app/content/`, not in components. Components are
+Content edits go in `my-app/content/`, not in components; the two long-form pages (`PhINODE`, `colophon`) keep their prose in the page file. Titouan edits copy himself in the `/home/titouan/rework` worktree and asks for it to be shipped: commit his edits under his name only (no co-author line), then merge and deploy. Components are
 server-rendered except `Projects.tsx` (expandable rows) and `PiStats.tsx`
 (polls `/api/system-stats`). The footer's commit and deploy date are baked in at build time by `deploy.sh`, not fetched.
 
@@ -73,7 +73,7 @@ cd .. && ./deploy.sh   # add --backend when backend/ or deploy/ changed
 
 ## Where things stand
 
-Redesign shipped 2026-09-15. The pre-redesign site is archived at tag
+Redesign shipped 2026-09-15; project page, colophon, Cloudflare visitor counts, video embed, about/knowledge grid added 2026-09-16. The pre-redesign site is archived at tag
 `v1-original` (not deployable with current tooling). Open work is tracked in
 `docs/SECURITY.md` under "Still outstanding" — all of it needs changes to
 systemd units or the Cloudflare dashboard, which is why it is still open.

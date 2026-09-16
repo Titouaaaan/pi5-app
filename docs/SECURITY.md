@@ -18,12 +18,16 @@ outstanding. Update it whenever the security posture changes.
 
 ```
 default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';
-img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';
+img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://www.youtube-nocookie.com;
+frame-ancestors 'none';
 base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
 ```
 
 Everything the page needs is same-origin (fonts self-hosted by `next/font`,
 images local, API under `/api`), so every directive except two is strict.
+The one foreign origin is `frame-src` for the RL-Souls video, which is an
+iframe mounted only while that project row is open, on the no-cookie
+YouTube domain.
 `script-src` and `style-src` carry `'unsafe-inline'` because Next's hydration
 script and Tailwind's styles are inline; removing it needs a per-request
 nonce, which turns the static page into a dynamic one. The trade is

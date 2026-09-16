@@ -40,7 +40,7 @@ Module `system.py`. No cache, no upstream.
 
 ## `GET /system-stats`
 
-Host statistics for the footer. Polled every 30 s by `PiStats.tsx`.
+Host statistics for the footer. Polled every 5 s by `PiStats.tsx` (also shown on the colophon page).
 
 ```json
 {"cpu": "1.9%", "memory": "5953/8063MB", "disk": "48.4/58.0GB", "uptime": "76d 21h"}
