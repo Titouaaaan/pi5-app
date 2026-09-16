@@ -91,6 +91,18 @@ export default function Projects() {
                     <p className="text-[16px] font-medium leading-snug text-body">{project.title}</p>
                   ) : null}
                   <p className="text-[15px] leading-[1.7] text-muted">{project.body}</p>
+                  {project.video ? (
+                    // Mounted only while open, so it starts on expand and is torn
+                    // down (playback stops) on collapse. No-cookie domain; CSP
+                    // frame-src allows only this origin.
+                    <iframe
+                      className="aspect-video w-full rounded-md border border-rule-light"
+                      src={`https://www.youtube-nocookie.com/embed/${project.video}?autoplay=1&rel=0`}
+                      title={`${project.slug} video`}
+                      allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                    />
+                  ) : null}
                   {project.quote ? (
                     <blockquote className="border-l border-rule pl-4 text-[15px] leading-[1.7] text-muted">
                       {project.quote}

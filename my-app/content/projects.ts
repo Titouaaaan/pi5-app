@@ -9,6 +9,8 @@ export type Project = {
   title?: string;
   /** Quoted verbatim, for example a paper abstract. */
   quote?: string;
+  /** YouTube video id; embedded and autoplayed while the row is expanded. */
+  video?: string;
   links: { label: string; href: string }[];
 };
 
@@ -34,6 +36,7 @@ export const projects: Project[] = [
     tag: "reinforcement learning",
     year: "2025",
     stack: "python · pytorch · gymnasium · tensorboard",
+    video: "qfs3fYU9Z3k",
     body: "Model-free reinforcement learning algorithms implemented from scratch to train an agent in Dark Souls III, using the SoulsGym environment (a custom Gymnasium). Different algorithms are tested and tuned to work out which methods actually survive a boss fight. Built during my gap year between M1 and M2.",
     links: [{ label: "view on github", href: "https://github.com/Titouaaaan/RL-Souls" }],
   },
