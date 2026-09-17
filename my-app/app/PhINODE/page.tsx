@@ -23,26 +23,26 @@ function Fig({
     <figure className="flex flex-col gap-2">
       <Image src={src} width={w} height={h} alt={alt}
         className={`h-auto w-full rounded-md border border-rule bg-white p-2.5 ${narrow ? "mx-auto max-w-[560px]" : ""}`} />
-      <figcaption className="font-mono text-[13px] leading-relaxed text-faint">{children}</figcaption>
+      <figcaption className="font-mono text-[0.8125rem] leading-relaxed text-faint">{children}</figcaption>
     </figure>
   );
 }
 
 const H3 = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="text-[16px] font-semibold text-ink">{children}</h3>
+  <h3 className="text-[1rem] font-semibold text-ink">{children}</h3>
 );
 const P = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-[16px] leading-[1.7] text-body">{children}</p>
+  <p className="text-[1rem] leading-[1.7] text-body">{children}</p>
 );
 const Note = ({ children }: { children: React.ReactNode }) => (
-  <p className="font-mono text-[13px] leading-relaxed text-faint">{children}</p>
+  <p className="font-mono text-[0.8125rem] leading-relaxed text-faint">{children}</p>
 );
 const Eq = ({ children }: { children: React.ReactNode }) => (
-  <div className="border-l border-rule pl-4 font-mono text-[15px] leading-[1.9] text-body">{children}</div>
+  <div className="border-l border-rule pl-4 font-mono text-[0.9375rem] leading-[1.9] text-body">{children}</div>
 );
 const Q = ({ tag, title, children }: { tag: string; title: string; children: React.ReactNode }) => (
   <div className="flex flex-col gap-3 pt-1.5">
-    <H3><span className="mr-2.5 font-mono text-[13px] font-normal text-fainter">{tag}</span>{title}</H3>
+    <H3><span className="mr-2.5 font-mono text-[0.8125rem] font-normal text-fainter">{tag}</span>{title}</H3>
     {children}
   </div>
 );
@@ -50,29 +50,29 @@ const Q = ({ tag, title, children }: { tag: string; title: string; children: Rea
 export default function PhinodePage() {
   return (
     <main id="main" className="mx-auto flex max-w-column flex-col gap-10 px-8 pb-16 pt-8">
-      <p className="font-mono text-[14px]">
+      <p className="font-mono text-[0.875rem]">
         <Link href="/">← titouanguerin.com</Link>{" "}
         <span className="text-faint">/ work / {phinode.name}</span>
       </p>
 
       <header className="flex flex-col gap-3">
-        <h1 translate="no" className="flex items-baseline gap-2.5 text-[38px] font-semibold leading-tight tracking-tight">
-          <span aria-hidden="true" className="font-mono text-[28px] font-normal text-fainter">#</span>
+        <h1 translate="no" className="flex items-baseline gap-2.5 text-[2.375rem] font-semibold leading-tight tracking-tight">
+          <span aria-hidden="true" className="font-mono text-[1.75rem] font-normal text-fainter">#</span>
           {phinode.name}
         </h1>
         <div className="flex flex-col gap-2.5 sm:pl-[38px]">
-          <p translate="no" className="text-[18px] leading-relaxed text-body">{phinode.title}</p>
-          <p translate="no" className="text-[16px] text-muted">
+          <p translate="no" className="text-[1.125rem] leading-relaxed text-body">{phinode.title}</p>
+          <p translate="no" className="text-[1rem] text-muted">
             {phinode.authors.map((a, i) => (
               <span key={a.name}>{i > 0 ? ", " : ""}{a.name}<sup className="text-faint">{a.aff}</sup></span>
             ))}
             {"  "}
-            <span className="font-mono text-[13px] text-faint">
+            <span className="font-mono text-[0.8125rem] text-faint">
               {phinode.affiliations.map((a) => (<span key={a.n} className="mr-2"><sup>{a.n}</sup>{a.name}</span>))}
             </span>
           </p>
-          <p className="font-mono text-[13px] text-faint">{phinode.meta}</p>
-          <div className="flex flex-wrap gap-2.5 pt-1 font-mono text-[14px]">
+          <p className="font-mono text-[0.8125rem] text-faint">{phinode.meta}</p>
+          <div className="flex flex-wrap gap-2.5 pt-1 font-mono text-[0.875rem]">
             {phinode.links.map((l) => (
               <a key={l.href} href={l.href} {...newTab(l.href)}
                 className={`rounded-md border border-rule px-3 py-1.5 no-underline hover:border-accent ${"dim" in l && l.dim ? "text-faint hover:border-rule" : ""}`}>
@@ -103,8 +103,8 @@ export default function PhinodePage() {
             ["Correct the physics when it is inaccurate", "by letting the optimiser tune the prior's coefficients together with the learned residual."],
             ["Plan on top of the controller", "with a short-horizon MPC that uses the trained policy and its critic, and find out which of the two actually helps."],
           ].map(([b, rest], i) => (
-            <li key={b} className="grid grid-cols-[28px_1fr] gap-3 text-[16px] leading-[1.7] text-body">
-              <span className="pt-0.5 font-mono text-[14px] text-fainter">{i + 1}</span>
+            <li key={b} className="grid grid-cols-[28px_1fr] gap-3 text-[1rem] leading-[1.7] text-body">
+              <span className="pt-0.5 font-mono text-[0.875rem] text-fainter">{i + 1}</span>
               <span><b className="font-medium text-ink">{b}</b> {rest}</span>
             </li>
           ))}
@@ -133,7 +133,7 @@ export default function PhinodePage() {
         <H3>The dynamics model</H3>
         <P>Following APHYNITY and PhIHP, the state derivative is a known physics term plus a learned correction, integrated with RK4. The prior is approximate by design, so its coefficients θ<sub>p</sub> are trainable.</P>
         <Eq>
-          ṡ = F<sub>p</sub><sup>θp</sup>(s, a) <span className="text-[12px] text-faint">physics prior</span> + F<sub>a</sub><sup>θa</sup>(s, a) <span className="text-[12px] text-faint">learned residual</span><br />
+          ṡ = F<sub>p</sub><sup>θp</sup>(s, a) <span className="text-[0.75rem] text-faint">physics prior</span> + F<sub>a</sub><sup>θa</sup>(s, a) <span className="text-[0.75rem] text-faint">learned residual</span><br />
           s<sub>t+1</sub> = s<sub>t</sub> + ∫<sub>t</sub><sup>t+Δt</sup> ṡ dτ
         </Eq>
         <P>The prior is an aerodynamic model of the Skywalker X8. It is degraded on purpose for the experiments: ten coefficients that are hard to measure in practice are perturbed by 25 to 50% (mild) or 75 to 100% (severe), and each condition is run with the prior frozen or trainable.</P>
@@ -172,7 +172,7 @@ export default function PhinodePage() {
             Controller performance aggregated over all six prior conditions, all targets. Policy alone, CEM with critic bootstrap, and the full hybrid.
           </Fig>
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse font-mono text-[13px] text-body tabular-nums">
+            <table className="w-full border-collapse font-mono text-[0.8125rem] text-body tabular-nums">
               <thead>
                 <tr className="text-faint">
                   <th className="border-b border-rule-light px-2.5 py-1.5 text-left font-medium">controller</th>
@@ -213,13 +213,13 @@ export default function PhinodePage() {
             <div className="grid gap-4 sm:grid-cols-2">
               {[["(a) policy only", "dive_policy"], ["(b) hybrid controller", "dive_hybrid"]].map(([lbl, f]) => (
                 <div key={f} className="flex flex-col gap-1.5">
-                  <span className="font-mono text-[13px] text-faint">{lbl}</span>
+                  <span className="font-mono text-[0.8125rem] text-faint">{lbl}</span>
                   <Image src={`/phinode/${f}.png`} width={1000} height={800} alt={`${lbl}, hard dive`}
                     className="h-auto w-full rounded-md border border-rule bg-white p-2.5" />
                 </div>
               ))}
             </div>
-            <figcaption className="font-mono text-[13px] leading-relaxed text-faint">
+            <figcaption className="font-mono text-[0.8125rem] leading-relaxed text-faint">
               Hybrid controller vs policy only for hard dive attitude control. Each panel: roll and pitch against their references (top), control surface commands and angular velocities (bottom), over 1000 steps.
             </figcaption>
           </figure>
@@ -230,12 +230,12 @@ export default function PhinodePage() {
       <section className="flex flex-col gap-3.5">
         <SectionHeading id="next">what&#39;s next</SectionHeading>
         <P>This is the starting point of the PhD at ONERA and ISIR. The open directions, in order of how much they are on my mind:</P>
-        <ul className="flex list-disc flex-col gap-1.5 pl-[18px] text-[16px] leading-[1.7] text-body">
+        <ul className="flex list-disc flex-col gap-1.5 pl-[18px] text-[1rem] leading-[1.7] text-body">
           <li><b className="font-medium text-ink">Waypoint tracking.</b> From holding one attitude to sequencing spatial targets, a longer-horizon and more compositional task.</li>
           <li><b className="font-medium text-ink">Inference cost.</b> 21 ms per step is twice the budget. Action delay, executing short sequences instead of replanning every step, or MPPI instead of CEM.</li>
           <li><b className="font-medium text-ink">Joint learning of model and controller</b>, and hierarchical control across the attitude and guidance loops.</li>
         </ul>
-        <p className="font-mono text-[14px]"><Link href="/#phd">the phd, on the main page →</Link></p>
+        <p className="font-mono text-[0.875rem]"><Link href="/#phd">the phd, on the main page →</Link></p>
       </section>
 
       <Rule />

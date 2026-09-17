@@ -17,7 +17,7 @@
   --font-sans: var(--font-plex-sans), system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
-  --container-column: 800px;
+  --container-column: 50rem; /* 800px, 920px at the desktop 115% root */
 }
 
 /* Every text colour clears WCAG AA (4.5:1) on its background in both themes;
@@ -80,6 +80,15 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Type is set in rem, so this one number scales every size on the site.
+     Phones keep the browser default (16px); from the sm breakpoint up the
+     whole page runs 15% larger. */
+  @media (min-width: 640px) {
+    html {
+      font-size: 115%;
+    }
   }
 
   /* Section headings (SectionHeading.tsx) are numbered I., II., ... per page. */

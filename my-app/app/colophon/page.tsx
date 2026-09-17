@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 };
 
 const P = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-[16px] leading-[1.7] text-body">{children}</p>
+  <p className="text-[1rem] leading-[1.7] text-body">{children}</p>
 );
 const Item = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <li className="text-[16px] leading-[1.7] text-body">
+  <li className="text-[1rem] leading-[1.7] text-body">
     <b className="font-semibold text-ink">{title}</b> {children}
   </li>
 );
@@ -24,16 +24,16 @@ const Item = ({ title, children }: { title: string; children: React.ReactNode })
 export default function ColophonPage() {
   return (
     <main id="main" className="mx-auto flex max-w-column flex-col gap-9 px-8 pb-16 pt-8">
-      <p className="font-mono text-[14px]">
+      <p className="font-mono text-[0.875rem]">
         <Link href="/">← titouanguerin.com</Link> <span className="text-faint">/ colophon</span>
       </p>
 
       <section className="flex flex-col gap-3">
-        <h1 className="flex items-baseline gap-2.5 text-[38px] font-semibold leading-tight tracking-tight">
-          <span aria-hidden="true" className="font-mono text-[28px] font-normal text-fainter">#</span>
+        <h1 className="flex items-baseline gap-2.5 text-[2.375rem] font-semibold leading-tight tracking-tight">
+          <span aria-hidden="true" className="font-mono text-[1.75rem] font-normal text-fainter">#</span>
           how this site runs
         </h1>
-        <p className="text-[18px] leading-relaxed text-body">
+        <p className="text-[1.125rem] leading-relaxed text-body">
           I did not want to pay for a server, so the site is hosted on my Raspberry Pi 5 sitting on my desk, and I briefly explain here how it works.
         </p>
       </section>
@@ -46,7 +46,7 @@ export default function ColophonPage() {
         >
           <TunnelDiagram />
         </div>
-        <figcaption className="font-mono text-[13px] leading-relaxed text-faint">
+        <figcaption className="font-mono text-[0.8125rem] leading-relaxed text-faint">
           A request, left to right. The Pi never accepts a connection from the internet: it opens one outbound tunnel to Cloudflare and answers through it.
         </figcaption>
       </figure>

@@ -13,14 +13,14 @@ export default function Footer({ colophonLink = true }: { colophonLink?: boolean
       <div className="flex flex-col gap-1.5">
         <PiStats />
         <Visits />
-        <p className="font-mono text-[13px] leading-[1.7] text-fainter">
+        <p className="font-mono text-[0.8125rem] leading-[1.7] text-fainter">
           raspberry pi 5
           {commit ? ` · ${commit}` : ""}
           {deployedAt ? ` · deployed ${deployedAt}` : ""}
         </p>
       </div>
       {colophonLink ? (
-        <Link href="/colophon" className="font-mono text-[13px] text-fainter no-underline hover:text-ink">
+        <Link href="/colophon" className="font-mono text-[0.8125rem] text-fainter no-underline hover:text-ink">
           how this site runs →
         </Link>
       ) : null}

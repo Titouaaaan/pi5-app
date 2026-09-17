@@ -5,7 +5,7 @@ export default function LabelledList({
   groups: readonly { label: string; items: readonly string[] }[];
 }) {
   return (
-    <dl translate="no" className="divide-y divide-rule font-mono text-[14px] leading-[1.8]">
+    <dl translate="no" className="divide-y divide-rule font-mono text-[0.875rem] leading-[1.8]">
       {groups.map((group) => (
         <div
           key={group.label}

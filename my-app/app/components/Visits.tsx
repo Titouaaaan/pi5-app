@@ -26,10 +26,10 @@ export default function Visits() {
   }, []);
 
   // Reserve the line so the footer does not shift when the count arrives.
-  if (!counts) return <p className="font-mono text-[13px] leading-[1.7] text-fainter">&nbsp;</p>;
+  if (!counts) return <p className="font-mono text-[0.8125rem] leading-[1.7] text-fainter">&nbsp;</p>;
 
   return (
-    <p className="font-mono text-[13px] leading-[1.7] text-fainter">
+    <p className="font-mono text-[0.8125rem] leading-[1.7] text-fainter">
       {counts.today} unique visitors today · {counts.last_30_days.toLocaleString("en")} in the
       last 30 days ({counts.source.toLowerCase()})
     </p>

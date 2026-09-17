@@ -5,9 +5,9 @@ export default function Phd() {
   return (
     <section className="flex flex-col gap-3">
       <SectionHeading id="phd">phd</SectionHeading>
-      <p translate="no" className="text-[16px] font-medium leading-snug text-body">{phd.title}</p>
+      <p translate="no" className="text-[1rem] font-medium leading-snug text-body">{phd.title}</p>
       {phd.text.map((paragraph) => (
-        <p key={paragraph.slice(0, 32)} className="text-[16px] leading-[1.7] text-body">
+        <p key={paragraph.slice(0, 32)} className="text-[1rem] leading-[1.7] text-body">
           {paragraph}
         </p>
       ))}

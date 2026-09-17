@@ -62,7 +62,7 @@ export default function RootLayout({
         {/* First focusable element: keyboard and screen-reader users jump past the header. */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-rule focus:bg-paper focus:px-3 focus:py-2 focus:font-mono focus:text-[14px] focus:no-underline"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-rule focus:bg-paper focus:px-3 focus:py-2 focus:font-mono focus:text-[0.875rem] focus:no-underline"
         >
           skip to content
         </a>

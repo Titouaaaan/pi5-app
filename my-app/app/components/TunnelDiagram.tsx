@@ -2,13 +2,13 @@
 export default function TunnelDiagram() {
   const box = "fill-white stroke-rule";
   const line = "stroke-faint fill-none";
-  const label = "font-mono text-[11.5px] [&]:fill-faint";
+  const label = "font-mono text-[0.7188rem] [&]:fill-faint";
   return (
     <svg
       viewBox="0 0 760 280"
       role="img"
       aria-label="A request goes from the browser to Cloudflare, then through an outbound tunnel to the Raspberry Pi, where cloudflared hands it to Next.js and FastAPI"
-      className="h-auto w-full text-[13px] [&_text]:fill-body"
+      className="h-auto w-full text-[0.8125rem] [&_text]:fill-body"
     >
       <defs>
         <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">

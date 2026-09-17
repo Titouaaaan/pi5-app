@@ -46,7 +46,7 @@ export default function Projects() {
     <section className="flex flex-col gap-3.5">
       <div className="relative">
         <SectionHeading id="work">selected work</SectionHeading>
-        <p aria-hidden="true" className="absolute bottom-0 right-0 hidden font-mono text-[12px] text-fainter sm:block">
+        <p aria-hidden="true" className="absolute bottom-0 right-0 hidden font-mono text-[0.75rem] text-fainter sm:block">
           click to expand
         </p>
       </div>
@@ -55,10 +55,10 @@ export default function Projects() {
         href="/PhINODE"
         className="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md border border-rule px-4 py-3 no-underline hover:border-accent"
       >
-        <span className="font-mono text-[13px] text-fainter">most recent work</span>
-        <span translate="no" className="font-mono text-[16px] font-medium text-accent">PhINODE</span>
-        <span className="text-[14px] text-muted">model-based RL for fixed-wing UAV attitude control, my Master&apos;s thesis at ISIR and ONERA</span>
-        <span className="ml-auto font-mono text-[13px] text-faint">project page →</span>
+        <span className="font-mono text-[0.8125rem] text-fainter">most recent work</span>
+        <span translate="no" className="font-mono text-[1rem] font-medium text-accent">PhINODE</span>
+        <span className="text-[0.875rem] text-muted">model-based RL for fixed-wing UAV attitude control, my Master&apos;s thesis at ISIR and ONERA</span>
+        <span className="ml-auto font-mono text-[0.8125rem] text-faint">project page →</span>
       </Link>
 
       <div className="flex flex-col gap-0.5">
@@ -83,15 +83,15 @@ export default function Projects() {
                 >
                   <span
                     aria-hidden="true"
-                    className="w-3 shrink-0 font-mono text-[15px] text-fainter group-hover:text-accent"
+                    className="w-3 shrink-0 font-mono text-[0.9375rem] text-fainter group-hover:text-accent"
                   >
                     {isOpen ? "−" : "+"}
                   </span>
-                  <span translate="no" className="font-mono text-[16px] font-medium text-accent group-hover:text-accent-hover">
+                  <span translate="no" className="font-mono text-[1rem] font-medium text-accent group-hover:text-accent-hover">
                     {project.slug}
                   </span>
-                  <span className="grow text-[14px] text-faint">{project.tag}</span>
-                  <span className="shrink-0 font-mono text-[13px] text-fainter">
+                  <span className="grow text-[0.875rem] text-faint">{project.tag}</span>
+                  <span className="shrink-0 font-mono text-[0.8125rem] text-fainter">
                     {project.year}
                   </span>
                 </button>
@@ -104,14 +104,14 @@ export default function Projects() {
                       href={project.callout.href}
                       className="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md border border-rule px-4 py-3 no-underline hover:border-accent"
                     >
-                      <span className="text-[14px] text-muted">{project.callout.text}</span>
-                      <span className="ml-auto font-mono text-[13px] text-faint">{project.callout.label}</span>
+                      <span className="text-[0.875rem] text-muted">{project.callout.text}</span>
+                      <span className="ml-auto font-mono text-[0.8125rem] text-faint">{project.callout.label}</span>
                     </Link>
                   ) : null}
                   {project.title ? (
-                    <p translate="no" className="text-[16px] font-medium leading-snug text-body">{project.title}</p>
+                    <p translate="no" className="text-[1rem] font-medium leading-snug text-body">{project.title}</p>
                   ) : null}
-                  <p className="text-[15px] leading-[1.7] text-muted">{project.body}</p>
+                  <p className="text-[0.9375rem] leading-[1.7] text-muted">{project.body}</p>
                   {project.video ? (
                     // Mounted only while open, so it starts on expand and is torn
                     // down (playback stops) on collapse. No-cookie domain; CSP
@@ -125,22 +125,22 @@ export default function Projects() {
                     />
                   ) : null}
                   {project.quote ? (
-                    <blockquote className="border-l border-rule pl-4 text-[15px] leading-[1.7] text-muted">
+                    <blockquote className="border-l border-rule pl-4 text-[0.9375rem] leading-[1.7] text-muted">
                       {project.quote}
                     </blockquote>
                   ) : null}
                   {project.stack ? (
-                    <p className="font-mono text-[13px] text-faint">{project.stack}</p>
+                    <p className="font-mono text-[0.8125rem] text-faint">{project.stack}</p>
                   ) : null}
                   {repoActivity ? (
-                    <p className="font-mono text-[13px] text-fainter">
+                    <p className="font-mono text-[0.8125rem] text-fainter">
                       last push {timeAgo(repoActivity.pushed_at)}
                       {repoActivity.stars > 0
                         ? ` · ${repoActivity.stars} star${repoActivity.stars === 1 ? "" : "s"}`
                         : ""}
                     </p>
                   ) : repoIsPrivate ? (
-                    <p className="font-mono text-[13px] text-fainter">repository currently private</p>
+                    <p className="font-mono text-[0.8125rem] text-fainter">repository currently private</p>
                   ) : null}
                   <div className="flex flex-wrap gap-4">
                     {project.links
@@ -152,7 +152,7 @@ export default function Projects() {
                         key={link.href}
                         href={link.href}
                         {...newTab(link.href)}
-                        className="font-mono text-[14px]"
+                        className="font-mono text-[0.875rem]"
                       >
                         {link.label}
                       </a>

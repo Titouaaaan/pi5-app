@@ -31,12 +31,12 @@ export default function Publications() {
           const paper = papers[pub.doi];
           return (
             <li key={pub.doi} className="flex flex-col gap-1.5">
-              <p translate="no" className="text-[16px] font-medium leading-snug text-body">{pub.title}</p>
-              <p translate="no" className="text-[15px] leading-relaxed text-muted">{pub.authors}</p>
-              <p translate="no" className="font-mono text-[13px] leading-relaxed text-faint">
+              <p translate="no" className="text-[1rem] font-medium leading-snug text-body">{pub.title}</p>
+              <p translate="no" className="text-[0.9375rem] leading-relaxed text-muted">{pub.authors}</p>
+              <p translate="no" className="font-mono text-[0.8125rem] leading-relaxed text-faint">
                 {pub.venue} · {pub.year}
               </p>
-              <div className="flex flex-wrap items-baseline gap-4 font-mono text-[14px]">
+              <div className="flex flex-wrap items-baseline gap-4 font-mono text-[0.875rem]">
                 <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer">
                   doi
                 </a>
@@ -44,7 +44,7 @@ export default function Publications() {
                   google scholar
                 </a>
                 {paper ? (
-                  <span className="text-[13px] text-fainter">
+                  <span className="text-[0.8125rem] text-fainter">
                     cited {paper.citations} time{paper.citations === 1 ? "" : "s"} (
                     {paper.source.toLowerCase()})
                   </span>

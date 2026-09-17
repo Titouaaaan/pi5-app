@@ -51,7 +51,7 @@ export default function MobileMenu({ sections }: { sections: Section[] }) {
           id="mobile-menu"
           className="absolute inset-x-0 top-full border-b border-rule bg-paper sm:hidden"
         >
-          <nav aria-label="Sections" className="flex flex-col px-8 py-2 font-mono text-[15px]">
+          <nav aria-label="Sections" className="flex flex-col px-8 py-2 font-mono text-[0.9375rem]">
             {sections.map((s) => (
               <a
                 key={s.id}
@@ -65,14 +65,14 @@ export default function MobileMenu({ sections }: { sections: Section[] }) {
             ))}
           </nav>
           {TRANSLATE_ENABLED ? (
-            <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[15px] text-faint">
+            <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[0.9375rem] text-faint">
               <span>
                 <span className="text-fainter">## </span>language
               </span>
               <LanguageSelect />
             </div>
           ) : null}
-          <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[15px] text-faint">
+          <div className="flex items-center justify-between border-t border-rule-light px-8 py-2 font-mono text-[0.9375rem] text-faint">
             <span>
               <span className="text-fainter">## </span>theme
             </span>

@@ -17,7 +17,7 @@ export default function Header() {
   return (
     <header translate="no" className="sticky top-0 z-10 border-b border-rule bg-paper">
       <div className="mx-auto flex max-w-column items-center justify-between gap-4 px-8 py-2.5">
-        <div className="flex items-center gap-4 font-mono text-[13px]">
+        <div className="flex items-center gap-4 font-mono text-[0.8125rem]">
           <Link
             href="/"
             className="flex items-center gap-2 text-faint no-underline hover:text-ink"
