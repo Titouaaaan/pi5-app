@@ -71,6 +71,14 @@ What it does, in order:
    differs (that means `--backend` was needed). Checks the public URL, warning
    rather than failing if the tunnel is the problem.
 
+If the script is interrupted (Ctrl-C, a dropped SSH session, a killed
+terminal), a trap restores the previous `node_modules` and build and starts
+the service before exiting, so an abort never leaves the site stopped.
+Added 2026-09-17 after an interrupted run did exactly that for eight
+minutes. The one thing no script can survive is `SIGKILL`; if that happens,
+just run `./deploy.sh` again, it detects the half-installed modules from the
+missing lock hash and reinstalls.
+
 **Do not run `npm run build` by hand in the live tree.** `next start` reads
 static chunks lazily off disk, so a build that fails partway can break the live
 site before any restart, with no clean rollback. That is the specific problem

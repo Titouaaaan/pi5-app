@@ -59,6 +59,26 @@ start_if_stopped() {
   fi
 }
 
+# If the script dies for any reason it did not plan for (Ctrl-C, a closed
+# terminal, a killed tool), do not leave the site stopped or half-swapped.
+# The planned failure paths above already restore what they need; for them
+# this is a no-op because their flags are clear by the time they exit.
+abort_cleanup() {
+  local code=$?
+  trap - EXIT
+  if [[ $code -ne 0 ]]; then
+    if [[ ! -d "$LIVE_DIR" && -d "$PREV_DIR" ]]; then mv "$PREV_DIR" "$LIVE_DIR"; fi
+    restore_modules
+    start_if_stopped
+    printf '\033[1;31mAborted (exit %s). Previous build and modules kept; service running.\033[0m\n' "$code" >&2
+  fi
+  exit "$code"
+}
+trap abort_cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+trap 'exit 129' HUP
+
 cd "$APP_DIR"
 mkdir -p "$KEEP_DIR"
 

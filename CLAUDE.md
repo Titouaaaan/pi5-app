@@ -17,7 +17,9 @@ of truth; this file is the short version.
    `./deploy.sh`. Nothing else.
 2. **`deploy.sh` refuses uncommitted or unpushed work.** Commit, push, then
    deploy. It builds into a scratch dir, swaps on success, health-checks and
-   rolls back by itself. It has been exercised by a real failure and recovered.
+   rolls back by itself, and a trap restores everything if it is interrupted.
+   Run it as its own step, never chained after edits in one command: an
+   interrupted chain once killed it mid-deploy.
 3. **Dev server goes on port 3002.** 3000 is production, 3001 is uptime-kuma
    (answers with a misleading 302), 8000 is the live backend. Run a dev backend
    on 8001 and point the proxy at it: `BACKEND_URL=http://127.0.0.1:8001`.
