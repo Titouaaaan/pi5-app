@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 Personal portfolio at **https://titouanguerin.com**, self-hosted on a Raspberry
-Pi 5. Next.js 15 (App Router, Tailwind) in `my-app/`, a FastAPI backend in
+Pi 5. Next.js 16 (App Router, Tailwind) in `my-app/`, a FastAPI backend in
 `backend/`, exposed through a Cloudflare tunnel.
 
 Read `docs/OPERATIONS.md` before touching how the site runs, and
