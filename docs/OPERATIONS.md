@@ -146,7 +146,14 @@ tried on 2026-09-17 and is blocked upstream: `eslint-config-next` allows it,
 but its dependency `eslint-plugin-react` (7.37.5, the latest) still calls
 `context.getFilename()`, removed in 10, and crashes on the first rule. Retry
 when `eslint-plugin-react` publishes a release whose peer range includes
-`eslint@10`: `npm view eslint-plugin-react peerDependencies.eslint`. Each is a real migration and should be done on its own,
+`eslint@10`: `npm view eslint-plugin-react peerDependencies.eslint`.
+TypeScript 7 (the Go-based compiler) is blocked the same way:
+`typescript-eslint`, also a dependency of `eslint-config-next`, declares
+`typescript <6.1` and drives the parser through TypeScript's JavaScript API,
+which 7 does not provide. Check `npm view @typescript-eslint/parser
+peerDependencies.typescript` before retrying; 6.0 is the intended stepping
+stone and VS Code already lints with it (bundled 6.0.3 passes this project
+clean). Each is a real migration and should be done on its own,
 not as part of a routine update.
 
 Node on the Pi is **22.x** (LTS until April 2027), installed from NodeSource's
