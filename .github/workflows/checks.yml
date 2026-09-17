@@ -44,6 +44,9 @@ jobs:
           python-version: "3.11" # same as the Pi
           cache: pip
           cache-dependency-path: backend/requirements-dev.txt
+      # The runner's preinstalled setuptools carries advisories; deploy.sh and
+      # the venv docs upgrade it on the Pi for the same reason.
+      - run: pip install --upgrade pip setuptools
       - run: pip install -r requirements-dev.txt
       - run: python -m pytest
       - run: pip-audit
