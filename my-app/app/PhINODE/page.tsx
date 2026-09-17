@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "PhINODE",
   description: phinode.title,
   alternates: { canonical: "https://titouanguerin.com/PhINODE" },
-  openGraph: { title: "PhINODE", description: phinode.title, url: "https://titouanguerin.com/PhINODE" },
+  openGraph: { images: "/opengraph-image", title: "PhINODE", description: phinode.title, url: "https://titouanguerin.com/PhINODE" },
 };
 
 // Figures come from the thesis, re-extracted onto white; they keep a white
@@ -49,7 +49,7 @@ const Q = ({ tag, title, children }: { tag: string; title: string; children: Rea
 
 export default function PhinodePage() {
   return (
-    <main className="mx-auto flex max-w-column flex-col gap-10 px-8 pb-16 pt-8">
+    <main id="main" className="mx-auto flex max-w-column flex-col gap-10 px-8 pb-16 pt-8">
       <p className="font-mono text-[14px]">
         <Link href="/">← titouanguerin.com</Link>{" "}
         <span className="text-faint">/ work / {phinode.name}</span>

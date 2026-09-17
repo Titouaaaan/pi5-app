@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "How this site runs",
   description: "titouanguerin.com is served from a Raspberry Pi 5 at home through a Cloudflare tunnel. The stack and a few things worth liking about it.",
   alternates: { canonical: "https://titouanguerin.com/colophon" },
-  openGraph: { title: "How this site runs", url: "https://titouanguerin.com/colophon" },
+  openGraph: { images: "/opengraph-image", title: "How this site runs", url: "https://titouanguerin.com/colophon" },
 };
 
 const P = ({ children }: { children: React.ReactNode }) => (
@@ -23,7 +23,7 @@ const Item = ({ title, children }: { title: string; children: React.ReactNode })
 
 export default function ColophonPage() {
   return (
-    <main className="mx-auto flex max-w-column flex-col gap-9 px-8 pb-16 pt-8">
+    <main id="main" className="mx-auto flex max-w-column flex-col gap-9 px-8 pb-16 pt-8">
       <p className="font-mono text-[14px]">
         <Link href="/">← titouanguerin.com</Link> <span className="text-faint">/ colophon</span>
       </p>
@@ -77,7 +77,7 @@ export default function ColophonPage() {
           <Item title="The footer is live.">CPU, memory, disk and uptime come from the Pi every 5 seconds.</Item>
           <Item title="Deploys cannot half-break it.">A script builds the new version into a scratch folder, swaps it in only if the build succeeded, restarts, checks that the page now carries the new commit hash, and rolls back on its own if it does not. It has done that once, for real.</Item>
           <Item title="The visitor counter cannot track you.">It stores a hash of your address mixed with the date and a secret that never leaves the Pi. Same person tomorrow, different hash. No cookies, nothing to join.</Item>
-          <Item title="Nothing loads from anyone else.">The only JavaScript on the page is my own, about 110 kB of it, used for small things like the dropdown menu and the light/dark switch. There is no external analytics script adding more, and the single embed is the YouTube video of my RL agent in the Dark Souls III project, which only loads when you open that row. I tried to keep it as light as I could.</Item>
+          <Item title="Nothing loads from anyone else.">The only JavaScript on the page is my own, under 200 kB of it, used for small things like the dropdown menu and the light/dark switch. There is no external analytics script adding more, and the single embed is the YouTube video of my RL agent in the Dark Souls III project, which only loads when you open that row. I tried to keep it as light as I could.</Item>
         </ul>
       </section>
 
