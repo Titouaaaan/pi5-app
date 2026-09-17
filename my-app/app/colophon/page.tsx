@@ -34,7 +34,7 @@ export default function ColophonPage() {
           how this site runs
         </h1>
         <p className="text-[18px] leading-relaxed text-body">
-          I did not want to pay for a server, so the site is hosted on my Raspberry Pi 5 sitting on my desk, and briefly explain here how.
+          I did not want to pay for a server, so the site is hosted on my Raspberry Pi 5 sitting on my desk, and I briefly explain here how it works.
         </p>
       </section>
 
