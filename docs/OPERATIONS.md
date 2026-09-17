@@ -137,7 +137,15 @@ a routine update. When Next goes to 16, drop the `postcss` override in
 `package.json` (see `SECURITY.md`) and note that `next lint` is gone — the
 `lint` script already uses the ESLint CLI directly in readiness.
 
-Node on the Pi is 20.x. Next 15.5 requires 18.18+; Next 16 requires 20.9+.
+Node on the Pi is **22.x** (LTS until April 2027), installed from NodeSource's
+apt repo (`/etc/apt/sources.list.d/nodesource.list`, `node_22.x` channel);
+moved from 20.x on 2026-09-17 after Node 20 reached end-of-life. To move to
+the next LTS: change the channel in that file, `apt update && apt install
+nodejs`, then `./deploy.sh` (rebuilds and health-checks under the new
+runtime) and `sudo systemctl restart uptime-kuma`, which shares the binary.
+Native addons (Next's SWC, sharp, uptime-kuma's sqlite3) are N-API and
+survive a major bump without `npm ci`. Next 15.5 requires 18.18+; Next 16
+requires 20.9+.
 
 ## Service management
 
