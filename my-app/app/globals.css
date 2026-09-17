@@ -116,6 +116,13 @@
     cursor: pointer;
   }
 
+  /* Keyboard focus: a ring in the accent, outside the element. Only for
+     :focus-visible, so a mouse click never shows it. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
   /* Deep links (#publications) land clear of the sticky header. */
   [id] {
     scroll-margin-top: 4.5rem;
