@@ -71,6 +71,9 @@ cd ../backend
 cd .. && ./deploy.sh   # add --backend when backend/ or deploy/ changed
 ```
 
+The same checks run on GitHub (`.github/workflows/checks.yml`) on every push
+and weekly; `gh run list` shows them. CI never deploys.
+
 ## Where things stand
 
 Redesign shipped 2026-09-15; project page, colophon, Cloudflare visitor counts, video embed, about/knowledge grid added 2026-09-16. The pre-redesign site is archived at tag

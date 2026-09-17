@@ -119,6 +119,17 @@ git push
 The `v1-original` tag is an archive of the site as it was before the redesign,
 kept for reference. It predates `deploy.sh` and is **not deployable with it**.
 
+## Continuous integration
+
+`.github/workflows/checks.yml` runs the pre-deploy checks on GitHub's
+machines on every push to `main` or `rework`, on pull requests, and every
+Monday at 08:00 UTC: `npm ci`, lint, `tsc`, `next build`, `npm audit` for
+the frontend; pytest and `pip-audit` for the backend. The weekly run is
+what makes a new advisory against an existing dependency visible without
+anyone running an audit by hand. It never deploys and has no access to the
+Pi; `deploy.sh` remains the only path to production, and a red run does not
+block it. Results: `gh run list`, or the Actions tab.
+
 ## Keeping dependencies current
 
 ```bash
