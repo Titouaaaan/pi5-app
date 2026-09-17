@@ -86,5 +86,6 @@ The translate dropdown is disabled behind `TRANSLATE_ENABLED` pending issue #1.
 
 Dependencies: Next **16.x** and Tailwind **4.x** (theme lives in
 `globals.css` under `@theme inline`; no config file) since 2026-09-17.
-ESLint 10 and TypeScript 7 are still majors ahead; each deserves its own
-change with its own deploy.
+TypeScript 7 is still a major ahead. ESLint 10 is blocked by
+`eslint-plugin-react` (see OPERATIONS.md); do not retry until it ships
+ESLint 10 support.

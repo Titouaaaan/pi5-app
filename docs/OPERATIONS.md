@@ -141,8 +141,12 @@ npm run lint && npx tsc --noEmit && npm run build
 ```
 
 Next moved to **16.x** and Tailwind to **4.x** on 2026-09-17. Still held on
-their current major: **ESLint 9.x** (`eslint-config-next` caps at 9) and
-**TypeScript 5.x**. Each is a real migration and should be done on its own,
+their current major: **ESLint 9.x** and **TypeScript 5.x**. ESLint 10 was
+tried on 2026-09-17 and is blocked upstream: `eslint-config-next` allows it,
+but its dependency `eslint-plugin-react` (7.37.5, the latest) still calls
+`context.getFilename()`, removed in 10, and crashes on the first rule. Retry
+when `eslint-plugin-react` publishes a release whose peer range includes
+`eslint@10`: `npm view eslint-plugin-react peerDependencies.eslint`. Each is a real migration and should be done on its own,
 not as part of a routine update.
 
 Node on the Pi is **22.x** (LTS until April 2027), installed from NodeSource's
