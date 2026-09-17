@@ -11,7 +11,7 @@ outstanding. Update it whenever the security posture changes.
 | **Public API docs** | `api.titouanguerin.com/docs` served the interactive Swagger UI to the internet, advertising the API surface | `docs_url`, `redoc_url` and `openapi_url` all set to `None` |
 | **Framework fingerprinting** | `X-Powered-By: Next.js` on every response | `poweredByHeader: false` |
 | **Missing response headers** | none set | `Strict-Transport-Security` (2 years, subdomains), `Content-Security-Policy` (see below), `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: DENY`, `Permissions-Policy` denying camera/microphone/geolocation |
-| **GitHub API called from every visitor's browser** | each visitor hit `api.github.com` unauthenticated, against a 60-requests-per-hour-per-IP limit | fetched server-side in `Footer.tsx` and cached for an hour with `next: { revalidate: 3600 }` |
+| **GitHub API called from every visitor's browser** | each visitor hit `api.github.com` unauthenticated, against a 60-requests-per-hour-per-IP limit | fetched by the backend (`/github/activity`, one request an hour, cached and served stale on failure) and read by `Projects.tsx` |
 | **Undocumented Python dependencies** | no `requirements.txt`; the venv was unreproducible | `backend/requirements.txt`, pinned; `deploy.sh --backend` rebuilds the venv from it |
 
 ## Content-Security-Policy
@@ -64,7 +64,9 @@ is upgraded to 16.
 
 **Python:** `fastapi` only sets a floor on `starlette`, so `starlette` is pinned
 explicitly in `backend/requirements.txt`; otherwise `pip install -r` leaves an
-old one in place. Audit the backend with `pip-audit` (in
+old one in place. Create the venv with `--upgrade-deps`: the Pi's Python 3.11
+seeds venvs with setuptools 66, which carries three advisories and fails
+`pip-audit` on its own (`deploy.sh --backend` upgrades it in the live venv). Audit the backend with `pip-audit` (in
 `requirements-dev.txt`) run **inside the venv**, not with `-r`, so it checks
 what is installed rather than what a fresh resolve would pick.
 

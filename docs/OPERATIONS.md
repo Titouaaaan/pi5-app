@@ -92,7 +92,7 @@ backend on another port and point the `/api` rewrite at it:
 ```bash
 # backend, in one shell
 cd backend
-python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
+python3 -m venv --upgrade-deps .venv && .venv/bin/pip install -r requirements-dev.txt
 .venv/bin/uvicorn app.main:app --port 8001 --reload
 .venv/bin/python -m pytest               # run the tests
 

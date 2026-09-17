@@ -11,8 +11,8 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    // Build output, the Python venv that lives inside app/, and generated types.
-    ignores: [".next/**", ".next-build/**", "app/venv/**", "next-env.d.ts"],
+    // Build output and generated types.
+    ignores: [".next/**", ".next-build/**", "next-env.d.ts"],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];

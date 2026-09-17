@@ -8,7 +8,7 @@ token (Zone > Analytics > Read) in CLOUDFLARE_API_TOKEN; never in the repo.
 """
 
 import os
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 import httpx
 from fastapi import APIRouter, HTTPException
@@ -61,8 +61,14 @@ def _zone() -> str:
     return _zone_id
 
 
+def _utc_today() -> date:
+    # Cloudflare's daily buckets are UTC days; the Pi's local date is ahead
+    # of UTC for an hour a night in summer, which would show today as 0.
+    return datetime.now(timezone.utc).date()
+
+
 def daily_uniques(today: date | None = None) -> dict[str, int]:
-    today = today or date.today()
+    today = today or _utc_today()
     r = httpx.post(
         f"{API}/graphql",
         json={
@@ -85,7 +91,7 @@ def daily_uniques(today: date | None = None) -> dict[str, int]:
 
 
 def summarise(by_day: dict[str, int], today: date | None = None) -> Visitors:
-    today = today or date.today()
+    today = today or _utc_today()
     yesterday = today - timedelta(days=1)
     return Visitors(
         today=by_day.get(today.isoformat(), 0),
