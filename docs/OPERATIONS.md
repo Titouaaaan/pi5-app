@@ -140,21 +140,25 @@ npm audit           # must be 0 before deploying
 npm run lint && npx tsc --noEmit && npm run build
 ```
 
-Next moved to **16.x** and Tailwind to **4.x** on 2026-09-17. Still held on
-their current major: **ESLint 9.x** and **TypeScript 5.x**. ESLint 10 was
-tried on 2026-09-17 and is blocked upstream: `eslint-config-next` allows it,
-but its dependency `eslint-plugin-react` (7.37.5, the latest) still calls
-`context.getFilename()`, removed in 10, and crashes on the first rule. Retry
-when `eslint-plugin-react` publishes a release whose peer range includes
-`eslint@10`: `npm view eslint-plugin-react peerDependencies.eslint`.
-TypeScript 7 (the Go-based compiler) is blocked the same way:
-`typescript-eslint`, also a dependency of `eslint-config-next`, declares
-`typescript <6.1` and drives the parser through TypeScript's JavaScript API,
-which 7 does not provide. Check `npm view @typescript-eslint/parser
-peerDependencies.typescript` before retrying; 6.0 is the intended stepping
-stone and VS Code already lints with it (bundled 6.0.3 passes this project
-clean). Each is a real migration and should be done on its own,
-not as part of a routine update.
+Next **16.x**, Tailwind **4.x**, ESLint **10.x** and TypeScript **6.0** since
+2026-09-17. Two notes for the next bump:
+
+- **ESLint 10** runs `eslint-config-next` through `fixupConfigRules` from
+  `@eslint/compat` (see `eslint.config.mjs`), because its dependency
+  `eslint-plugin-react` still uses `context` methods ESLint 10 removed.
+  When `npm view eslint-plugin-react peerDependencies.eslint` includes 10,
+  drop the wrapper and `@eslint/compat`.
+- **TypeScript 7** is the Go compiler with no JavaScript API. `tsc` 7 checks
+  this project in under a second and `next build` accepts it, but
+  `typescript-eslint` needs the API and refuses 7.0 (it is tracking 7.1).
+  6.0 is the last JavaScript line and the intended stepping stone. Move to 7
+  when `npm view @typescript-eslint/parser peerDependencies.typescript`
+  allows it; until then do not install 7, or use the documented
+  side-by-side alias (`typescript` → `@typescript/typescript6`,
+  `@typescript/native` → 7) if the speed matters.
+
+Each of these is a real migration and should be done on its own, not as
+part of a routine update.
 
 Node on the Pi is **22.x** (LTS until April 2027), installed from NodeSource's
 apt repo (`/etc/apt/sources.list.d/nodesource.list`, `node_22.x` channel);

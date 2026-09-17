@@ -84,8 +84,7 @@ systemd units or the Cloudflare dashboard, which is why it is still open.
 Open issues live on GitHub (`gh issue list`); the Pi is logged in as Titouaaaan.
 The translate dropdown is disabled behind `TRANSLATE_ENABLED` pending issue #1.
 
-Dependencies: Next **16.x** and Tailwind **4.x** (theme lives in
-`globals.css` under `@theme inline`; no config file) since 2026-09-17.
-ESLint 10 and TypeScript 7 are both blocked by dependencies of
-`eslint-config-next` (see OPERATIONS.md for the one-line checks); do not
-retry until those clear.
+Dependencies: Next **16.x**, Tailwind **4.x** (theme in `globals.css` under
+`@theme inline`; no config file), ESLint **10** (via `@eslint/compat`) and
+TypeScript **6.0**, all since 2026-09-17. TypeScript 7 waits on
+`typescript-eslint`; see OPERATIONS.md for the checks before bumping either.
