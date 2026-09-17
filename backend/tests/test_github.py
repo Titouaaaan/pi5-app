@@ -36,7 +36,7 @@ def test_activity_returns_repos(monkeypatch):
 def test_serves_stale_when_github_fails(monkeypatch):
     monkeypatch.setattr(github.cache, "_fetch", fake_activity)
     client.get("/github/activity")
-    github.cache._at = 0.0  # expire
+    github.cache._at = float("-inf")  # expire regardless of how long the host has been up
 
     def failing():
         raise httpx.ConnectError("down")
