@@ -1,0 +1,49 @@
+# The same checks CLAUDE.md asks for before a deploy, run by GitHub on every
+# push and once a week. The weekly run is the point: a new advisory against a
+# package already in the lockfile shows up as a red run, instead of the next
+# time someone remembers npm audit. Nothing here deploys; deploy.sh on the
+# Pi is the only thing that ships.
+name: checks
+
+on:
+  push:
+    branches: [main, rework]
+  pull_request:
+  schedule:
+    - cron: "0 8 * * 1" # Mondays 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: my-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22 # same major as the Pi
+          cache: npm
+          cache-dependency-path: my-app/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm run build
+      - run: npm audit
+
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11" # same as the Pi
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest
+      - run: pip-audit
