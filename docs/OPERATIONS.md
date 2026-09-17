@@ -140,12 +140,11 @@ npm audit           # must be 0 before deploying
 npm run lint && npx tsc --noEmit && npm run build
 ```
 
-Held deliberately on their current major: **Next 15.x**, **Tailwind 3.x**,
-**ESLint 9.x** (`eslint-config-next` caps at 9), **TypeScript 5.x**. Each of
-those majors is a real migration and should be done on its own, not as part of
-a routine update. When Next goes to 16, drop the `postcss` override in
-`package.json` (see `SECURITY.md`) and note that `next lint` is gone — the
-`lint` script already uses the ESLint CLI directly in readiness.
+Next moved to **16.x** on 2026-09-17 (Turbopack builds and dev, native
+flat ESLint config, the `postcss` override gone with it). Still held on
+their current major: **Tailwind 3.x**, **ESLint 9.x** (`eslint-config-next`
+caps at 9), **TypeScript 5.x**. Each of those is a real migration and
+should be done on its own, not as part of a routine update.
 
 Node on the Pi is **22.x** (LTS until April 2027), installed from NodeSource's
 apt repo (`/etc/apt/sources.list.d/nodesource.list`, `node_22.x` channel);
@@ -154,8 +153,7 @@ the next LTS: change the channel in that file, `apt update && apt install
 nodejs`, then `./deploy.sh` (rebuilds and health-checks under the new
 runtime) and `sudo systemctl restart uptime-kuma`, which shares the binary.
 Native addons (Next's SWC, sharp, uptime-kuma's sqlite3) are N-API and
-survive a major bump without `npm ci`. Next 15.5 requires 18.18+; Next 16
-requires 20.9+.
+survive a major bump without `npm ci`. Next 16 requires Node 20.9+.
 
 ## Service management
 

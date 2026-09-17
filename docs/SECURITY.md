@@ -48,19 +48,10 @@ frames or connections from any other origin.
 ## Dependencies
 
 Audited and brought to **0 vulnerabilities** on 2026-09-15. Next moved from
-15.1.3 (January 2025, one critical and several high advisories) to 15.5.25, the
-latest on the 15.x line; everything else updated within its semver range.
-
-One fix needed a hand: Next 15.5 still pins a vulnerable nested `postcss`
-(build-time advisories — attacker-controlled CSS input, which does not apply
-here, but an advisory is an advisory). `package.json` carries
-
-```json
-"overrides": { "next": { "postcss": "8.5.28" } }
-```
-
-which is the same pin Next itself adopted in 16. Remove the override when Next
-is upgraded to 16.
+15.1.3 (January 2025, one critical and several high advisories) to 15.5,
+then to **16.3** on 2026-09-17; everything else is kept within its semver
+range. (Next 15.5 had needed a `postcss` override in `package.json` for a
+vulnerable nested pin; 16 carries the fix itself and the override is gone.)
 
 **Python:** `fastapi` only sets a floor on `starlette`, so `starlette` is pinned
 explicitly in `backend/requirements.txt`; otherwise `pip install -r` leaves an

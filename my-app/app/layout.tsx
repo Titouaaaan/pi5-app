@@ -49,7 +49,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`${plexSans.variable} ${plexMono.variable} font-sans`}>
         {/* Restore a saved theme before anything paints, so there is no flash. */}
         <script

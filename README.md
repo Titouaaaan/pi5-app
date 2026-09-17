@@ -9,7 +9,7 @@ Raspberry Pi 5 sitting in my flat.
 
 ## Stack
 
-**Frontend** — [Next.js](https://nextjs.org) 15 (App Router), React 19,
+**Frontend** — [Next.js](https://nextjs.org) 16 (App Router), React 19,
 TypeScript and Tailwind CSS. Server-rendered, with client-side JavaScript only
 where something actually needs to be interactive.
 
