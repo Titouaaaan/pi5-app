@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { projects } from "@/content/projects";
+import { newTab } from "./newTab";
 import SectionHeading from "./SectionHeading";
 
 type RepoActivity = { pushed_at: string; stars: number };
@@ -146,8 +147,7 @@ export default function Projects() {
                       <a
                         key={link.href}
                         href={link.href}
-                        target={link.href.startsWith("http") ? "_blank" : undefined}
-                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        {...newTab(link.href)}
                         className="font-mono text-[14px]"
                       >
                         {link.label}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Footer from "../components/Footer";
 import Rule from "../components/Rule";
 import SectionHeading from "../components/SectionHeading";
+import { newTab } from "../components/newTab";
 import { phinode } from "@/content/phinode";
 
 export const metadata: Metadata = {
@@ -73,9 +74,7 @@ export default function PhinodePage() {
           <p className="font-mono text-[13px] text-faint">{phinode.meta}</p>
           <div className="flex flex-wrap gap-2.5 pt-1 font-mono text-[14px]">
             {phinode.links.map((l) => (
-              <a key={l.href} href={l.href}
-                target={l.href.startsWith("http") ? "_blank" : undefined}
-                rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              <a key={l.href} href={l.href} {...newTab(l.href)}
                 className={`rounded-md border border-rule px-3 py-1.5 no-underline hover:border-accent ${"dim" in l && l.dim ? "text-faint hover:border-rule" : ""}`}>
                 {l.label}
               </a>
