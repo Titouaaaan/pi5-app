@@ -15,11 +15,20 @@ export default function Hero() {
         {profile.tagline}
       </p>
       <nav translate="no" className="flex flex-wrap gap-x-[18px] gap-y-1 pl-[26px] pt-1 font-mono text-[14px]">
-        {profile.links.map((link) => (
-          <a key={link.label} href={link.href}>
-            {link.label}
-          </a>
-        ))}
+        {profile.links.map((link) => {
+          // Sites and the PDF open in a new tab so the page stays; mailto does not need one.
+          const external = link.href.startsWith("http") || link.href.endsWith(".pdf");
+          return (
+            <a
+              key={link.label}
+              href={link.href}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noopener noreferrer" : undefined}
+            >
+              {link.label}
+            </a>
+          );
+        })}
       </nav>
     </header>
   );
