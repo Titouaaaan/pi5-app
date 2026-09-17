@@ -143,7 +143,11 @@ export default function Projects() {
                     <p className="font-mono text-[13px] text-fainter">repository currently private</p>
                   ) : null}
                   <div className="flex flex-wrap gap-4">
-                    {project.links.map((link) => (
+                    {project.links
+                      // A private repo's GitHub link would 404 for visitors; the
+                      // "currently private" line above stands in for it.
+                      .filter((link) => !(repoIsPrivate && link.href.startsWith(GITHUB_PREFIX)))
+                      .map((link) => (
                       <a
                         key={link.href}
                         href={link.href}
