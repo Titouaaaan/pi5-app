@@ -24,9 +24,13 @@ export default function Header() {
           >
             <span
               aria-hidden="true"
-              className="flex h-5 w-5 items-center justify-center rounded-sm bg-ink text-[13px] font-medium text-paper"
+              className="flex h-5 w-5 items-center justify-center rounded-sm bg-ink text-paper"
             >
-              #
+              {/* Blackboard-bold T (U+1D54B), the favicon's glyph, as an outline
+                  from Noto Sans Math so no font is loaded for one character. */}
+              <svg viewBox="5 0 579 714" height="12" fill="currentColor" fillRule="evenodd">
+                <path d="M208 714V53H5V0H584V53H381V714ZM261 661H328V53H261Z" />
+              </svg>
             </span>
             welcome
           </Link>
