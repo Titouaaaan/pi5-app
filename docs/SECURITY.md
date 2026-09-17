@@ -85,37 +85,35 @@ counting, not analytics.
 
 The client address is taken from `CF-Connecting-IP` (set by Cloudflare and
 verified to survive the Next.js rewrite). Direct LAN requests to port 8000
-could spoof that header to inflate the count; binding to `127.0.0.1` (item 2
+could spoof that header to inflate the count; binding to `127.0.0.1` (item 1
 below) closes that.
+
+## Tunnel token (fixed 2026-09-17)
+
+The tunnel token used to sit inline in `/etc/systemd/system/cloudflared.service`
+(mode 644, so readable by every local user, and visible to everyone in `ps`)
+and had been pasted into terminals. Now:
+
+- The token was rotated in the dashboard (Networking > Tunnels > the tunnel >
+  Overview > **Rotate token**), which invalidated the old one.
+- It lives only in `/etc/cloudflared/tunnel.env` (root, mode 600) as
+  `TUNNEL_TOKEN=...`, loaded by `EnvironmentFile=` in the unit. cloudflared
+  reads that variable natively, so `ExecStart` is just
+  `cloudflared --no-autoupdate tunnel run`: nothing on the command line, and a
+  root process's environment is not readable by other users.
+- The unit (mode 644) contains no secret and is safe to read or commit.
+
+To rotate again: Rotate token in the dashboard, then on the Pi
+`read -rs TOKEN`, paste, and
+`printf 'TUNNEL_TOKEN=%s\n' "$TOKEN" | sudo tee /etc/cloudflared/tunnel.env >/dev/null; unset TOKEN`,
+then `sudo systemctl restart cloudflared`. Running connections survive until
+the restart, so there is no window to plan around.
 
 ## Still outstanding
 
 These need changes outside the repo and are listed in the order they matter.
 
-### 1. Rotate the Cloudflare tunnel token — highest priority
-
-`/etc/systemd/system/cloudflared.service` contains the tunnel token inline and
-is mode `644`, so **every local user can read it and run the tunnel**. The
-token has also appeared in terminal output and shell history.
-
-```bash
-# Create a new token in the Cloudflare dashboard, then:
-sudo install -m 600 /dev/null /etc/cloudflared/tunnel.env
-sudo tee /etc/cloudflared/tunnel.env >/dev/null <<'EOF'
-TUNNEL_TOKEN=<the new token>
-EOF
-sudo systemctl edit --full cloudflared.service   # see below
-sudo systemctl daemon-reload && sudo systemctl restart cloudflared
-```
-
-In the unit, replace the inline token with:
-
-```ini
-EnvironmentFile=/etc/cloudflared/tunnel.env
-ExecStart=/usr/bin/cloudflared --no-autoupdate tunnel run --token ${TUNNEL_TOKEN}
-```
-
-### 2. Bind the backend to localhost
+### 1. Bind the backend to localhost
 
 The unit (versioned at `deploy/fastapi-backend.service`) runs uvicorn with
 `--host 0.0.0.0`, so port 8000 is reachable from the whole LAN and tailnet.
@@ -126,17 +124,17 @@ The one thing that needs it is uptime-kuma's "FastApi" monitor, which polls
 2. In `deploy/fastapi-backend.service`, change `--host 0.0.0.0` to
    `--host 127.0.0.1`, commit, and run `./deploy.sh --backend`.
 
-### 3. Retire the `api.` hostname
+### 2. Retire the `api.` hostname
 
 With the `/api/*` rewrite in place, `api.titouanguerin.com` is no longer used
 by the site. Removing its tunnel route removes an entire public entry point.
 
-### 4. Update cloudflared
+### 3. Update cloudflared
 
 Running 2025.9.1 against a current 2026.9.1, with `--no-autoupdate` set while a
 `cloudflared-update.service` exists unused.
 
-### 5. Remove the stale `pi.` DNS record
+### 4. Remove the stale `pi.` DNS record
 
 `pi.titouanguerin.com` returns Cloudflare error 1016 (origin DNS error). It is
 a dead record still advertised in the old README.
