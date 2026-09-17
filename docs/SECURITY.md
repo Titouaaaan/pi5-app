@@ -84,9 +84,8 @@ reads the database. No cookies are set and no address is stored. This is
 counting, not analytics.
 
 The client address is taken from `CF-Connecting-IP` (set by Cloudflare and
-verified to survive the Next.js rewrite). Direct LAN requests to port 8000
-could spoof that header to inflate the count; binding to `127.0.0.1` (item 1
-below) closes that.
+verified to survive the Next.js rewrite). The backend listens on `127.0.0.1`
+only, so the header cannot be spoofed from the LAN.
 
 ## Tunnel token (fixed 2026-09-17)
 
@@ -113,32 +112,22 @@ the restart, so there is no window to plan around.
 
 These need changes outside the repo and are listed in the order they matter.
 
-### 1. Bind the backend to localhost
+### 1. Repoint uptime-kuma's "FastApi" monitor — from home
 
-The unit (versioned at `deploy/fastapi-backend.service`) runs uvicorn with
-`--host 0.0.0.0`, so port 8000 is reachable from the whole LAN and tailnet.
-Nothing off the Pi needs it: the tunnel, Next's `/api` rewrite and
-`deploy.sh` all use `localhost`/`127.0.0.1`, so no Cloudflare change is
-involved. The one consumer of the LAN address is uptime-kuma's "FastApi"
-monitor, and uptime-kuma runs as a plain systemd service on the Pi (not in
-Docker), so `127.0.0.1` from it is the Pi.
+Done 2026-09-17: uvicorn binds to `127.0.0.1` (`deploy/fastapi-backend.service`,
+deployed `7587c8a`); `curl http://192.168.1.41:8000/health` from the Pi is
+refused, `127.0.0.1` and the public `/api/*` answer. The journal showed the
+LAN address had exactly one client, uptime-kuma polling `/system-stats` once
+a minute, and uptime-kuma runs as a plain systemd service on the Pi, so
+`127.0.0.1` from it is the Pi. No Cloudflare change was involved.
 
-**TODO, from home (uptime-kuma is only reachable on the LAN):**
+That monitor is red until it is repointed, which needs the home Wi-Fi:
 
-1. Open uptime-kuma at `http://192.168.1.41:3001` from a device on the
-   home Wi-Fi.
-2. **FastApi** monitor → **Edit** → set the URL to
-   `http://127.0.0.1:8000/health` → **Save**. It goes green within one
-   check interval. (`/health` is the liveness probe; `/system-stats` works
-   too but does real work on every poll.)
-3. Then, in `deploy/fastapi-backend.service`, change `--host 0.0.0.0` to
-   `--host 127.0.0.1`, drop the comment above it, commit, and run
-   `./deploy.sh --backend`. Verify: `curl http://192.168.1.41:8000/health`
-   from the Pi must fail to connect, `curl http://127.0.0.1:8000/health`
-   must answer.
-
-Step 3 can be done before step 1 at the cost of the monitor showing red
-until it is repointed; the site itself is unaffected either way.
+1. Open uptime-kuma at `http://192.168.1.41:3001` from a device on the LAN.
+2. **FastApi** monitor → **Edit** → URL `http://127.0.0.1:8000/health` →
+   **Save**. Green within one check interval. (`/health` is the liveness
+   probe; `/system-stats` works too but does real work on every poll.)
+3. Delete this section.
 
 ### 2. Retire the `api.` hostname
 
