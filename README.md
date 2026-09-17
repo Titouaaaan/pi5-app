@@ -14,8 +14,11 @@ TypeScript and Tailwind CSS. Server-rendered, with client-side JavaScript only
 where something actually needs to be interactive.
 
 **Backend** — Python and [FastAPI](https://fastapi.tiangolo.com). Very based.
-It reports the Pi's live CPU, memory, disk and uptime, which you can see at the
-bottom of the page.
+It feeds the footer: the Pi's live CPU, memory, disk and uptime, visitor
+counts from Cloudflare, plus last-push dates for the projects (GitHub) and
+citation counts for the papers (OpenAlex), each cached so the page never
+waits on them. There is also a visitor counter that stores a salted daily
+hash and nothing else. Endpoints are documented in [docs/API.md](docs/API.md).
 
 ## Hosting
 
@@ -58,6 +61,12 @@ It refuses to deploy anything uncommitted or unpushed, builds into a scratch
 directory and only swaps it in once the build succeeds, then health-checks the
 site and rolls back on its own if something went wrong. Full detail in
 [docs/OPERATIONS.md](docs/OPERATIONS.md).
+
+## Checks
+
+Lint, type check, build, tests and dependency audits run on every push and
+weekly on GitHub Actions (`.github/workflows/checks.yml`). Nothing there
+deploys; the Pi does that, only through `deploy.sh`.
 
 ## Notes
 

@@ -108,7 +108,7 @@ These need changes outside the repo and are listed in the order they matter.
 ### 1. Repoint uptime-kuma's "FastApi" monitor — from home
 
 Done 2026-09-17: uvicorn binds to `127.0.0.1` (`deploy/fastapi-backend.service`,
-deployed `7587c8a`); `curl http://192.168.1.41:8000/health` from the Pi is
+deployed `7587c8a`); `curl http://<the Pi's LAN address>:8000/health` is
 refused, `127.0.0.1` and the public `/api/*` answer. The journal showed the
 LAN address had exactly one client, uptime-kuma polling `/system-stats` once
 a minute, and uptime-kuma runs as a plain systemd service on the Pi, so
@@ -116,7 +116,7 @@ a minute, and uptime-kuma runs as a plain systemd service on the Pi, so
 
 That monitor is red until it is repointed, which needs the home Wi-Fi:
 
-1. Open uptime-kuma at `http://192.168.1.41:3001` from a device on the LAN.
+1. Open uptime-kuma (the Pi's LAN address, port 3001) from a device on the LAN.
 2. **FastApi** monitor → **Edit** → URL `http://127.0.0.1:8000/health` →
    **Save**. Green within one check interval. (`/health` is the liveness
    probe; `/system-stats` works too but does real work on every poll.)
