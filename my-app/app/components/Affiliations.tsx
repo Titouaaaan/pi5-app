@@ -20,7 +20,7 @@ export default function Affiliations() {
             href={inst.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="block rounded-md bg-[var(--logo-tile)] p-1.5 no-underline opacity-90 hover:opacity-100"
+            className="block rounded-md bg-(--logo-tile) p-1.5 no-underline opacity-90 hover:opacity-100"
           >
             <Image
               src={inst.src}
@@ -28,7 +28,7 @@ export default function Affiliations() {
               width={Math.round((inst.width * LOGO_HEIGHT) / inst.height)}
               height={LOGO_HEIGHT}
               priority
-              className="h-[clamp(40px,12vw,64px)] w-auto rounded-sm"
+              className="h-[clamp(40px,12vw,64px)] w-auto rounded-xs"
             />
           </a>
         </li>

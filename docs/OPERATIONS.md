@@ -140,11 +140,10 @@ npm audit           # must be 0 before deploying
 npm run lint && npx tsc --noEmit && npm run build
 ```
 
-Next moved to **16.x** on 2026-09-17 (Turbopack builds and dev, native
-flat ESLint config, the `postcss` override gone with it). Still held on
-their current major: **Tailwind 3.x**, **ESLint 9.x** (`eslint-config-next`
-caps at 9), **TypeScript 5.x**. Each of those is a real migration and
-should be done on its own, not as part of a routine update.
+Next moved to **16.x** and Tailwind to **4.x** on 2026-09-17. Still held on
+their current major: **ESLint 9.x** (`eslint-config-next` caps at 9) and
+**TypeScript 5.x**. Each is a real migration and should be done on its own,
+not as part of a routine update.
 
 Node on the Pi is **22.x** (LTS until April 2027), installed from NodeSource's
 apt repo (`/etc/apt/sources.list.d/nodesource.list`, `node_22.x` channel);
@@ -181,8 +180,11 @@ never edit the copy in `/etc` by hand.
 ## Colours and themes
 
 Tokens are CSS variables in `my-app/app/globals.css`, one set under `:root`
-and one under `prefers-color-scheme: dark`; Tailwind classes (`text-faint`,
-`bg-paper`, ...) read them, so components carry no theme logic. Every text
+and one under `prefers-color-scheme: dark`. The `@theme inline` block at the
+top of that file maps them to Tailwind 4 classes (`text-faint`, `bg-paper`,
+...); there is no `tailwind.config` any more. `inline` matters: it makes a
+class emit `var(--ink)` itself, so an element that overrides a token (the
+colophon's white tile) is honoured. Components carry no theme logic. Every text
 colour clears WCAG AA, 4.5:1, on its background. Measured 2026-09-15:
 
 | Token | Light | ratio | Dark | ratio | Used for |

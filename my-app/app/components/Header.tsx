@@ -24,7 +24,7 @@ export default function Header() {
           >
             <span
               aria-hidden="true"
-              className="flex h-5 w-5 items-center justify-center rounded bg-ink text-[13px] font-medium text-paper"
+              className="flex h-5 w-5 items-center justify-center rounded-sm bg-ink text-[13px] font-medium text-paper"
             >
               #
             </span>
