@@ -1,5 +1,6 @@
 import { profile } from "@/content/profile";
 import { coursework, knowledge } from "@/content/knowledge";
+import LabelledList from "./LabelledList";
 import SectionHeading from "./SectionHeading";
 
 export default function About() {
@@ -13,14 +14,7 @@ export default function About() {
       ))}
 
       <p className="pt-2 font-mono text-[13px] text-faint">things i know my way around</p>
-      <dl translate="no" className="grid grid-cols-[88px_minmax(0,1fr)] gap-x-[18px] gap-y-2.5 font-mono text-[14px] leading-[1.8] sm:grid-cols-[132px_minmax(0,1fr)]">
-        {knowledge.map((group) => (
-          <div key={group.label} className="contents">
-            <dt className="text-faint">{group.label}</dt>
-            <dd className="text-muted">{group.items.join(" · ")}</dd>
-          </div>
-        ))}
-      </dl>
+      <LabelledList groups={knowledge} />
 
       <p className="text-[15px] leading-[1.7] text-body">
         Most of my M2 coursework is on GitHub, in{" "}
