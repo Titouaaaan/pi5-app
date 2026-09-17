@@ -54,7 +54,7 @@ export default function ColophonPage() {
       <Rule />
       <section className="flex flex-col gap-3.5">
         <SectionHeading id="why">why a pi</SectionHeading>
-        <P>This kind of portoflio website doesn&apos;t get thousands or millions of visitors per day (for now?), therefore a Pi 5 can easily handle it. The device only draws a few watts, so hosting at home costs less than a coffee a month, and much less than if I had to pay for a server provider. 
+        <P>This kind of portfolio website doesn&apos;t get thousands or millions of visitors per day (for now?), therefore a Pi 5 can easily handle it. The device only draws a few watts, so hosting at home costs less than a coffee a month, and much less than if I had to pay for a server provider. 
           The one catch of this setup is that a home connection sits behind a router with no fixed address and no ports I want to open. A Cloudflare tunnel solves exactly that: the Pi dials out, Cloudflare holds the public address, and nothing on my network is reachable directly. 
           I also get to play around with this awesome toy, which is always fun. The Pi does a few other things for me at home too, like a little self-hosted drive for my photos and videos, and I&apos;ll probably write a page about that setup eventually.</P>
       </section>
