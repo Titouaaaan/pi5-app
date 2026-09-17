@@ -26,8 +26,9 @@ of truth; this file is the short version.
    production build and failed it. Scratch belongs in `<repo>/.deploy/`
    (gitignored) or outside the repo.
 5. **Cloudflare is configured in the dashboard, not on disk.** The tunnel is
-   token-mode. Titouan has asked not to change Cloudflare config; the routes are
-   documented in `docs/OPERATIONS.md`.
+   token-mode, with the token in a root-only file. Dashboard changes are
+   Titouan's to make, walked through step by step; the routes are documented
+   in `docs/OPERATIONS.md`.
 6. **The colophon page is public and describes the infrastructure.** Keep it to the stack, the Pi and the tunnel: never ports, paths, hostnames, service names, monitoring tools, network details or anything from docs/.
 7. **Do not publish personal data without asking.** The email link in
    `content/profile.ts` is there because Titouan explicitly chose it.
@@ -76,10 +77,13 @@ and weekly; `gh run list` shows them. CI never deploys.
 
 ## Where things stand
 
-Redesign shipped 2026-09-15; project page, colophon, Cloudflare visitor counts, video embed, about/knowledge grid added 2026-09-16. The pre-redesign site is archived at tag
-`v1-original` (not deployable with current tooling). Open work is tracked in
-`docs/SECURITY.md` under "Still outstanding" — all of it needs changes to
-systemd units or the Cloudflare dashboard, which is why it is still open.
+Redesign shipped 2026-09-15; project page, colophon, Cloudflare visitor
+counts, video embed, about/knowledge grid added 2026-09-16. On 2026-09-17 the
+security list was worked through end to end (tunnel token rotated, backend
+bound to localhost, `api.`/`pi.` retired, Node 22, CI, the major upgrades
+below) and `v2.0.0` was tagged. The pre-redesign site is archived at tag
+`v1-original` (not deployable with current tooling). The one item under
+"Still outstanding" in `docs/SECURITY.md` needs the home Wi-Fi.
 
 Open issues live on GitHub (`gh issue list`); the Pi is logged in as Titouaaaan.
 The translate dropdown is disabled behind `TRANSLATE_ENABLED` pending issue #1.
