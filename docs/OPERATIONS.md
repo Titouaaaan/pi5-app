@@ -11,11 +11,10 @@ internet
 Cloudflare tunnel (cloudflared.service, token mode)
    |
    +-- titouanguerin.com ------> localhost:3000   Next.js  (nextjs-app.service)
-   |                                  |
-   |                                  +-- /api/* rewritten to 127.0.0.1:8000
-   |
-   +-- api.titouanguerin.com --> localhost:8000   FastAPI  (fastapi-backend.service, backend/)
-                                                  (legacy hostname; see SECURITY.md #3)
+                                      |
+                                      +-- /api/* rewritten to 127.0.0.1:8000
+                                                 FastAPI  (fastapi-backend.service, backend/)
+                                                 listens on 127.0.0.1 only
 ```
 
 The tunnel runs in **token mode**, which means its routing table lives in the
@@ -25,8 +24,8 @@ Cloudflare dashboard and **not** in any file on the Pi. There is no
 each backend (`/health` only exists on FastAPI).
 
 `www.titouanguerin.com` redirects to the apex (Cloudflare redirect rule).
-`pi.titouanguerin.com` is a **dead record**, Cloudflare error 1016.
-The live site is the apex domain.
+The live site is the apex domain; it is the tunnel's only route. `api.` and
+`pi.` subdomains were retired on 2026-09-17.
 
 ## Ports in use
 

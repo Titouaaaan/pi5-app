@@ -129,17 +129,18 @@ That monitor is red until it is repointed, which needs the home Wi-Fi:
    probe; `/system-stats` works too but does real work on every poll.)
 3. Delete this section.
 
-### 2. Retire the `api.` hostname
+### Closed 2026-09-17
 
-With the `/api/*` rewrite in place, `api.titouanguerin.com` is no longer used
-by the site. Removing its tunnel route removes an entire public entry point.
-
-### 3. Update cloudflared
-
-Running 2025.9.1 against a current 2026.9.1, with `--no-autoupdate` set while a
-`cloudflared-update.service` exists unused.
-
-### 4. Remove the stale `pi.` DNS record
-
-`pi.titouanguerin.com` returns Cloudflare error 1016 (origin DNS error). It is
-a dead record still advertised in the old README.
+- **`api.titouanguerin.com` retired.** Cloudflare analytics showed one
+  request to it in 24 hours (a scanner) against 6,300 to the site; the
+  `/api/*` rewrite had replaced it. Tunnel route and DNS record deleted
+  in the dashboard; the hostname no longer resolves. The backend is now
+  reachable only through the site's own origin.
+- **`pi.titouanguerin.com` deleted.** The stale record that returned
+  error 1016 is gone and no longer inflates Cloudflare's visitor count.
+- **cloudflared 2025.9.1 → 2026.9.1.** It had been installed from a
+  hand-downloaded `.deb`, so nothing ever updated it. Cloudflare's apt repo
+  is now configured (`/etc/apt/sources.list.d/cloudflared.list`), so it
+  updates with `sudo apt upgrade`; `--no-autoupdate` stays, which is
+  correct for a package-managed install. The unused
+  `cloudflared-update.service` is disabled and harmless.
