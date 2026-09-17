@@ -11,10 +11,9 @@ Environment=DATA_DIR=/home/titouan/home/pi/pi5-app/.data
 # Secrets (CLOUDFLARE_API_TOKEN, optionally GITHUB_TOKEN). Root-owned, mode 600;
 # systemd reads it before dropping to the service user. '-' makes it optional.
 EnvironmentFile=-/etc/pi5-app/backend.env
-# 0.0.0.0 because uptime-kuma's "FastApi" monitor polls the LAN address.
-# Repoint that monitor at http://127.0.0.1:8000/health, then change this to
-# --host 127.0.0.1 so the port is no longer reachable from the LAN or tailnet.
-ExecStart=/home/titouan/home/pi/pi5-app/backend/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+# Localhost only: the tunnel, Next's /api rewrite and uptime-kuma all run on
+# this machine, so the port has no business being reachable from the LAN.
+ExecStart=/home/titouan/home/pi/pi5-app/backend/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 User=titouan
 Group=titouan
 Restart=always
