@@ -84,8 +84,9 @@ counts, video embed, about/knowledge grid added 2026-09-16. On 2026-09-17 the
 security list was worked through end to end (tunnel token rotated, backend
 bound to localhost, `api.`/`pi.` retired, Node 22, CI, the major upgrades
 below) and `v2.0.0` was tagged. The pre-redesign site is archived at tag
-`v1-original` (not deployable with current tooling). The one item under
-"Still outstanding" in `docs/SECURITY.md` needs the home Wi-Fi.
+`v1-original` (not deployable with current tooling). Nothing in
+`docs/SECURITY.md` is outstanding; the uptime-kuma monitor was repointed at
+`127.0.0.1` on 2026-09-21.
 
 Open issues live on GitHub (`gh issue list`); the Pi is logged in as Titouaaaan.
 The translate dropdown is disabled behind `TRANSLATE_ENABLED` pending issue #1.

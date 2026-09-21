@@ -101,29 +101,17 @@ To rotate again: Rotate token in the dashboard, then on the Pi
 then `sudo systemctl restart cloudflared`. Running connections survive until
 the restart, so there is no window to plan around.
 
-## Still outstanding
+## Closed
 
-These need changes outside the repo and are listed in the order they matter.
+All 2026-09-17 unless noted.
 
-### 1. Repoint uptime-kuma's "FastApi" monitor — from home
-
-Done 2026-09-17: uvicorn binds to `127.0.0.1` (`deploy/fastapi-backend.service`,
-deployed `7587c8a`); `curl http://<the Pi's LAN address>:8000/health` is
-refused, `127.0.0.1` and the public `/api/*` answer. The journal showed the
-LAN address had exactly one client, uptime-kuma polling `/system-stats` once
-a minute, and uptime-kuma runs as a plain systemd service on the Pi, so
-`127.0.0.1` from it is the Pi. No Cloudflare change was involved.
-
-That monitor is red until it is repointed, which needs the home Wi-Fi:
-
-1. Open uptime-kuma (the Pi's LAN address, port 3001) from a device on the LAN.
-2. **FastApi** monitor → **Edit** → URL `http://127.0.0.1:8000/health` →
-   **Save**. Green within one check interval. (`/health` is the liveness
-   probe; `/system-stats` works too but does real work on every poll.)
-3. Delete this section.
-
-### Closed 2026-09-17
-
+- **uptime-kuma's "FastApi" monitor repointed** (2026-09-21). uvicorn was
+  rebound to `127.0.0.1` (`deploy/fastapi-backend.service`, deployed
+  `7587c8a`), which left the monitor's LAN-address URL refused and the
+  monitor red; the journal had shown that monitor was the LAN address's only
+  client. It now polls `http://127.0.0.1:8000/health` — uptime-kuma runs as a
+  plain systemd service on the Pi, so `127.0.0.1` from it is the Pi — and is
+  green. No Cloudflare change was involved.
 - **`api.titouanguerin.com` retired.** Cloudflare analytics showed one
   request to it in 24 hours (a scanner) against 6,300 to the site; the
   `/api/*` rewrite had replaced it. Tunnel route and DNS record deleted
