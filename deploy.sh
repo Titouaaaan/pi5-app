@@ -185,7 +185,7 @@ if [[ $healthy -ne 1 ]]; then
   fail "No previous build to roll back to. Check: sudo journalctl -u nextjs-app -n 50"
 fi
 
-backend_commit="$(curl -fsS --max-time 5 "http://127.0.0.1:8000/deploy" 2>/dev/null | sed -n 's/.*"commit":"\([^"]*\)".*/\1/p')"
+backend_commit="$(curl -fsS --max-time 5 "http://127.0.0.1:8000/deploy" 2>/dev/null | sed -n 's/.*"commit":"\([^"]*\)".*/\1/p')" || true
 if [[ "$backend_commit" == "$COMMIT" ]]; then
   log "Backend healthy, reports $COMMIT"
 elif [[ -n "$backend_commit" ]]; then
