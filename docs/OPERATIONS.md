@@ -51,10 +51,14 @@ What it does, in order:
 1. Refuses to run if the working tree has uncommitted changes, or if `HEAD`
    is not on any remote branch. Production never runs code that exists only
    on this Pi.
-2. If `package-lock.json` changed since the last deploy, **stops the service**,
-   sets the old `node_modules` aside and runs `npm ci`. This is the only case
-   with downtime, a few minutes on the Pi, and it is deliberate: replacing
-   `node_modules` under a running server is worse than a clean stop.
+2. If `package-lock.json` changed since the last deploy, copies `my-app/`
+   into `.deploy/stage` and runs `npm ci` there; the build in step 4 then
+   runs in that copy too. The live server keeps serving from the untouched
+   `node_modules` throughout, and the new `node_modules` is swapped in with
+   the new build in step 5. (Until 2026-10-12 this step stopped the service
+   for a few minutes; a build moved between directories was verified to run
+   fine, since `next start` does not read the absolute paths in
+   `required-server-files.json`.)
 3. With `--backend`: creates `backend/.venv` if missing, installs
    `backend/requirements.txt`, and if `deploy/fastapi-backend.service` differs
    from the copy in `/etc/systemd/system/`, installs it and reloads systemd.
@@ -62,8 +66,9 @@ What it does, in order:
    page footer, then builds into `.next-build`, a scratch directory the
    running server never reads. A failed build leaves the live site exactly as
    it was.
-5. Swaps `.next-build` into `.next` (the previous build is parked in
-   `.deploy/`) and restarts the service(s).
+5. Swaps `.next-build` into `.next` (and the staged `node_modules`, if any;
+   the previous ones are parked in `.deploy/`) and restarts the service(s).
+   The restart is the only downtime, well under a second.
 6. Polls `localhost:3000` for up to 40 s until the page **contains the commit
    hash it just built**. If it does not, restores the previous build (and
    previous `node_modules`, if they were replaced) and restarts again.
@@ -72,12 +77,14 @@ What it does, in order:
    rather than failing if the tunnel is the problem.
 
 If the script is interrupted (Ctrl-C, a dropped SSH session, a killed
-terminal), a trap restores the previous `node_modules` and build and starts
-the service before exiting, so an abort never leaves the site stopped.
-Added 2026-09-17 after an interrupted run did exactly that for eight
-minutes. The one thing no script can survive is `SIGKILL`; if that happens,
-just run `./deploy.sh` again, it detects the half-installed modules from the
-missing lock hash and reinstalls.
+terminal), a trap deletes the staging copy and, if the swap had begun but the
+restart had not, puts the previous `node_modules` and build back. The service
+is never stopped, so an abort never leaves the site down; an abort after the
+restart leaves the new build running.
+The trap was added 2026-09-17 after an interrupted run left the site stopped
+for eight minutes. The one thing no script can survive is `SIGKILL`; if that
+happens, just run `./deploy.sh` again: it starts from a fresh staging copy,
+and a half-swapped `node_modules` is detected by its missing lock hash.
 
 **Do not run `npm run build` by hand in the live tree.** `next start` reads
 static chunks lazily off disk, so a build that fails partway can break the live
