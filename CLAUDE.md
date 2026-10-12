@@ -65,7 +65,7 @@ cd my-app
 npm run lint           # eslint . (flat config in eslint.config.mjs)
 npx tsc --noEmit
 npm run build
-npm audit              # must report 0 vulnerabilities before deploying
+npm audit --omit=dev   # runtime deps; must report 0 before deploying (CI does the same)
 
 cd ../backend
 .venv/bin/python -m pytest      # after: python3 -m venv --upgrade-deps .venv && .venv/bin/pip install -r requirements-dev.txt

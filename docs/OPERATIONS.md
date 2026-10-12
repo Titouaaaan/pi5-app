@@ -131,7 +131,7 @@ kept for reference. It predates `deploy.sh` and is **not deployable with it**.
 
 `.github/workflows/checks.yml` runs the pre-deploy checks on GitHub's
 machines on every push to `main` or `rework`, on pull requests, and every
-Monday at 08:00 UTC: `npm ci`, lint, `tsc`, `next build`, `npm audit` for
+Monday at 08:00 UTC: `npm ci`, lint, `tsc`, `next build`, `npm audit --omit=dev` for
 the frontend; pytest and `pip-audit` for the backend. The weekly run is
 what makes a new advisory against an existing dependency visible without
 anyone running an audit by hand. It never deploys and has no access to the
@@ -144,7 +144,7 @@ block it. Results: `gh run list`, or the Actions tab.
 cd my-app
 npm outdated        # what has moved
 npm update          # everything within its semver range
-npm audit           # must be 0 before deploying
+npm audit --omit=dev   # must be 0 before deploying
 npm run lint && npx tsc --noEmit && npm run build
 ```
 

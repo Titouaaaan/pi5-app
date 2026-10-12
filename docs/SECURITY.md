@@ -61,7 +61,7 @@ seeds venvs with setuptools 66, which carries three advisories and fails
 `requirements-dev.txt`) run **inside the venv**, not with `-r`, so it checks
 what is installed rather than what a fresh resolve would pick.
 
-**Before every deploy:** `npm audit` in `my-app/` and `pip-audit` in
+**Before every deploy:** `npm audit --omit=dev` in `my-app/` and `pip-audit` in
 `backend/.venv` must both report nothing.
 If it does not, `npm update` first; if an advisory only resolves with a major
 bump, treat that as its own change with its own test cycle rather than folding
