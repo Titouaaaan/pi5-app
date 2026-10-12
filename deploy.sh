@@ -11,9 +11,10 @@
 # server is reading. If the health check fails afterwards, the previous build
 # is restored and the service restarted again.
 #
-# Downtime: none for code and content changes. When package-lock.json has
-# changed, the service is stopped for the reinstall (a few minutes on the Pi),
-# because npm ci replaces node_modules and the running server reads from it.
+# Downtime: only the restart itself. When package-lock.json has changed, npm ci
+# and the build run in a staging copy of my-app (.deploy/stage), and the new
+# node_modules is swapped in together with the new build, just before the
+# restart, so the running server never reads a half-installed node_modules.
 
 set -Eeuo pipefail
 
@@ -29,6 +30,7 @@ MODULES_DIR="$APP_DIR/node_modules"
 KEEP_DIR="$REPO_DIR/.deploy"
 PREV_DIR="$KEEP_DIR/next-previous"
 MODULES_PREV="$KEEP_DIR/node_modules-previous"
+STAGE_DIR="$KEEP_DIR/stage"
 DEPLOY_INFO="$KEEP_DIR/info.json"
 BACKEND_DIR="$REPO_DIR/backend"
 BACKEND_VENV="$BACKEND_DIR/.venv"
@@ -36,8 +38,10 @@ BACKEND_UNIT_SRC="$REPO_DIR/deploy/fastapi-backend.service"
 BACKEND_UNIT_DST="/etc/systemd/system/fastapi-backend.service"
 LOCK_HASH_FILE="$MODULES_DIR/.deploy-lock-hash"
 RESTART_BACKEND=0
-SERVICE_STOPPED=0
+STAGED=0
+SWAPPED=0
 DEPS_CHANGED=0
+RESTARTED=0
 
 [[ "${1:-}" == "--backend" ]] && RESTART_BACKEND=1
 
@@ -52,25 +56,24 @@ restore_modules() {
   fi
 }
 
-start_if_stopped() {
-  if [[ $SERVICE_STOPPED -eq 1 ]]; then
-    sudo systemctl start nextjs-app.service
-    SERVICE_STOPPED=0
-  fi
-}
-
 # If the script dies for any reason it did not plan for (Ctrl-C, a closed
-# terminal, a killed tool), do not leave the site stopped or half-swapped.
-# The planned failure paths above already restore what they need; for them
+# terminal, a killed tool), do not leave the site half-swapped. The service is
+# never stopped, so before the restart restoring the files is enough; after
+# the restart the new build is what is running, so it is left in place.
+# The planned failure paths restore what they need themselves; for them
 # this is a no-op because their flags are clear by the time they exit.
 abort_cleanup() {
   local code=$?
   trap - EXIT
+  rm -rf "$STAGE_DIR"
   if [[ $code -ne 0 ]]; then
-    if [[ ! -d "$LIVE_DIR" && -d "$PREV_DIR" ]]; then mv "$PREV_DIR" "$LIVE_DIR"; fi
-    restore_modules
-    start_if_stopped
-    printf '\033[1;31mAborted (exit %s). Previous build and modules kept; service running.\033[0m\n' "$code" >&2
+    if [[ $RESTARTED -eq 1 ]]; then
+      printf '\033[1;31mAborted (exit %s) after the restart. The new build is live; health check not finished.\033[0m\n' "$code" >&2
+    else
+      if [[ $SWAPPED -eq 1 && -d "$PREV_DIR" ]]; then rm -rf "$LIVE_DIR"; mv "$PREV_DIR" "$LIVE_DIR"; fi
+      restore_modules
+      printf '\033[1;31mAborted (exit %s). Previous build and modules kept; service running.\033[0m\n' "$code" >&2
+    fi
   fi
   exit "$code"
 }
@@ -94,20 +97,15 @@ fi
 # --- 2. Dependencies -------------------------------------------------------
 lock_hash="$(sha256sum package-lock.json | cut -d' ' -f1)"
 if [[ ! -d "$MODULES_DIR" || "$(cat "$LOCK_HASH_FILE" 2>/dev/null)" != "$lock_hash" ]]; then
-  DEPS_CHANGED=1
-  log "Lockfile changed — stopping the service for the reinstall"
-  sudo systemctl stop nextjs-app.service
-  SERVICE_STOPPED=1
-
-  rm -rf "$MODULES_PREV"
-  [[ -d "$MODULES_DIR" ]] && mv "$MODULES_DIR" "$MODULES_PREV"
-
-  if ! npm ci --no-audit --no-fund; then
-    restore_modules
-    start_if_stopped
-    fail "npm ci failed. Previous node_modules restored and service restarted."
-  fi
-  echo "$lock_hash" > "$LOCK_HASH_FILE"
+  log "Lockfile changed — installing into a staging copy (the site stays up)"
+  rm -rf "$STAGE_DIR"
+  # The tree is clean (checked above), so this copy is HEAD plus ignored env files.
+  rsync -a --exclude node_modules --exclude .next --exclude .next-build \
+    --exclude tsconfig.tsbuildinfo "$APP_DIR/" "$STAGE_DIR/"
+  (cd "$STAGE_DIR" && npm ci --no-audit --no-fund) \
+    || fail "npm ci failed. Nothing was swapped; the site is untouched."
+  echo "$lock_hash" > "$STAGE_DIR/node_modules/.deploy-lock-hash"
+  STAGED=1
 else
   log "Lockfile unchanged, skipping npm ci"
 fi
@@ -130,17 +128,29 @@ COMMIT="$(git rev-parse --short HEAD)"
 DEPLOYED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 printf '{"commit":"%s","deployed_at":"%s"}\n' "$COMMIT" "$DEPLOYED_AT" > "$DEPLOY_INFO.next"
 
+# With new dependencies the build runs in the staging copy, against them.
+# A build is portable between directories: next start does not read the
+# absolute paths in required-server-files.json (verified 2026-10-12).
+BUILD_ROOT="$APP_DIR"
+[[ $STAGED -eq 1 ]] && BUILD_ROOT="$STAGE_DIR"
+
 log "Building $COMMIT (into .next-build)"
-rm -rf "$BUILD_DIR"
-if ! NEXT_DIST_DIR=".next-build" NEXT_PUBLIC_DEPLOY_COMMIT="$COMMIT" NEXT_PUBLIC_DEPLOY_AT="${DEPLOYED_AT%%T*}" npm run build; then
-  restore_modules
-  start_if_stopped
+rm -rf "$BUILD_DIR" "$STAGE_DIR/.next-build"
+if ! (cd "$BUILD_ROOT" && NEXT_DIST_DIR=".next-build" NEXT_PUBLIC_DEPLOY_COMMIT="$COMMIT" NEXT_PUBLIC_DEPLOY_AT="${DEPLOYED_AT%%T*}" npm run build); then
   fail "Build failed. Nothing was swapped in; the site is serving the previous build."
 fi
+[[ $STAGED -eq 1 ]] && mv "$STAGE_DIR/.next-build" "$BUILD_DIR"
 
 # --- 4. Swap the new build in ----------------------------------------------
 log "Swapping in the new build"
+if [[ $STAGED -eq 1 ]]; then
+  rm -rf "$MODULES_PREV"
+  [[ -d "$MODULES_DIR" ]] && mv "$MODULES_DIR" "$MODULES_PREV"
+  DEPS_CHANGED=1
+  mv "$STAGE_DIR/node_modules" "$MODULES_DIR"
+fi
 rm -rf "$PREV_DIR"
+SWAPPED=1
 [[ -d "$LIVE_DIR" ]] && mv "$LIVE_DIR" "$PREV_DIR"
 mv "$BUILD_DIR" "$LIVE_DIR"
 mv "$DEPLOY_INFO.next" "$DEPLOY_INFO"
@@ -148,7 +158,7 @@ mv "$DEPLOY_INFO.next" "$DEPLOY_INFO"
 # --- 5. Restart ------------------------------------------------------------
 log "Restarting services"
 sudo systemctl restart nextjs-app.service
-SERVICE_STOPPED=0
+RESTARTED=1
 [[ $RESTART_BACKEND -eq 1 ]] && sudo systemctl restart fastapi-backend.service
 
 # --- 6. Health check, with rollback ----------------------------------------
@@ -164,6 +174,7 @@ done
 
 if [[ $healthy -ne 1 ]]; then
   printf '\033[1;31mHealth check failed — rolling back.\033[0m\n' >&2
+  RESTARTED=0
   if [[ -d "$PREV_DIR" ]]; then
     rm -rf "$LIVE_DIR"
     mv "$PREV_DIR" "$LIVE_DIR"
