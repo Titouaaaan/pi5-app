@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const backend = process.env.BACKEND_URL ?? "http://127.0.0.1:8000";
+
 const nextConfig: NextConfig = {
   // deploy.sh builds into a scratch directory and swaps it in, so a build
   // that fails halfway can never corrupt the .next the live server reads.
@@ -9,13 +11,17 @@ const nextConfig: NextConfig = {
   // browser request same-origin, so the backend needs no CORS middleware and
   // no separate public hostname. BACKEND_URL overrides the target for local
   // development, where port 8000 may already be taken by the live service.
+  // The RL-BRAWL game is a static export the backend serves (and sets the
+  // headers for: Next.js does not apply headers() to proxied responses).
   async rewrites() {
     return [
-      {
-        source: "/api/:path*",
-        destination: `${process.env.BACKEND_URL ?? "http://127.0.0.1:8000"}/:path*`,
-      },
+      { source: "/api/:path*", destination: `${backend}/:path*` },
+      { source: "/rl-brawl/play/:path+", destination: `${backend}/rl-brawl/play/:path+` },
     ];
+  },
+
+  async redirects() {
+    return [{ source: "/rl-brawl/play", destination: "/rl-brawl/play/index.html", permanent: false }];
   },
 
   // Do not advertise the framework version to the internet.
@@ -38,6 +44,7 @@ const nextConfig: NextConfig = {
           // on script and style is the price of Next's hydration and Tailwind
           // without a nonce (which would make every page dynamic); the other
           // directives still stop external script/style/frame/connect injection.
+          // frame-src 'self': the RL-BRAWL page frames its own game.
           {
             key: "Content-Security-Policy",
             value: [
@@ -47,7 +54,7 @@ const nextConfig: NextConfig = {
               "img-src 'self' data:",
               "font-src 'self'",
               "connect-src 'self'",
-              "frame-src https://www.youtube-nocookie.com",
+              "frame-src 'self' https://www.youtube-nocookie.com",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

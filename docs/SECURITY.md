@@ -18,7 +18,7 @@ outstanding. Update it whenever the security posture changes.
 
 ```
 default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';
-img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://www.youtube-nocookie.com;
+img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self' https://www.youtube-nocookie.com;
 frame-ancestors 'none';
 base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
 ```
@@ -33,6 +33,32 @@ script and Tailwind's styles are inline; removing it needs a per-request
 nonce, which turns the static page into a dynamic one. The trade is
 deliberate: the remaining directives still block loading scripts, styles,
 frames or connections from any other origin.
+
+### The RL-BRAWL game: its own, looser policy
+
+`/rl-brawl/play/*` is a Godot web export served by the backend
+(`backend/app/rlbrawl.py`), which sets its headers because Next.js does not
+apply `headers()` to forwarded responses:
+
+```
+default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval';
+style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:;
+frame-ancestors 'self'; base-uri 'self'; object-src 'none'
+```
+plus `X-Frame-Options: SAMEORIGIN`, `nosniff`, the same `Referrer-Policy`.
+
+The two relaxations are what the game can't run without: `'wasm-unsafe-eval'`
+lets the browser compile WebAssembly (it does not allow JavaScript `eval`),
+and `frame-ancestors 'self'` lets the `/rl-brawl` page frame it while still
+refusing other sites. `blob:` images are made by Godot itself. The site's
+pages gained `frame-src 'self'` for that one iframe. The game's files come
+from the owner's own export, copied over SSH; nothing in them is
+user-supplied.
+
+**Known gap (pre-existing):** for the same reason, responses under `/api/*`
+carry none of the site's headers (seen 2026-10-13). They are JSON read by the
+site's own scripts, so the exposure is small; adding the headers in a
+backend middleware would close it.
 
 ## Verified 2026-09-15, from the public URL
 

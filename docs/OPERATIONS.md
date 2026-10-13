@@ -207,6 +207,30 @@ Code lives in `backend/app/`, one module per concern, with tests in
 `deploy/fastapi-backend.service` and installed by `deploy.sh --backend`;
 never edit the copy in `/etc` by hand.
 
+## The RL-BRAWL game (`/rl-brawl/play/`)
+
+A Godot web export, about 65 MB of static files, built on Titouan's PC by the
+RL-BRAWL repo (`python tools/web_export.py --deploy`), which copies it to
+`~/rl-brawl-web` and swaps the folder in whole. It is not in this repo and
+not part of `deploy.sh`: a new export is live as soon as it lands, with no
+build or restart here. Don't put files in that folder.
+
+- **Served by the backend** (`backend/app/rlbrawl.py`, mounted at
+  `/rl-brawl/play`, folder overridable with `RL_BRAWL_DIR`); Next.js forwards
+  `/rl-brawl/play/*` to it and redirects the bare `/rl-brawl/play` to
+  `index.html`. `next.config.ts` `headers()` do **not** reach forwarded
+  responses, so the game's headers are set in `rlbrawl.py` (CSP with
+  `'wasm-unsafe-eval'`, framable by the site only, `Cache-Control: no-cache`),
+  along with gzip (Next.js would leave the 16 MB `.pck` uncompressed).
+  A first visit costs the Pi about 17 MB of upload.
+- **HTTPS only:** Godot refuses to start outside a secure context, so in
+  development open the dev server through `localhost` (an SSH tunnel from
+  another machine: `ssh -N -L 3002:localhost:3002 titouan@<pi>`), not the Pi's
+  LAN address.
+- **Missing folder:** the backend still starts; the frame shows "Not Found".
+- What the game side needs from the site, and the other way round, is in the
+  RL-BRAWL repo's `docs/web.md`, section "On titouanguerin.com".
+
 ## Colours and themes
 
 Tokens are CSS variables in `my-app/app/globals.css`, one set under `:root`
@@ -237,8 +261,9 @@ white-background PNG.
 | `/` | `app/page.tsx` | sections in `app/components/`, copy in `content/*.ts` |
 | `/PhINODE` | `app/PhINODE/page.tsx` | the thesis project page; figures in `public/phinode/`, metadata in `content/phinode.ts` |
 | `/colophon` | `app/colophon/page.tsx` | how the site runs; the diagram is `components/TunnelDiagram.tsx`. Public: stack, Pi and tunnel only, never ports, paths, hostnames or service names |
+| `/rl-brawl` | `app/rl-brawl/page.tsx` | the RL-BRAWL project page; metadata in `content/rlbrawl.ts`; frames the game from `/rl-brawl/play/` (below) |
 
-All three share the layout (header with theme toggle, footer with live stats
+All of them share the layout (header with theme toggle, footer with live stats
 and, except on the colophon itself, a link to it).
 
 ## Static assets
