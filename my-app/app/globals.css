@@ -149,3 +149,22 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* components/Sprite.tsx: step through the frames of a one-row sprite sheet. */
+.sprite {
+  image-rendering: pixelated;
+  animation-name: sprite;
+  animation-iteration-count: infinite;
+}
+
+@keyframes sprite {
+  to {
+    background-position-x: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sprite {
+    animation: none;
+  }
+}
