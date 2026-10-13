@@ -64,6 +64,7 @@ def test_rl_brawl_game_files(tmp_path, monkeypatch):
 
     (tmp_path / "index.html").write_text("<canvas></canvas>")
     (tmp_path / "game.wasm").write_bytes(b"\0asm" * 1000)
+    monkeypatch.setattr(rlbrawl.game.app, "directory", str(tmp_path))
     monkeypatch.setattr(rlbrawl.game.app, "all_directories", [str(tmp_path)])
     page = client.get("/rl-brawl/play/index.html")
     assert page.text == "<canvas></canvas>"
@@ -74,5 +75,9 @@ def test_rl_brawl_game_files(tmp_path, monkeypatch):
     assert wasm.headers["content-type"] == "application/wasm"
     assert wasm.headers["content-encoding"] == "gzip"
     assert client.get("/rl-brawl/play/../main.py").status_code == 404
-    monkeypatch.setattr(rlbrawl.game.app, "all_directories", [str(tmp_path / "missing")])
+
+    # No export yet: a 404, not a 500.
+    missing = str(tmp_path / "missing")
+    monkeypatch.setattr(rlbrawl.game.app, "directory", missing)
+    monkeypatch.setattr(rlbrawl.game.app, "all_directories", [missing])
     assert client.get("/rl-brawl/play/index.html").status_code == 404

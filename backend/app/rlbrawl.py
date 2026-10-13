@@ -38,15 +38,20 @@ HEADERS = {
 
 
 class GameFiles(StaticFiles):
+    # Starlette checks the folder on the first request and raises (a 500) if
+    # it is missing; with no export yet, or in CI, it should just be a 404.
+    async def check_config(self) -> None:
+        pass
+
     def file_response(self, *args, **kwargs):
         response = super().file_response(*args, **kwargs)
         response.headers.update(HEADERS)
         return response
 
 
-# check_dir=False: the backend (and CI) start without the folder; the route
-# just 404s. Gzip because Next.js only compresses some types: the 16 MB .pck
-# (application/octet-stream) would otherwise go out raw.
+# check_dir=False and the check_config above: without the folder the backend
+# still starts and the route 404s. Gzip because Next.js only compresses some
+# types: the 16 MB .pck (application/octet-stream) would otherwise go out raw.
 game = GZipMiddleware(
     GameFiles(
         directory=os.environ.get("RL_BRAWL_DIR", Path.home() / "rl-brawl-web"),
