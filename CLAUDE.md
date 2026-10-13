@@ -47,6 +47,7 @@ backend/tests/                  pytest; run before every backend deploy
 my-app/app/                     Next.js App Router: layout, page, components/
 my-app/app/PhINODE/             the thesis project page; long-form JSX, metadata in content/phinode.ts
 my-app/app/colophon/            how the site runs; prose is in the page, diagram in components/TunnelDiagram.tsx
+my-app/app/rl-brawl/            the RL-BRAWL game page; frames /rl-brawl/play/, served by backend/app/rlbrawl.py from ~/rl-brawl-web (see OPERATIONS.md)
 my-app/content/*.ts             all site copy: profile, phd, projects, publications, timeline, skills, knowledge, phinode, languages (disabled)
 my-app/public/docs/             PDFs, named as they should download (CV, thesis, slides)
 my-app/public/phinode/          thesis figures, extracted from the report onto white
@@ -55,8 +56,8 @@ my-app/app/robots.ts, sitemap.ts, opengraph-image.tsx   generated at build
 ```
 
 Content edits go in `my-app/content/`, not in components; the two long-form pages (`PhINODE`, `colophon`) keep their prose in the page file. Titouan edits copy himself in the `/home/titouan/rework` worktree and asks for it to be shipped: commit his edits under his name only (no co-author line), then merge and deploy. Components are
-server-rendered except `Projects.tsx` (expandable rows) and `PiStats.tsx`
-(polls `/api/system-stats`). The footer's commit and deploy date are baked in at build time by `deploy.sh`, not fetched.
+server-rendered except `Projects.tsx` (expandable rows), `PiStats.tsx`
+(polls `/api/system-stats`) and `GameFrame.tsx` (scales the RL-BRAWL game to its frame). The footer's commit and deploy date are baked in at build time by `deploy.sh`, not fetched.
 
 ## Commands
 

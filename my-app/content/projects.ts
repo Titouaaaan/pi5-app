@@ -33,6 +33,16 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "rl-brawl",
+    slug: "RL-BRAWL",
+    tag: "game + self-play rl",
+    year: "2026",
+    stack: "c++ · godot · pytorch · webassembly",
+    body: "A small Smash-style fighting game with one deterministic C++ simulation, and PPO self-play agents that learn to play it. The whole game, bots included, also runs in the browser.",
+    callout: { text: "play it in your browser", href: "/rl-brawl", label: "project page →" },
+    links: [{ label: "view on github", href: "https://github.com/Titouaaaan/RL-BRAWL" }],
+  },
+  {
     id: "rl-souls",
     slug: "RL-Souls",
     tag: "reinforcement learning",

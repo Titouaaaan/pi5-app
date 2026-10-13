@@ -19,6 +19,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: "https://titouanguerin.com/rl-brawl",
+      lastModified: process.env.NEXT_PUBLIC_DEPLOY_AT
+        ? new Date(process.env.NEXT_PUBLIC_DEPLOY_AT)
+        : new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: "https://titouanguerin.com/colophon",
       lastModified: process.env.NEXT_PUBLIC_DEPLOY_AT
         ? new Date(process.env.NEXT_PUBLIC_DEPLOY_AT)
