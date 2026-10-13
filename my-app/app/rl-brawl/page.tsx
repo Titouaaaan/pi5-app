@@ -91,7 +91,7 @@ export default function RlBrawlPage() {
           As training progresses and the agent gets better against itself, it is forced to learn new strategies to counter itself. Implicitly, what this means is 
           that the agent cannot really learn an abusive strategy because it will eventually be countered by itself. Another interesting property of the training, 
           is thatthe agent also plays against previous copies of itself, in order to make sure that it doesn’t forget
-          how to play against old strategies that were “solved”. The mechanics is called "league training", and is used in many successful RL projects such as AlphaStar and OpenAI Five.
+          how to play against old strategies that were “solved”. The mechanics is called “league training”, and is used in many successful RL projects such as AlphaStar and OpenAI Five.
           This mechanic is very important, because how embarrassing would it be to have a bot that is good against a high Elo bot but struggles or even loses
           against a low Elo bot...
         </P>
